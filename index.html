@@ -3,65 +3,140 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Học Tailwind CSS & JS ES6+</title>
-
-        <!-- Nhúng Tailwind CSS CDN (Cách đơn giản nhất để bắt đầu) -->
+        <title>Bố Cục Responsive - Tailwind CSS</title>
+        <!-- Nhúng Tailwind CSS CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="bg-gray-100 min-h-screen p-6 font-sans">
-        <!-- Container chính giữa màn hình -->
-        <div class="max-w-2xl mx-auto space-y-6">
-            <!-- Tiêu đề trang -->
-            <div class="text-center">
-                <h1 class="text-3xl font-extrabold text-blue-600">🚀 Lộ Trình Web Developer Hiện Đại</h1>
-                <p class="text-red-600 mt-2">Thực hành Tailwind CSS & JavaScript ES6+</p>
+    <body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
+        <!-- 1. HEADER / THANH ĐIỀU HƯỚNG (Flexbox) -->
+        <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <span class="bg-blue-600 text-white font-bold p-2 rounded-lg text-lg">MW</span>
+                    <span class="text-xl font-bold text-gray-900">ModernWeb</span>
+                </div>
+
+                <!-- Menu (Ẩn trên điện thoại, hiện trên màn hình md trở lên) -->
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+                    <a href="#" class="text-blue-600 font-semibold">Trang chủ</a>
+                    <a href="#" class="hover:text-blue-600 transition">Khóa học</a>
+                    <a href="#" class="hover:text-blue-600 transition">Lộ trình</a>
+                    <a href="#" class="hover:text-blue-600 transition">Liên hệ</a>
+                </nav>
+
+                <!-- Nút Action -->
+                <button
+                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow-sm">
+                    Bắt Đầu Học
+                </button>
             </div>
+        </header>
 
-            <!-- THẺ DỰ ÁN 1: Thẻ thông tin cá nhân (Card) làm bằng Tailwind CSS -->
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4">👤 Thông Tin Học Viên</h2>
-
-                <div class="space-y-3">
-                    <p class="text-gray-700">
-                        <strong>Họ và tên:</strong>
-                        Sửa Nguyễn
+        <!-- 2. CONTAINER CHÍNH -->
+        <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+            <!-- BANNER GIỚI THIỆU -->
+            <section
+                class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-8 shadow-xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3 max-w-xl">
+                    <span
+                        class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Bài 2: Responsive & Grid
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">
+                        Thiết Kế Giao Diện Tự Thích Ứng Màn Hình
+                    </h1>
+                    <p class="text-blue-100 text-sm md:text-base">
+                        Học cách chia cột Grid và Flexbox trong Tailwind CSS. Thử thu nhỏ cửa sổ trình duyệt để thấy
+                        phép màu!
                     </p>
-                    <p class="text-gray-700">
-                        <strong>Mục tiêu:</strong>
-                        Từ PHP/MySQL thuần lên Full-Stack Developer
-                    </p>
+                </div>
+                <button
+                    class="bg-white text-blue-700 hover:bg-blue-50 font-bold px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
+                    Khám Phá Ngay 🚀
+                </button>
+            </section>
 
-                    <!-- Các nhãn kỹ năng (Badges) -->
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="bg-red-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            HTML/CSS
-                        </span>
-                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            PHP & MySQL
-                        </span>
-                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            Git & GitHub
-                        </span>
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            JS ES6+
-                        </span>
-                        <span class="bg-cyan-100 text-cyan-800 text-xs font-semibold px-3 py-1 rounded-full">
-                            Tailwind CSS (New!)
-                        </span>
+            <!-- BÀI TẬP GRID: Danh sách 3 Thẻ Khóa Học (Responsive 1 cột trên Mobile -> 3 cột trên Laptop) -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900">📚 Các Môn Học Trong Lộ Trình</h2>
+
+                <!-- Lưới Grid: Mobile 1 cột (grid-cols-1), Tablet 2 cột (sm:grid-cols-2), Desktop 3 cột (lg:grid-cols-3) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div
+                        class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-bold text-xl">
+                                01
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Git & GitHub Pro</h3>
+                            <p class="text-gray-600 text-sm">
+                                Quản lý mã nguồn, tạo nhánh feature, gộp code Pull Request như môi trường doanh nghiệp.
+                            </p>
+                        </div>
+                        <div
+                            class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                            <span>Đã hoàn thành ✅</span>
+                            <span class="font-semibold text-blue-600">Module 1</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div
+                        class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center font-bold text-xl">
+                                02
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Tailwind CSS UI</h3>
+                            <p class="text-gray-600 text-sm">
+                                Xây dựng giao diện Responsive hiện đại, không cần viết file CSS truyền thống.
+                            </p>
+                        </div>
+                        <div
+                            class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                            <span>Đang học ⏳</span>
+                            <span class="font-semibold text-teal-600">Module 2</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div
+                        class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-xl">
+                                03
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Laravel Framework</h3>
+                            <p class="text-gray-600 text-sm">
+                                Xây dựng Backend mượt mà với Modern PHP, Eloquent ORM và RESTful API.
+                            </p>
+                        </div>
+                        <div
+                            class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                            <span>Sắp tới 🎯</span>
+                            <span class="font-semibold text-purple-600">Module 3</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- THẺ DỰ ÁN 2: Dữ liệu API (Do main.js render) -->
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4">
-                    🌐 Dữ Liệu Gọi Từ API (JS Async/Await)
-                </h2>
+            <!-- KHU VỰC API KẾT NỐI -->
+            <section class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">🌐 Dữ Liệu Gọi Từ API (JS Async/Await)</h2>
                 <div id="app"></div>
-            </div>
-        </div>
+            </section>
+        </main>
 
-        <!-- Nhúng file JavaScript -->
+        <!-- FOOTER -->
+        <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+            <p>© 2026 ModernWeb Learning - Đồng hành cùng Sửa Nguyễn</p>
+        </footer>
+
         <script src="js/main.js"></script>
     </body>
 </html>
