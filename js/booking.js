@@ -2,23 +2,36 @@
 // SPA BOOKING & FEEDBACK INTERACTIVE SCRIPT
 // ==========================================
 
+// Bảng danh sách dịch vụ Spa & Giá tiền
+const SERVICES_LIST = [
+    { name: 'Gội Đầu Dưỡng Sinh Thảo Dược', price: 199000, duration: '60 Phút' },
+    { name: 'Chăm Sóc Da Mặt Chuyên Sâu', price: 350000, duration: '75 Phút' },
+    { name: 'Massage Cổ Vai Gáy Trị Liệu', price: 250000, duration: '45 Phút' },
+    { name: 'Combo Chăm Sóc Da & Gội Đầu VIP', price: 499000, duration: '90 Phút' }
+];
+
 // Danh sách Kỹ thuật viên mẫu
 const STAFF_LIST = [
-    { id: 1, name: 'Nguyễn Minh Anh', role: 'Chuyên gia Da', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80', rating: '4.9 ⭐' },
-    { id: 2, name: 'Trần Thu Hà', role: 'Chuyên gia Gội đầu', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80', rating: '5.0 ⭐' },
-    { id: 3, name: 'Lê Ngọc Lan', role: 'KTV Trị liệu', avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=150&q=80', rating: '4.8 ⭐' }
+    { id: 1, name: 'Nguyễn Minh Anh', role: 'Chuyên gia Da', rating: '4.9 ⭐' },
+    { id: 2, name: 'Trần Thu Hà', role: 'Chuyên gia Gội đầu', rating: '5.0 ⭐' },
+    { id: 3, name: 'Lê Ngọc Lan', role: 'KTV Trị liệu', rating: '4.8 ⭐' }
 ];
 
 // Mở Modal Đặt Lịch
-function openBookingModal(serviceName = 'Gội Đầu Dưỡng Sinh Thảo Dược', price = 199000) {
+function openBookingModal(serviceName = null, price = null) {
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
 
-    // Cập nhật dịch vụ đã chọn
-    document.getElementById('selectedServiceName').innerText = serviceName;
-    document.getElementById('selectedServicePrice').innerText = price.toLocaleString('vi-VN') + ' đ';
-    document.getElementById('inputService').value = serviceName;
-    document.getElementById('inputPrice').value = price;
+    const serviceSelect = document.getElementById('serviceSelect');
+    if (serviceSelect) {
+        if (serviceName) {
+            serviceSelect.value = serviceName;
+        } else {
+            // Mặc định chọn dịch vụ đầu tiên nếu mở từ Thanh Navigator
+            serviceSelect.value = SERVICES_LIST[0].name;
+        }
+        updateSelectedServicePrice();
+    }
 
     // Thiết lập ngày mặc định là hôm nay
     const today = new Date().toISOString().split('T')[0];
@@ -31,6 +44,21 @@ function openBookingModal(serviceName = 'Gội Đầu Dưỡng Sinh Thảo Dư�
     // Hiển thị Modal
     modal.classList.remove('hidden');
     modal.classList.add('flex');
+}
+
+// Cập nhật giá tiền khi thay đổi Dịch vụ trong dropdown
+function updateSelectedServicePrice() {
+    const serviceSelect = document.getElementById('serviceSelect');
+    if (!serviceSelect) return;
+
+    const selectedName = serviceSelect.value;
+    const found = SERVICES_LIST.find(s => s.name === selectedName);
+
+    if (found) {
+        document.getElementById('inputService').value = found.name;
+        document.getElementById('inputPrice').value = found.price;
+        document.getElementById('selectedServicePrice').innerText = found.price.toLocaleString('vi-VN') + ' đ';
+    }
 }
 
 // Đóng Modal Đặt Lịch
