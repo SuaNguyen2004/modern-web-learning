@@ -39,7 +39,7 @@ function protectPage(allowedRoles = []) {
     return true;
 }
 
-// Cập nhật giao diện Header theo Trạng thái Đăng Nhập
+// Cập nhật giao diện Header gọn gàng không bị vỡ layout
 function updateHeaderAuthNav() {
     const user = getCurrentUser();
     const navContainer = document.getElementById('navAuthContainer');
@@ -50,7 +50,7 @@ function updateHeaderAuthNav() {
     if (!user) {
         // TRẠNG THÁI: CHƯA ĐĂNG NHẬP (GUEST)
         const guestHTML = `
-            <button onclick="openAuthModal()" class="flex items-center gap-1.5 text-xs font-extrabold text-white bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 px-4 py-2 rounded-full shadow-md transition active:scale-95">
+            <button onclick="openAuthModal()" class="flex items-center gap-1.5 text-xs font-extrabold text-white bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 px-4 py-2 rounded-full shadow-md transition active:scale-95 whitespace-nowrap">
                 <span>🔑</span> Đăng Nhập / Đăng Ký
             </button>
         `;
@@ -59,38 +59,42 @@ function updateHeaderAuthNav() {
 
         if (mobileNavContainer) {
             mobileNavContainer.innerHTML = `
-                <button onclick="openAuthModal(); toggleMobileMenu();" class="w-full bg-rose-600 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-md">
+                <button onclick="openAuthModal(); toggleMobileMenu();" class="w-full bg-rose-600 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-md text-xs">
                     <span>🔑</span> Đăng Nhập / Đăng Ký Tài Khoản
                 </button>
             `;
         }
     } else {
-        // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP
+        // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP (GỌN GÀNG GỌN TRONG 1 THẺ PILL SANG TRỌNG)
         let roleBadge = '';
-        let roleLink = '';
+        let targetPage = 'customer.html';
+        let pageBtnText = '👑 Trang VIP';
 
         if (user.role === 'admin') {
-            roleBadge = `<span class="bg-purple-100 text-purple-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">⚙️ ADMIN</span>`;
-            roleLink = `<a href="spa_admin.html" class="hover:text-rose-600 font-bold">⚙️ Trang Quản Lý Admin</a>`;
+            roleBadge = `<span class="bg-purple-100 text-purple-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">ADMIN</span>`;
+            targetPage = 'spa_admin.html';
+            pageBtnText = '⚙️ Trang Quản Lý';
         } else if (user.role === 'ktv') {
-            roleBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">👩‍🎨 KTV</span>`;
-            roleLink = `<a href="spa_admin.html" class="hover:text-rose-600 font-bold">📋 Lịch Phục Vụ KTV</a>`;
+            roleBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">KTV</span>`;
+            targetPage = 'spa_admin.html';
+            pageBtnText = '📋 Lịch Phục Vụ';
         } else {
-            roleBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${user.rank_badge || '👑 VIP'}</span>`;
-            roleLink = `<a href="customer.html" class="hover:text-rose-600 font-bold">👑 Trang VIP Cá Nhân</a>`;
+            roleBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">${user.rank_badge || 'VIP'}</span>`;
+            targetPage = 'customer.html';
+            pageBtnText = '👑 Trang VIP';
         }
 
         const userHTML = `
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2 bg-rose-50 px-3 py-1.5 rounded-full border border-rose-200">
-                    <span class="w-6 h-6 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center">
-                        ${user.name ? user.name.charAt(0) : 'U'}
-                    </span>
-                    <span class="text-xs font-bold text-gray-900">${user.name}</span>
-                    ${roleBadge}
-                </div>
-                ${roleLink ? `<div class="hidden md:block">${roleLink}</div>` : ''}
-                <button onclick="handleLogout()" class="text-xs font-bold text-gray-500 hover:text-red-600 bg-gray-100 hover:bg-red-50 p-2 rounded-full transition" title="Đăng Xuất">
+            <div class="flex items-center gap-2 bg-slate-900 text-white pl-1.5 pr-2.5 py-1 rounded-full shadow-md border border-slate-800 text-xs whitespace-nowrap">
+                <span class="w-6 h-6 rounded-full bg-rose-500 text-white font-bold text-[11px] flex items-center justify-center shadow-inner">
+                    ${user.name ? user.name.charAt(0) : 'U'}
+                </span>
+                <span class="font-bold text-xs truncate max-w-[110px]">${user.name}</span>
+                ${roleBadge}
+                <a href="${targetPage}" class="bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold px-3 py-1 rounded-full transition shadow-sm whitespace-nowrap ml-0.5">
+                    ${pageBtnText}
+                </a>
+                <button onclick="handleLogout()" class="text-slate-400 hover:text-red-400 p-1 font-bold text-xs transition" title="Đăng Xuất">
                     🚪
                 </button>
             </div>
@@ -100,14 +104,18 @@ function updateHeaderAuthNav() {
 
         if (mobileNavContainer) {
             mobileNavContainer.innerHTML = `
-                <div class="p-3 bg-rose-50 rounded-xl border border-rose-200 space-y-2 text-xs">
+                <div class="p-3 bg-rose-50 rounded-2xl border border-rose-200 space-y-2 text-xs">
                     <div class="flex items-center justify-between">
                         <span class="font-bold text-gray-900">👤 ${user.name}</span>
                         ${roleBadge}
                     </div>
-                    <div class="pt-2 border-t border-rose-200/60 flex flex-col gap-2">
-                        ${roleLink}
-                        <button onclick="handleLogout()" class="text-red-600 font-bold text-left">🚪 Đăng Xuất Tài Khoản</button>
+                    <div class="pt-2 border-t border-rose-200/60 flex items-center justify-between gap-2">
+                        <a href="${targetPage}" class="bg-rose-600 text-white font-bold px-3.5 py-2 rounded-xl text-center text-[11px] flex-1">
+                            ${pageBtnText}
+                        </a>
+                        <button onclick="handleLogout()" class="bg-red-50 text-red-600 font-bold px-3.5 py-2 rounded-xl text-center text-[11px] border border-red-200">
+                            🚪 Đăng Xuất
+                        </button>
                     </div>
                 </div>
             `;
