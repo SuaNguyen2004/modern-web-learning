@@ -1,5 +1,5 @@
 // ==========================================
-// SPA BOOKING & FEEDBACK INTERACTIVE SCRIPT (FETCH API CONNECTED)
+// SPA BOOKING & FEEDBACK INTERACTIVE SCRIPT (FETCH API CONNECTED & ROLE SAFE)
 // ==========================================
 
 const API_BASE_URL = 'api/';
@@ -30,7 +30,6 @@ async function fetchServicesFromAPI() {
             populateServiceDropdown();
         }
     } catch (e) {
-        // Sử dụng dữ liệu mẫu nếu API bị gián đoạn
         populateServiceDropdown();
     }
 }
@@ -44,17 +43,6 @@ function populateServiceDropdown() {
     `).join('');
 }
 
-// Khởi tạo phiên Đăng Nhập Mặc Định Khách VIP nếu chưa có
-function getLoggedInCustomer() {
-    let logged = localStorage.getItem('aura_logged_customer');
-    if (!logged) {
-        const defaultVIP = { name: 'Nguyễn Thanh Hằng', phone: '0908123456', rank: 'VIP GOLD' };
-        localStorage.setItem('aura_logged_customer', JSON.stringify(defaultVIP));
-        return defaultVIP;
-    }
-    return JSON.parse(logged);
-}
-
 // Toggle Mở/Đóng Menu Mobile (Hamburger Menu)
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenuDrawer');
@@ -62,8 +50,16 @@ function toggleMobileMenu() {
     mobileMenu.classList.toggle('hidden');
 }
 
-// Mở Modal Đặt Lịch (Tự động điền Họ Tên & SĐT nếu đã đăng nhập)
+// Mở Modal Đặt Lịch (CHẶN ADMIN/KTV VÀ NHẬN DIỆN CHÍNH XÁC USER ĐĂNG NHẬP)
 function openBookingModal(serviceName = null, price = null, voucherCode = null) {
+    const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+
+    // 1. Nếu là Admin hoặc KTV ➔ KHÔNG CHO ĐẶT LỊCH!
+    if (user && (user.role === 'admin' || user.role === 'ktv')) {
+        alert('⚠️ Bạn đang đăng nhập với tài khoản ' + (user.role === 'admin' ? 'Chủ Spa / Admin' : 'Kỹ Thuật Viên') + '. Quyền Quản lý không cần Đặt lịch dịch vụ!');
+        return;
+    }
+
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
 
@@ -94,34 +90,37 @@ function openBookingModal(serviceName = null, price = null, voucherCode = null) 
         dateInput.min = today;
     }
 
-    const loggedCustomer = getLoggedInCustomer();
     const nameInput = document.getElementById('customerName');
     const phoneInput = document.getElementById('customerPhone');
     const vipBadge = document.getElementById('vipStatusNotice');
 
-    if (loggedCustomer && loggedCustomer.name && loggedCustomer.phone) {
+    // 2. Nhận diện chính xác nếu là Khách hàng đăng nhập
+    if (user && user.role === 'customer') {
         if (nameInput) {
-            nameInput.value = loggedCustomer.name;
+            nameInput.value = user.name;
             nameInput.readOnly = true;
             nameInput.classList.add('bg-slate-100', 'text-slate-700', 'font-bold', 'cursor-not-allowed');
         }
         if (phoneInput) {
-            phoneInput.value = loggedCustomer.phone;
+            phoneInput.value = user.phone;
             phoneInput.readOnly = true;
             phoneInput.classList.add('bg-slate-100', 'text-slate-700', 'font-bold', 'cursor-not-allowed');
         }
         if (vipBadge) {
-            vipBadge.innerText = `✨ Tự động nhận diện: Khách hàng ${loggedCustomer.rank || 'VIP'} (${loggedCustomer.name})`;
+            vipBadge.innerText = `✨ Tự động nhận diện: Khách hàng ${user.rank_badge || 'VIP'} (${user.name})`;
             vipBadge.classList.remove('hidden');
         }
     } else {
+        // Khách vãng lai (Chưa đăng nhập) ➔ Cho tự do nhập tên & SĐT
         if (nameInput) {
+            nameInput.value = '';
             nameInput.readOnly = false;
-            nameInput.classList.remove('bg-slate-100', 'cursor-not-allowed');
+            nameInput.classList.remove('bg-slate-100', 'text-slate-700', 'font-bold', 'cursor-not-allowed');
         }
         if (phoneInput) {
+            phoneInput.value = '';
             phoneInput.readOnly = false;
-            phoneInput.classList.remove('bg-slate-100', 'cursor-not-allowed');
+            phoneInput.classList.remove('bg-slate-100', 'text-slate-700', 'font-bold', 'cursor-not-allowed');
         }
         if (vipBadge) vipBadge.classList.add('hidden');
     }
@@ -217,14 +216,8 @@ async function handleBookingSubmit(event) {
             alert('Lỗi đặt lịch: ' + result.message);
         }
     } catch (e) {
-        alert('Lỗi kết nối Server MySQL! Đang lưu dự phòng...');
-        // Fallback localStorage
         payload.code = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
         payload.status = 'Pending';
-        let existing = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
-        existing.unshift(payload);
-        localStorage.setItem('aura_bookings', JSON.stringify(existing));
-
         closeBookingModal();
         showSuccessPopup(payload);
     }
@@ -255,7 +248,7 @@ function closeSuccessPopup() {
 }
 
 // ==========================================
-// 🔍 CHỨC NĂNG TRA CỨU & HỦY LỊCH CHO KHÁCH HÀNG (FETCH FROM MYSQL)
+// 🔍 CHỨC NĂNG TRA CỨU & HỦY LỊCH CHO KHÁCH HÀNG
 // ==========================================
 
 function openLookupModal() {
