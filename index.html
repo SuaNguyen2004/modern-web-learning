@@ -1,142 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Bố Cục Responsive - Tailwind CSS</title>
-        <!-- Nhúng Tailwind CSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
-        <!-- 1. HEADER / THANH ĐIỀU HƯỚNG (Flexbox) -->
-        <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-            <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-                <!-- Logo -->
-                <div class="flex items-center gap-2">
-                    <span class="bg-blue-600 text-white font-bold p-2 rounded-lg text-lg">MW</span>
-                    <span class="text-xl font-bold text-gray-900">ModernWeb</span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation & Interactive - Tailwind CSS</title>
+    <!-- Nhúng Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
+
+    <!-- 1. HEADER / THANH ĐIỀU HƯỚNG -->
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo với hiệu ứng Hover xoay nhẹ -->
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <span class="bg-blue-600 group-hover:bg-indigo-600 text-white font-bold p-2 rounded-lg text-lg transition duration-300 group-hover:rotate-12">MW</span>
+                <span class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition">ModernWeb</span>
+            </div>
+
+            <!-- Nút Thông báo có chấm đỏ nhấp nháy animate-ping -->
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <button class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition">
+                        🔔
+                    </button>
+                    <!-- Chấm đỏ hoạt họa animate-ping -->
+                    <span class="absolute top-1 right-1 flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                    </span>
                 </div>
 
-                <!-- Menu (Ẩn trên điện thoại, hiện trên màn hình md trở lên) -->
-                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-                    <a href="#" class="text-blue-600 font-semibold">Trang chủ</a>
-                    <a href="#" class="hover:text-blue-600 transition">Khóa học</a>
-                    <a href="#" class="hover:text-blue-600 transition">Lộ trình</a>
-                    <a href="#" class="hover:text-blue-600 transition">Liên hệ</a>
-                </nav>
-
-                <!-- Nút Action -->
-                <button
-                    class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow-sm">
-                    Bắt Đầu Học
+                <!-- Nút Bấm có hiệu ứng Active Scale khi bấm xuống -->
+                <button class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-sm font-medium px-4 py-2 rounded-lg transition duration-200 shadow-md hover:shadow-blue-200">
+                    Đăng Nhập
                 </button>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- 2. CONTAINER CHÍNH -->
-        <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
-            <!-- BANNER GIỚI THIỆU -->
-            <section
-                class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-8 shadow-xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="space-y-3 max-w-xl">
-                    <span
-                        class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-                        Bài 2: Responsive & Grid
+    <!-- 2. CONTAINER CHÍNH -->
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+
+        <!-- TIÊU ĐỀ BÀI HỌC ANIMATION -->
+        <section class="text-center space-y-2">
+            <h1 class="text-3xl font-extrabold text-gray-900">✨ Chuyên Đề: Animation & Hiệu Ứng Chuyển Động</h1>
+            <p class="text-gray-600 max-w-xl mx-auto">Khám phá cách hoạt động của `transition`, `transform`, `hover:`, `active:` và các Animation dựng sẵn trong Tailwind CSS.</p>
+        </section>
+
+        <!-- KHU VỰC 1: CÁC ANIMATION DỰNG SẴN (BUILT-IN ANIMATIONS) -->
+        <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
+            <h2 class="text-xl font-bold text-gray-900 border-b pb-2">1. Các Animation Dựng Sẵn (Built-in Animations)</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <!-- Spin (Xoay tròn) -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
+                    <div class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p class="font-semibold text-sm">`animate-spin`</p>
+                    <p class="text-xs text-gray-500">Dùng cho icon Loading 🔄</p>
+                </div>
+
+                <!-- Ping (Sóng lan tỏa) -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
+                    <span class="relative inline-flex h-8 w-8 mx-auto mt-1">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-8 w-8 bg-sky-500 text-white text-xs items-center justify-center font-bold">NEW</span>
                     </span>
-                    <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">
-                        Thiết Kế Giao Diện Tự Thích Ứng Màn Hình
-                    </h1>
-                    <p class="text-blue-100 text-sm md:text-base">
-                        Học cách chia cột Grid và Flexbox trong Tailwind CSS. Thử thu nhỏ cửa sổ trình duyệt để thấy
-                        phép màu!
-                    </p>
+                    <p class="font-semibold text-sm">`animate-ping`</p>
+                    <p class="text-xs text-gray-500">Dùng cho điểm chú ý 🎯</p>
                 </div>
-                <button
-                    class="bg-white text-blue-700 hover:bg-blue-50 font-bold px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
-                    Khám Phá Ngay 🚀
-                </button>
-            </section>
 
-            <!-- BÀI TẬP GRID: Danh sách 3 Thẻ Khóa Học (Responsive 1 cột trên Mobile -> 3 cột trên Laptop) -->
-            <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-gray-900">📚 Các Môn Học Trong Lộ Trình</h2>
-
-                <!-- Lưới Grid: Mobile 1 cột (grid-cols-1), Tablet 2 cột (sm:grid-cols-2), Desktop 3 cột (lg:grid-cols-3) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Card 1 -->
-                    <div
-                        class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                        <div class="space-y-3">
-                            <div
-                                class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-bold text-xl">
-                                01
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-900">Git & GitHub Pro</h3>
-                            <p class="text-gray-600 text-sm">
-                                Quản lý mã nguồn, tạo nhánh feature, gộp code Pull Request như môi trường doanh nghiệp.
-                            </p>
-                        </div>
-                        <div
-                            class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                            <span>Đã hoàn thành ✅</span>
-                            <span class="font-semibold text-blue-600">Module 1</span>
-                        </div>
+                <!-- Pulse (Mờ rồi rõ) -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
+                    <div class="animate-pulse space-y-2">
+                        <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+                        <div class="h-3 bg-gray-200 rounded w-1/2 mx-auto"></div>
                     </div>
-
-                    <!-- Card 2 -->
-                    <div
-                        class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                        <div class="space-y-3">
-                            <div
-                                class="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center font-bold text-xl">
-                                02
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-900">Tailwind CSS UI</h3>
-                            <p class="text-gray-600 text-sm">
-                                Xây dựng giao diện Responsive hiện đại, không cần viết file CSS truyền thống.
-                            </p>
-                        </div>
-                        <div
-                            class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                            <span>Đang học ⏳</span>
-                            <span class="font-semibold text-teal-600">Module 2</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div
-                        class="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                        <div class="space-y-3">
-                            <div
-                                class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-xl">
-                                03
-                            </div>
-                            <h3 class="text-lg font-bold text-gray-900">Laravel Framework</h3>
-                            <p class="text-gray-600 text-sm">
-                                Xây dựng Backend mượt mà với Modern PHP, Eloquent ORM và RESTful API.
-                            </p>
-                        </div>
-                        <div
-                            class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-                            <span>Sắp tới 🎯</span>
-                            <span class="font-semibold text-purple-600">Module 3</span>
-                        </div>
-                    </div>
+                    <p class="font-semibold text-sm">`animate-pulse`</p>
+                    <p class="text-xs text-gray-500">Dùng khi chờ tải dữ liệu ⏳</p>
                 </div>
-            </section>
 
-            <!-- KHU VỰC API KẾT NỐI -->
-            <section class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">🌐 Dữ Liệu Gọi Từ API (JS Async/Await)</h2>
-                <div id="app"></div>
-            </section>
-        </main>
+                <!-- Bounce (Nảy lên xuống) -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
+                    <div class="text-2xl animate-bounce">👇</div>
+                    <p class="font-semibold text-sm">`animate-bounce`</p>
+                    <p class="text-xs text-gray-500">Dùng nhắc cuộn trang 📜</p>
+                </div>
+            </div>
+        </section>
 
-        <!-- FOOTER -->
-        <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
-            <p>© 2026 ModernWeb Learning - Đồng hành cùng Sửa Nguyễn</p>
-        </footer>
+        <!-- KHU VỰC 2: CÁC HIỆU ỨNG TƯƠNG TÁC (HOVER, SCALE, ROTATE, GROUP) -->
+        <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
+            <h2 class="text-xl font-bold text-gray-900 border-b pb-2">2. Hiệu Ứng Rê Chuột (Hover & Transform)</h2>
 
-        <script src="js/main.js"></script>
-    </body>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Card 1: Phóng to (Scale) & Đổ bóng -->
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-md cursor-pointer hover:scale-105 hover:shadow-2xl transition duration-300">
+                    <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full">Kỹ thuật 1</span>
+                    <h3 class="text-lg font-bold mt-2">Phóng To Thẻ (Scale)</h3>
+                    <p class="text-xs text-blue-100 mt-2">Class: `hover:scale-105 transition duration-300`</p>
+                </div>
+
+                <!-- Card 2: Trôi nổi lên (Translate-Y) & Xoay nghiêng (Rotate) -->
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-6 rounded-xl shadow-md cursor-pointer hover:-translate-y-2 hover:rotate-1 hover:shadow-2xl transition duration-300">
+                    <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full">Kỹ thuật 2</span>
+                    <h3 class="text-lg font-bold mt-2">Nổi Lên & Xoay Nghiêng</h3>
+                    <p class="text-xs text-emerald-100 mt-2">Class: `hover:-translate-y-2 hover:rotate-1`</p>
+                </div>
+
+                <!-- Card 3: Thẻ cha tác động Thẻ con (Group Hover) -->
+                <div class="group bg-gradient-to-br from-purple-500 to-pink-600 text-white p-6 rounded-xl shadow-md cursor-pointer hover:shadow-2xl transition duration-300">
+                    <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full">Kỹ thuật 3: Group Hover</span>
+                    <h3 class="text-lg font-bold mt-2 flex items-center justify-between">
+                        <span>Rê Chuột Vào Đây</span>
+                        <!-- Mũi tên trượt sang phải khi rê chuột vào thẻ cha -->
+                        <span class="inline-block group-hover:translate-x-3 transition duration-300">➔</span>
+                    </h3>
+                    <p class="text-xs text-purple-100 mt-2">Thẻ cha có `group`, thẻ con có `group-hover:translate-x-3`</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DỮ LIỆU API -->
+        <section class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h2 class="text-lg font-bold text-gray-900 mb-4">🌐 Dữ Liệu Gọi Từ API (JS Async/Await)</h2>
+            <div id="app"></div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+        <p>© 2026 ModernWeb Learning - Thực hành Tailwind Animation</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
 </html>
