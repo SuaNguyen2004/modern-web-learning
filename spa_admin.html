@@ -18,7 +18,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- Logo Admin -->
             <div class="flex items-center gap-3">
-                <span class="bg-rose-600 text-white font-bold px-2.5 py-1 rounded-lg text-sm tracking-wider uppercase">ADMIN</span>
+                <span class="bg-rose-600 text-white font-bold px-2.5 py-1 rounded-lg text-sm tracking-wider uppercase">ADMIN & KTV</span>
                 <span class="text-xl font-bold tracking-wide">AuraSpa Panel</span>
             </div>
 
@@ -33,7 +33,7 @@
                         AD
                     </div>
                     <div class="text-xs hidden sm:block">
-                        <p class="font-bold text-white leading-none">Chủ Spa (Admin)</p>
+                        <p class="font-bold text-white leading-none">Chủ Spa / Quản Lý</p>
                         <p class="text-[10px] text-slate-400 mt-0.5">Quản lý hệ thống</p>
                     </div>
                 </div>
@@ -44,11 +44,11 @@
     <!-- 2. CONTAINER CHÍNH -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-1 w-full">
 
-        <!-- TIÊU ĐỀ DANGSHBOARD -->
+        <!-- TIÊU ĐỀ DASHBOARD -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
             <div>
                 <h1 class="text-2xl font-extrabold text-slate-900">📊 Quản Lý Lịch Hẹn & Đánh Giá Spa</h1>
-                <p class="text-slate-500 text-xs mt-1">Điều phối ca làm của Kỹ thuật viên & Theo dõi phản hồi khách hàng realtime</p>
+                <p class="text-slate-500 text-xs mt-1">Hệ thống tự động chuyển trạng thái ca hẹn theo giờ • Cho phép đổi KTV & Hủy ca linh hoạt</p>
             </div>
             <button onclick="renderDashboard()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 self-start sm:self-auto">
                 <span>🔄</span> Cập Nhật Dữ Liệu
@@ -74,7 +74,7 @@
                 <div>
                     <p class="text-[11px] font-bold text-amber-500 uppercase tracking-wider">Chờ Duyệt Đơn</p>
                     <h3 id="statPending" class="text-3xl font-extrabold text-amber-600 mt-1">0</h3>
-                    <p class="text-[11px] text-amber-600 font-medium mt-1">⚡ Cần xác nhận ngay</p>
+                    <p class="text-[11px] text-amber-600 font-medium mt-1">⚡ Admin chỉ cần bấm duyệt 1 lần</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
                     ⏳
@@ -86,7 +86,7 @@
                 <div>
                     <p class="text-[11px] font-bold text-purple-500 uppercase tracking-wider">Đang Phục Vụ</p>
                     <h3 id="statInProgress" class="text-3xl font-extrabold text-purple-600 mt-1">0</h3>
-                    <p class="text-[11px] text-purple-600 font-medium mt-1">💆‍♀️ KTV đang làm ca</p>
+                    <p class="text-[11px] text-purple-600 font-medium mt-1">⏰ Tự động chuyển theo giờ hẹn</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
                     ✨
@@ -106,23 +106,36 @@
             </div>
         </div>
 
-        <!-- 4. BẢNG QUẢN LÝ LỊCH HẸN VÀ BỘ LỌC STATUS -->
+        <!-- 4. BẢNG QUẢN LÝ LỊCH HẸN VÀ BỘ LỌC STATUS / KTV -->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
             
             <!-- Header Tab Filters -->
-            <div class="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
+            <div class="p-5 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-slate-50/50">
                 <div>
                     <h2 class="font-extrabold text-slate-900 text-lg">Danh Sách Lịch Hẹn Spa</h2>
-                    <p class="text-slate-500 text-xs">Cập nhật trạng thái từng đơn hẹn realtime từ khách hàng</p>
+                    <p class="text-slate-500 text-xs">Admin duyệt đơn 1 lần • Tự động chuyển ca theo giờ • KTV dễ dàng đổi ca hoặc hủy ca</p>
                 </div>
 
-                <!-- Filters Tab Buttons -->
-                <div class="flex flex-wrap gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
-                    <button onclick="filterBookings('ALL', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-rose-600 text-white shadow-sm transition">Tất Cả</button>
-                    <button onclick="filterBookings('Pending', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">⏳ Chờ Duyệt</button>
-                    <button onclick="filterBookings('Confirmed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">✓ Đã Duyệt</button>
-                    <button onclick="filterBookings('In_Progress', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">💆‍♀️ Đang Phục Vụ</button>
-                    <button onclick="filterBookings('Completed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">🎉 Hoàn Thành</button>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <!-- Bộ lọc KTV dành riêng cho Kỹ thuật viên xem ca -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-gray-700 whitespace-nowrap">👩‍🎨 Xem Theo KTV:</span>
+                        <select onchange="filterByStaff(this.value)" class="bg-white border border-slate-300 text-xs font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-rose-500 shadow-sm">
+                            <option value="ALL">Tất cả Kỹ Thuật Viên</option>
+                            <option value="Minh Anh">KTV Nguyễn Minh Anh</option>
+                            <option value="Thu Hà">KTV Trần Thu Hà</option>
+                            <option value="Ngọc Lan">KTV Lê Ngọc Lan</option>
+                        </select>
+                    </div>
+
+                    <!-- Filters Tab Buttons (Trạng Thái) -->
+                    <div class="flex flex-wrap gap-1 bg-slate-200/80 p-1 rounded-xl text-xs">
+                        <button onclick="filterBookings('ALL', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-rose-600 text-white shadow-sm transition">Tất Cả</button>
+                        <button onclick="filterBookings('Pending', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">⏳ Chờ Duyệt</button>
+                        <button onclick="filterBookings('Confirmed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">✓ Đã Duyệt</button>
+                        <button onclick="filterBookings('In_Progress', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">💆‍♀️ Đang Phục Vụ</button>
+                        <button onclick="filterBookings('Completed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">🎉 Hoàn Thành</button>
+                    </div>
                 </div>
             </div>
 
@@ -135,9 +148,9 @@
                             <th class="p-4">Khách Hàng</th>
                             <th class="p-4">Dịch Vụ & Giá</th>
                             <th class="p-4">Thời Gian Hẹn</th>
-                            <th class="p-4">Kỹ Thuật Viên</th>
-                            <th class="p-4">Trạng Thái</th>
-                            <th class="p-4 text-right">Thao Tác Duyệt</th>
+                            <th class="p-4">Kỹ Thuật Viên Phụ Trách</th>
+                            <th class="p-4">Trạng Thái (Tự Động)</th>
+                            <th class="p-4 text-right">Thao Tác Duyệt / Đổi KTV</th>
                         </tr>
                     </thead>
                     <tbody id="bookingsTbody" class="divide-y divide-slate-100">
@@ -147,7 +160,7 @@
             </div>
 
             <div class="p-4 border-t border-slate-100 text-center text-xs text-slate-400">
-                <p>Tự động đồng bộ dữ liệu từ bộ nhớ LocalStorage của khách hàng</p>
+                <p>Tự động chuyển trạng thái theo đúng ngày giờ hẹn của khách hàng</p>
             </div>
         </div>
 

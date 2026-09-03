@@ -10,13 +10,6 @@ const SERVICES_LIST = [
     { name: 'Combo Chăm Sóc Da & Gội Đầu VIP', price: 499000, duration: '90 Phút' }
 ];
 
-// Danh sách Kỹ thuật viên mẫu
-const STAFF_LIST = [
-    { id: 1, name: 'Nguyễn Minh Anh', role: 'Chuyên gia Da', rating: '4.9 ⭐' },
-    { id: 2, name: 'Trần Thu Hà', role: 'Chuyên gia Gội đầu', rating: '5.0 ⭐' },
-    { id: 3, name: 'Lê Ngọc Lan', role: 'KTV Trị liệu', rating: '4.8 ⭐' }
-];
-
 // Mở Modal Đặt Lịch
 function openBookingModal(serviceName = null, price = null) {
     const modal = document.getElementById('bookingModal');
@@ -27,13 +20,11 @@ function openBookingModal(serviceName = null, price = null) {
         if (serviceName) {
             serviceSelect.value = serviceName;
         } else {
-            // Mặc định chọn dịch vụ đầu tiên nếu mở từ Thanh Navigator
             serviceSelect.value = SERVICES_LIST[0].name;
         }
         updateSelectedServicePrice();
     }
 
-    // Thiết lập ngày mặc định là hôm nay
     const today = new Date().toISOString().split('T')[0];
     const dateInput = document.getElementById('bookingDate');
     if (dateInput) {
@@ -41,7 +32,6 @@ function openBookingModal(serviceName = null, price = null) {
         dateInput.min = today;
     }
 
-    // Hiển thị Modal
     modal.classList.remove('hidden');
     modal.classList.add('flex');
 }
@@ -73,13 +63,11 @@ function closeBookingModal() {
 // Chọn khung giờ
 let selectedTimeSlot = '09:30';
 function selectTimeSlot(element, time) {
-    // Bỏ active tất cả các ô giờ
     document.querySelectorAll('.time-slot-btn').forEach(btn => {
         btn.classList.remove('bg-rose-600', 'text-white', 'border-rose-600');
         btn.classList.add('bg-gray-50', 'text-gray-700', 'border-gray-200');
     });
 
-    // Active ô giờ được chọn
     element.classList.remove('bg-gray-50', 'text-gray-700', 'border-gray-200');
     element.classList.add('bg-rose-600', 'text-white', 'border-rose-600');
     selectedTimeSlot = time;
@@ -115,7 +103,6 @@ function handleBookingSubmit(event) {
         return;
     }
 
-    // Sinh mã đơn ĐỘC NHẤT không trùng lặp
     const bookingCode = generateUniqueBookingCode();
 
     const bookingData = {
@@ -128,19 +115,15 @@ function handleBookingSubmit(event) {
         time: selectedTimeSlot,
         staff: staffSelect,
         note: note,
-        status: 'Pending', // Trạng thái ban đầu: Chờ xác nhận
+        status: 'Pending', // Mới đặt: Chờ Admin duyệt
         createdAt: new Date().toLocaleString('vi-VN')
     };
 
-    // Lưu vào LocalStorage để mô phỏng Database
     let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
     existingBookings.unshift(bookingData);
     localStorage.setItem('aura_bookings', JSON.stringify(existingBookings));
 
-    // Đóng modal form
     closeBookingModal();
-
-    // Hiển thị Popup xác nhận thành công
     showSuccessPopup(bookingData);
 }
 
@@ -166,5 +149,105 @@ function closeSuccessPopup() {
     if (successModal) {
         successModal.classList.add('hidden');
         successModal.classList.remove('flex');
+    }
+}
+
+// ==========================================
+// 🔍 CHỨC NĂNG TRA CỨU & HỦY LỊCH CHO KHÁCH HÀNG
+// ==========================================
+
+function openLookupModal() {
+    const modal = document.getElementById('lookupModal');
+    if (!modal) return;
+    document.getElementById('lookupInput').value = '';
+    document.getElementById('lookupResultArea').classList.add('hidden');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closeLookupModal() {
+    const modal = document.getElementById('lookupModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+// Xử lý tra cứu lịch hẹn
+function handleLookupSearch() {
+    const query = document.getElementById('lookupInput').value.trim().toUpperCase();
+    if (!query) {
+        alert('Vui lòng nhập Mã lịch hẹn hoặc Số điện thoại!');
+        return;
+    }
+
+    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
+    const results = existingBookings.filter(b => b.code === query || b.customerPhone === query);
+
+    const resultArea = document.getElementById('lookupResultArea');
+    const resultList = document.getElementById('lookupResultList');
+
+    if (results.length === 0) {
+        resultList.innerHTML = `<p class="text-center text-red-500 text-xs py-4">❌ Không tìm thấy lịch hẹn phù hợp với thông tin "${query}".</p>`;
+    } else {
+        resultList.innerHTML = results.map(b => `
+            <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-200 space-y-2 text-xs">
+                <div class="flex justify-between items-center border-b border-rose-200/60 pb-2">
+                    <span class="font-extrabold text-rose-600 text-sm">${b.code}</span>
+                    <span>${getStatusBadgeHTML(b.status)}</span>
+                </div>
+                <div class="space-y-1 text-gray-700">
+                    <p><strong>Khách hàng:</strong> ${b.customerName} (${b.customerPhone})</p>
+                    <p><strong>Dịch vụ:</strong> ${b.serviceName} - <span class="text-rose-600 font-bold">${b.servicePrice.toLocaleString('vi-VN')} đ</span></p>
+                    <p><strong>Thời gian:</strong> ⏰ ${b.time} | 📅 ${b.date}</p>
+                    <p><strong>KTV phụ trách:</strong> ${b.staff}</p>
+                    ${b.note ? `<p class="text-[11px] text-gray-500 italic">Ghi chú: ${b.note}</p>` : ''}
+                </div>
+                ${(b.status === 'Pending' || b.status === 'Confirmed') ? `
+                    <div class="pt-2 border-t border-rose-200/60 text-right">
+                        <button onclick="cancelBookingByCustomer('${b.code}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition shadow-sm">
+                            ✕ Hủy Lịch Hẹn Này
+                        </button>
+                    </div>
+                ` : `<p class="text-[10px] text-gray-400 text-right italic">Không thể hủy đơn ở trạng thái này</p>`}
+            </div>
+        `).join('');
+    }
+
+    resultArea.classList.remove('hidden');
+}
+
+// Khách hàng tự hủy lịch hẹn
+function cancelBookingByCustomer(code) {
+    if (!confirm(`Bạn có chắc chắn muốn HỦY lịch hẹn ${code} không?`)) return;
+
+    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
+    const index = existingBookings.findIndex(b => b.code === code);
+
+    if (index !== -1) {
+        existingBookings[index].status = 'Cancelled';
+        existingBookings[index].note = (existingBookings[index].note || '') + ' (Khách hàng tự hủy)';
+        localStorage.setItem('aura_bookings', JSON.stringify(existingBookings));
+
+        alert(`Đã hủy lịch hẹn ${code} thành công!`);
+        handleLookupSearch(); // Refresh lại danh sách tra cứu
+    }
+}
+
+// Trả về HTML Badge trạng thái
+function getStatusBadgeHTML(status) {
+    switch (status) {
+        case 'Pending':
+            return `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200">⏳ Chờ duyệt</span>`;
+        case 'Confirmed':
+            return `<span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-200">✓ Đã duyệt</span>`;
+        case 'In_Progress':
+            return `<span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-purple-200">💆‍♀️ Đang phục vụ</span>`;
+        case 'Completed':
+            return `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">🎉 Hoàn thành</span>`;
+        case 'Cancelled':
+            return `<span class="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-200">✕ Đã hủy</span>`;
+        default:
+            return `<span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">${status}</span>`;
     }
 }

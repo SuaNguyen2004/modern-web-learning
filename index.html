@@ -1,53 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>AuraSpa - Chăm Sóc Da & Gội Đầu Dưỡng Sinh</title>
-        <!-- Tailwind CSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <!-- Google Font Inter -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-            rel="stylesheet" />
-        <style>
-            body {
-                font-family: "Plus Jakarta Sans", sans-serif;
-            }
-        </style>
-    </head>
-    <body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen">
-        <!-- 1. HEADER / NAVBAR -->
-        <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-                <!-- Logo Spa -->
-                <a href="#" class="flex items-center gap-2 group">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 to-pink-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition">
-                        🌸
-                    </div>
-                    <div class="leading-tight">
-                        <span
-                            class="text-2xl font-extrabold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                            AuraSpa
-                        </span>
-                        <span class="block text-[10px] text-rose-400 font-semibold tracking-widest uppercase">
-                            Beauty & Wellness
-                        </span>
-                    </div>
-                </a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSpa - Chăm Sóc Da & Gội Đầu Dưỡng Sinh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen">
 
-                <!-- Navigation Links -->
-                <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-600">
-                    <a href="#home" class="text-rose-600 font-semibold">Trang Chủ</a>
-                    <a href="#services" class="hover:text-rose-600 transition">Dịch Vụ</a>
-                    <a href="#staff" class="hover:text-rose-600 transition">Kỹ Thuật Viên</a>
-                    <a href="#equipment" class="hover:text-rose-600 transition">Công Nghệ & Thiết Bị</a>
-                    <a href="#reviews" class="hover:text-rose-600 transition">Đánh Giá</a>
-                </nav>
+    <!-- 1. HEADER / NAVBAR -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Spa -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 to-pink-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition">
+                    🌸
+                </div>
+                <div class="leading-tight">
+                    <span class="text-2xl font-extrabold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">AuraSpa</span>
+                    <span class="block text-[10px] text-rose-400 font-semibold tracking-widest uppercase">Beauty & Wellness</span>
+                </div>
+            </a>
 
-                <!-- CTA Booking & Admin Link -->
-            <div class="flex items-center gap-3">
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-600">
+                <a href="#home" class="text-rose-600 font-semibold">Trang Chủ</a>
+                <a href="#services" class="hover:text-rose-600 transition">Dịch Vụ</a>
+                <a href="#staff" class="hover:text-rose-600 transition">Kỹ Thuật Viên</a>
+                <a href="#equipment" class="hover:text-rose-600 transition">Công Nghệ & Thiết Bị</a>
+                <a href="#reviews" class="hover:text-rose-600 transition">Đánh Giá</a>
+            </nav>
+
+            <!-- CTA Booking & Lookup & Admin Link -->
+            <div class="flex items-center gap-2.5">
+                <button onclick="openLookupModal()" class="hidden lg:flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-full border border-gray-200 transition">
+                    <span>🔍</span> Tra Cứu / Hủy Lịch
+                </button>
                 <a href="spa_admin.html" class="hidden sm:flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-full border border-gray-200 transition">
                     <span>⚙️</span> Trang Quản Lý
                 </a>
@@ -55,800 +49,562 @@
                     <span>📅</span> Đặt Lịch Ngay
                 </button>
             </div>
-            </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- 2. HERO BANNER -->
-        <section
-            id="home"
-            class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-rose-100/50 via-pink-50/30 to-transparent">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <!-- Banner Content Left -->
-                    <div class="space-y-6 text-center lg:text-left">
-                        <span
-                            class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 text-xs font-bold px-3.5 py-1.5 rounded-full border border-rose-200">
-                            <span>✨</span>
-                            Trải Nghiệm Spa Chuẩn Dưỡng Sinh
-                        </span>
-                        <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
-                            Đánh Thức Vẻ Đẹp &
-                            <br class="hidden sm:inline" />
-                            <span class="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                                Thư Giãn Tâm Hồn
-                            </span>
-                        </h1>
-                        <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                            Chuyên chăm sóc da mặt chuyên sâu & gội đầu dưỡng sinh thảo dược. Không gian yên tĩnh, âm
-                            nhạc thư thái cùng kỹ thuật viên nhiều năm kinh nghiệm.
-                        </p>
-
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                            <button
-                                onclick="openBookingModal()"
-                                class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
-                                Đặt Lịch Hẹn Ngay 🌸
-                            </button>
-                            <a
-                                href="#staff"
-                                class="w-full sm:w-auto bg-white hover:bg-rose-50 text-gray-700 font-bold px-6 py-3.5 rounded-full border border-gray-200 shadow-sm transition text-center">
-                                Xem Kỹ Thuật Viên 👥
-                            </a>
-                        </div>
-
-                        <!-- Small Badges -->
-                        <div
-                            class="pt-6 border-t border-rose-200/60 flex items-center justify-center lg:justify-start gap-8 text-xs font-semibold text-gray-500">
-                            <div class="flex items-center gap-2">
-                                <span class="text-rose-500 font-bold text-base">✓</span>
-                                100% Thảo dược tự nhiên
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-rose-500 font-bold text-base">✓</span>
-                                KTV có chứng chỉ hành nghề
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Banner Image Right -->
-                    <div class="relative">
-                        <div class="relative mx-auto max-w-md lg:max-w-none">
-                            <img
-                                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
-                                alt="Spa Relaxing"
-                                class="rounded-3xl shadow-2xl border-4 border-white object-cover h-[420px] w-full"
-                                onerror="
-                                    this.onerror = null;
-                                    this.src =
-                                        'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80';
-                                " />
-
-                            <!-- Floating Badge -->
-                            <div
-                                class="absolute -bottom-6 -left-6 bg-white p-3.5 px-4 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3.5 hidden sm:flex">
-                                <div
-                                    class="w-12 h-12 rounded-xl bg-amber-100/90 border border-amber-200 text-amber-700 flex flex-col items-center justify-center p-1 leading-none shadow-inner">
-                                    <span class="text-xs leading-none mb-0.5">⭐</span>
-                                    <span class="text-base font-extrabold text-amber-800 leading-none">4.9</span>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-gray-900 text-sm">Khách Hàng Hài Lòng</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">+1,500 Lượt Đánh Giá 5 Sao</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. DANH MỤC DỊCH VỤ (SERVICES) -->
-        <section id="services" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
-                    <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Menu Dịch Vụ</span>
-                    <h2 class="text-3xl font-extrabold text-gray-900">Dịch Vụ Chăm Sóc Nổi Bật</h2>
-                    <p class="text-gray-600 text-sm">
-                        Các liệu trình được thiết kế bài bản giúp phục hồi sức khỏe và làn da tươi trẻ
+    <!-- 2. HERO BANNER -->
+    <section id="home" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-rose-100/50 via-pink-50/30 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Banner Content Left -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 text-xs font-bold px-3.5 py-1.5 rounded-full border border-rose-200">
+                        <span>✨</span> Trải Nghiệm Spa Chuẩn Dưỡng Sinh
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
+                        Đánh Thức Vẻ Đẹp & <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">Thư Giãn Tâm Hồn</span>
+                    </h1>
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Chuyên chăm sóc da mặt chuyên sâu & gội đầu dưỡng sinh thảo dược. Không gian yên tĩnh, âm nhạc thư thái cùng kỹ thuật viên nhiều năm kinh nghiệm.
                     </p>
-                </div>
-
-                <!-- Grid 4 Dịch vụ chính -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Service 1 -->
-                    <div
-                        class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                        <div class="space-y-4">
-                            <div
-                                class="w-14 h-14 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-rose-500/20">
-                                🌿
-                            </div>
-                            <div>
-                                <span
-                                    class="text-[11px] font-bold bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full">
-                                    ⏱️ 60 Phút
-                                </span>
-                                <h3 class="text-lg font-bold text-gray-900 mt-2">Gội Đầu Dưỡng Sinh Thảo Dược</h3>
-                                <p class="text-gray-600 text-xs mt-2 leading-relaxed">
-                                    Gội đầu bằng nước bồ kết nấu tươi, massage ấn huyệt da đầu, vòm nước tuần hoàn giúp
-                                    giảm đau đầu sảng khoái.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
-                            <span class="text-xl font-extrabold text-rose-600">199.000 đ</span>
-                            <button
-                                onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)"
-                                class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">
-                                Đặt Lịch
-                            </button>
-                        </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
+                        <button onclick="openBookingModal()" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
+                            Đặt Lịch Hẹn Ngay 🌸
+                        </button>
+                        <button onclick="openLookupModal()" class="w-full sm:w-auto bg-white hover:bg-rose-50 text-gray-700 font-bold px-6 py-3.5 rounded-full border border-gray-200 shadow-sm transition text-center flex items-center justify-center gap-2">
+                            <span>🔍</span> Tra Cứu / Hủy Lịch Hẹn
+                        </button>
                     </div>
 
-                    <!-- Service 2 -->
-                    <div
-                        class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                        <div class="space-y-4">
-                            <div
-                                class="w-14 h-14 bg-pink-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-pink-500/20">
-                                ✨
-                            </div>
-                            <div>
-                                <span
-                                    class="text-[11px] font-bold bg-pink-100 text-pink-700 px-2.5 py-0.5 rounded-full">
-                                    ⏱️ 75 Phút
-                                </span>
-                                <h3 class="text-lg font-bold text-gray-900 mt-2">Chăm Sóc Da Mặt Chuyên Sâu</h3>
-                                <p class="text-gray-600 text-xs mt-2 leading-relaxed">
-                                    Tẩy tế bào chết, hút mụn cám, điện di tinh chất Vitamin C kết hợp đắp mặt nạ sinh
-                                    học giúp da căng bóng sáng mịn.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
-                            <span class="text-xl font-extrabold text-rose-600">350.000 đ</span>
-                            <button
-                                onclick="openBookingModal('Chăm Sóc Da Mặt Chuyên Sâu', 350000)"
-                                class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">
-                                Đặt Lịch
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Service 3 -->
-                    <div
-                        class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                        <div class="space-y-4">
-                            <div
-                                class="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-amber-500/20">
-                                💆‍♀️
-                            </div>
-                            <div>
-                                <span
-                                    class="text-[11px] font-bold bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full">
-                                    ⏱️ 45 Phút
-                                </span>
-                                <h3 class="text-lg font-bold text-gray-900 mt-2">Massage Cổ Vai Gáy Trị Liệu</h3>
-                                <p class="text-gray-600 text-xs mt-2 leading-relaxed">
-                                    Ấn huyệt chuyên sâu giải tỏa bó cơ vai gáy, chườm đá nóng bazo và thảo dược kết hợp
-                                    hỗ trợ giấc ngủ ngon.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
-                            <span class="text-xl font-extrabold text-rose-600">250.000 đ</span>
-                            <button
-                                onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)"
-                                class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">
-                                Đặt Lịch
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Service 4 (VIP Combo) -->
-                    <div
-                        class="bg-gradient-to-b from-rose-500 to-pink-600 text-white rounded-2xl p-6 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition duration-300 relative overflow-hidden">
-                        <span
-                            class="absolute top-3 right-3 bg-amber-400 text-gray-900 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">
-                            HOT VIP
-                        </span>
-                        <div class="space-y-4">
-                            <div
-                                class="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center text-2xl backdrop-blur-sm">
-                                👑
-                            </div>
-                            <div>
-                                <span class="text-[11px] font-bold bg-white/20 text-white px-2.5 py-0.5 rounded-full">
-                                    ⏱️ 90 Phút
-                                </span>
-                                <h3 class="text-lg font-bold mt-2">Combo Chăm Sóc Da & Gội Đầu VIP</h3>
-                                <p class="text-rose-100 text-xs mt-2 leading-relaxed">
-                                    Gói chăm sóc toàn diện: Gội đầu thảo dược + Chăm sóc da C vitamin + Massage cổ vai
-                                    gáy chườm đá nóng.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-white/20 flex items-center justify-between">
-                            <span class="text-xl font-extrabold text-amber-300">499.000 đ</span>
-                            <button
-                                onclick="openBookingModal('Combo Chăm Sóc Da & Gội Đầu VIP', 499000)"
-                                class="bg-white hover:bg-rose-50 text-rose-600 text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">
-                                Đặt Lịch VIP
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. ĐỘI NGŨ KỸ THUẬT VIÊN (STAFF SHOWCASE) -->
-        <section id="staff" class="py-16 bg-rose-50/30">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
-                    <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Đội Ngũ Tay Nghề Cao</span>
-                    <h2 class="text-3xl font-extrabold text-gray-900">Kỹ Thuật Viên Được Yêu Thích</h2>
-                    <p class="text-gray-600 text-sm">
-                        Các kỹ thuật viên đều có chứng chỉ hành nghề, thái độ tận tâm và được khách hàng đánh giá cao
-                    </p>
-                </div>
-
-                <!-- Grid 3 KTV -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- KTV 1 -->
-                    <div
-                        class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
-                        <div class="relative w-28 h-28 mx-auto">
-                            <img
-                                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
-                                alt="KTV Minh Anh"
-                                class="w-full h-full rounded-full object-cover border-4 border-rose-200"
-                                onerror="
-                                    this.onerror = null;
-                                    this.src =
-                                        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80';
-                                " />
-                            <span
-                                class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                Sẵn sàng
-                            </span>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">Nguyễn Minh Anh</h3>
-                            <p class="text-xs text-rose-600 font-semibold mt-1">
-                                Chuyên Gia Chăm Sóc Da (Skin Specialist)
-                            </p>
-                            <p class="text-xs text-gray-500 mt-2">
-                                5 năm kinh nghiệm. Chuyên về điện di C, hút mụn bài bản và tư vấn liệu trình da.
-                            </p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                            <span class="text-amber-500 font-bold">⭐ 4.9 / 5.0 (180+ Đánh giá)</span>
-                            <button
-                                onclick="openBookingModal('Chăm Sóc Da Mặt Chuyên Sâu', 350000)"
-                                class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">
-                                Đặt KTV Này
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- KTV 2 -->
-                    <div
-                        class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
-                        <div class="relative w-28 h-28 mx-auto">
-                            <img
-                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80"
-                                alt="KTV Thu Hà"
-                                class="w-full h-full rounded-full object-cover border-4 border-rose-200"
-                                onerror="
-                                    this.onerror = null;
-                                    this.src =
-                                        'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=300&q=80';
-                                " />
-                            <span
-                                class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                Sẵn sàng
-                            </span>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">Trần Thu Hà</h3>
-                            <p class="text-xs text-rose-600 font-semibold mt-1">Chuyên Gia Gội Đầu Dưỡng Sinh</p>
-                            <p class="text-xs text-gray-500 mt-2">
-                                4 năm kinh nghiệm. Kỹ thuật bấm huyệt da đầu cực mượt, được khen bấm êm tay.
-                            </p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                            <span class="text-amber-500 font-bold">⭐ 5.0 / 5.0 (210+ Đánh giá)</span>
-                            <button
-                                onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)"
-                                class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">
-                                Đặt KTV Này
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- KTV 3 -->
-                    <div
-                        class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
-                        <div class="relative w-28 h-28 mx-auto">
-                            <img
-                                src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80"
-                                alt="KTV Ngọc Lan"
-                                class="w-full h-full rounded-full object-cover border-4 border-rose-200"
-                                onerror="
-                                    this.onerror = null;
-                                    this.src =
-                                        'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80';
-                                " />
-                            <span
-                                class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                Sẵn sàng
-                            </span>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">Lê Ngọc Lan</h3>
-                            <p class="text-xs text-rose-600 font-semibold mt-1">Kỹ Thuật Viên Massage Trị Liệu</p>
-                            <p class="text-xs text-gray-500 mt-2">
-                                3 năm kinh nghiệm. Chuyên trị liệu vai gáy, chườm đá nóng giúp giải tỏa căng thẳng.
-                            </p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                            <span class="text-amber-500 font-bold">⭐ 4.8 / 5.0 (140+ Đánh giá)</span>
-                            <button
-                                onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)"
-                                class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">
-                                Đặt KTV Này
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. CÔNG NGHỆ & THIẾT BỊ HIỆN ĐẠI -->
-        <section id="equipment" class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
-                    <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Đầu Tư Hiện Đại</span>
-                    <h2 class="text-3xl font-extrabold text-gray-900">Trang Thiết Bị & Công Nghệ Hiện Đại</h2>
-                    <p class="text-gray-600 text-sm">
-                        AuraSpa trang bị hệ thống máy móc cao cấp hỗ trợ liệu trình đạt hiệu quả tối ưu nhất
-                    </p>
-                </div>
-
-                <!-- Grid 3 Thiết bị Công nghệ -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Thiết bị 1 -->
-                    <div
-                        class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
-                        <img
-                            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80"
-                            alt="Máy soi da 3D Smart Scanner"
-                            class="w-full h-48 object-cover"
-                            onerror="
-                                this.onerror = null;
-                                this.src =
-                                    'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80';
-                            " />
-                        <div class="p-6 space-y-2">
-                            <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-full">
-                                Công Nghệ AI
-                            </span>
-                            <h3 class="text-lg font-bold text-gray-900">Máy Soi Da & Phân Tích Da 3D Smart Scanner</h3>
-                            <p class="text-gray-600 text-xs leading-relaxed">
-                                Phân tích chính xác độ ẩm, sắc tố melanin, lỗ chân lông và độ lão hóa để đưa ra liệu
-                                trình chăm sóc chuẩn xác nhất cho từng loại da.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Thiết bị 2 -->
-                    <div
-                        class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
-                        <img
-                            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80"
-                            alt="Giường gội vòm nước"
-                            class="w-full h-48 object-cover"
-                            onerror="
-                                this.onerror = null;
-                                this.src =
-                                    'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80';
-                            " />
-                        <div class="p-6 space-y-2">
-                            <span
-                                class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">
-                                Chuẩn Dưỡng Sinh
-                            </span>
-                            <h3 class="text-lg font-bold text-gray-900">Giường Gội Đầu Massge & Vòm Nước Tuần Hoàn</h3>
-                            <p class="text-gray-600 text-xs leading-relaxed">
-                                Hệ thống vòm phun nước thảo dược ấm 360 độ kết hợp đệm massage lưng giúp cơ thể thư giãn
-                                tuyệt đối trong suốt quá trình gội.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Thiết bị 3 -->
-                    <div
-                        class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
-                        <img
-                            src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80"
-                            alt="Máy điện di C"
-                            class="w-full h-48 object-cover"
-                            onerror="
-                                this.onerror = null;
-                                this.src =
-                                    'https://images.unsplash.com/photo-1512290900673-0fb66f5c880c?auto=format&fit=crop&w=600&q=80';
-                            " />
-                        <div class="p-6 space-y-2">
-                            <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-1 rounded-full">
-                                Trẻ Hóa Da
-                            </span>
-                            <h3 class="text-lg font-bold text-gray-900">
-                                Máy Điện Di Tinh Chất & Đèn Ánh Sáng Bio-Light
-                            </h3>
-                            <p class="text-gray-600 text-xs leading-relaxed">
-                                Đẩy sâu serum Vitamin C và Collagen vào tế bào da không gây xâm lấn, kết hợp chiếu ánh
-                                sáng sinh học diệt khuẩn mụn.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. KHU VỰC KHÁCH HÀNG FEEDBACK & ĐÁNH GIÁ (REVIEWS) -->
-        <section id="reviews" class="py-16 bg-rose-50/40">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
-                    <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Phản Hồi Trực Tuyến</span>
-                    <h2 class="text-3xl font-extrabold text-gray-900">Khách Hàng Nói Gì Về AuraSpa?</h2>
-                    <p class="text-gray-600 text-sm">
-                        Các đánh giá thực tế được khách hàng gửi sau khi trải nghiệm dịch vụ
-                    </p>
-                </div>
-
-                <!-- Grid 3 Feedback Card -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Feedback 1 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-sm">
-                                    HP
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Hoàng Phương</h4>
-                                    <p class="text-[11px] text-gray-400">Đã dùng: Gội đầu dưỡng sinh (60p)</p>
-                                </div>
-                            </div>
-                            <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
-                        </div>
-                        <p class="text-gray-600 text-xs leading-relaxed">
-                            "Bạn KTV Thu Hà làm cực kỳ êm tay! Nước bồ kết thơm tự nhiên, vòm nước rửa xong nhẹ hết cả
-                            đầu. Rất đáng tiền, sẽ quay lại tuần sau!"
-                        </p>
-                    </div>
-
-                    <!-- Feedback 2 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-pink-100 text-pink-700 font-bold flex items-center justify-center text-sm">
-                                    TH
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Thanh Hằng</h4>
-                                    <p class="text-[11px] text-gray-400">Đã dùng: Chăm sóc da chuyên sâu</p>
-                                </div>
-                            </div>
-                            <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
-                        </div>
-                        <p class="text-gray-600 text-xs leading-relaxed">
-                            "Ấn tượng nhất là bước soi da 3D được KTV Minh Anh phân tích rất kỹ. Điện di C xong da căng
-                            bóng hẳn. Hệ thống đặt lịch trên web rất tiện không phải đợi!"
-                        </p>
-                    </div>
-
-                    <!-- Feedback 3 -->
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-sm">
-                                    NT
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Ngọc Trâm</h4>
-                                    <p class="text-[11px] text-gray-400">Đã dùng: Combo VIP (90p)</p>
-                                </div>
-                            </div>
-                            <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
-                        </div>
-                        <p class="text-gray-600 text-xs leading-relaxed">
-                            "Gói Combo VIP 90p rất xứng đáng! Vừa được làm sạch da vừa gội đầu và chườm đá nóng cổ vai
-                            gáy. Không gian yên tĩnh nhạc thiền thích mê."
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========================================== -->
-        <!-- 🌟 MODAL FORM ĐẶT LỊCH HẸN TRỰC TUYẾN (SIÊU GỌN + DROPDOWN DỊCH VỤ LINH HOẠT) -->
-        <!-- ========================================== -->
-        <div
-            id="bookingModal"
-            class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
-            <div
-                class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-rose-100 relative animate-fade-in my-auto">
-                <!-- Nút đóng Modal -->
-                <button
-                    onclick="closeBookingModal()"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">
-                    ✕
-                </button>
-
-                <!-- Tiêu đề Form -->
-                <div class="text-center space-y-0.5 mb-3">
-                    <span class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">AuraSpa Booking</span>
-                    <h3 class="text-xl font-extrabold text-gray-900 leading-tight">ĐẶT LỊCH HẸN GIỜ</h3>
-                    <p class="text-[11px] text-gray-500">Giữ chỗ mượt mà & không phải chờ đợi</p>
-                </div>
-
-                <!-- Form Đặt Lịch Compact -->
-                <form onsubmit="handleBookingSubmit(event)" class="space-y-2.5">
-                    <input type="hidden" id="inputService" value="Gội Đầu Dưỡng Sinh Thảo Dược" />
-                    <input type="hidden" id="inputPrice" value="199000" />
-
-                    <!-- Thẻ Dịch vụ linh hoạt dạng Dropdown -->
-                    <div>
-                        <label class="block text-[11px] font-bold text-rose-600 uppercase mb-1">
-                            🌺 Chọn Dịch Vụ Spa:
-                        </label>
+                    <!-- Small Badges -->
+                    <div class="pt-6 border-t border-rose-200/60 flex items-center justify-center lg:justify-start gap-8 text-xs font-semibold text-gray-500">
                         <div class="flex items-center gap-2">
-                            <select
-                                id="serviceSelect"
-                                onchange="updateSelectedServicePrice()"
-                                class="w-full px-3 py-2 bg-rose-50 border border-rose-200 rounded-xl text-xs font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-rose-500 shadow-sm">
-                                <option value="Gội Đầu Dưỡng Sinh Thảo Dược">Gội Đầu Dưỡng Sinh Thảo Dược (60p)</option>
-                                <option value="Chăm Sóc Da Mặt Chuyên Sâu">Chăm Sóc Da Mặt Chuyên Sâu (75p)</option>
-                                <option value="Massage Cổ Vai Gáy Trị Liệu">Massage Cổ Vai Gáy Trị Liệu (45p)</option>
-                                <option value="Combo Chăm Sóc Da & Gội Đầu VIP">
-                                    Combo Chăm Sóc Da & Gội Đầu VIP (90p)
-                                </option>
-                            </select>
-                            <span
-                                id="selectedServicePrice"
-                                class="text-sm font-extrabold text-rose-600 whitespace-nowrap bg-rose-50 px-3 py-1.5 rounded-xl border border-rose-200">
-                                199.000 đ
-                            </span>
+                            <span class="text-rose-500 font-bold text-base">✓</span> 100% Thảo dược tự nhiên
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-rose-500 font-bold text-base">✓</span> KTV có chứng chỉ hành nghề
                         </div>
                     </div>
+                </div>
 
-                    <!-- Hàng 1: Ngày Hẹn & Chọn KTV (Grid 2 cột) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-[11px] font-bold text-gray-700 mb-1">📅 Ngày Hẹn:</label>
-                            <input
-                                type="date"
-                                id="bookingDate"
-                                required
-                                class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500" />
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold text-gray-700 mb-1">👩‍🎨 Chọn Kỹ Thuật Viên:</label>
-                            <select
-                                id="staffSelect"
-                                class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500">
-                                <option value="Hệ thống tự xếp KTV">Xếp KTV ngẫu nhiên</option>
-                                <option value="KTV Nguyễn Minh Anh">Minh Anh (Da - ⭐4.9)</option>
-                                <option value="KTV Trần Thu Hà">Thu Hà (Gội - ⭐5.0)</option>
-                                <option value="KTV Lê Ngọc Lan">Ngọc Lan (Massage - ⭐4.8)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Hàng 2: Chọn Khung Giờ (Lưới 4x2) -->
-                    <div>
-                        <label class="block text-[11px] font-bold text-gray-700 mb-1">⏰ Chọn Khung Giờ:</label>
-                        <div class="grid grid-cols-4 gap-1.5">
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '09:00')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                09:00
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '09:30')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-rose-600 bg-rose-600 text-white transition">
-                                09:30
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '10:30')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                10:30
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '14:00')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                14:00
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '15:30')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                15:30
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '17:00')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                17:00
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '18:30')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                18:30
-                            </button>
-                            <button
-                                type="button"
-                                onclick="selectTimeSlot(this, '19:30')"
-                                class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">
-                                19:30
-                            </button>
+                <!-- Banner Image Right -->
+                <div class="relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" 
+                             alt="Spa Relaxing" 
+                             class="rounded-3xl shadow-2xl border-4 border-white object-cover h-[420px] w-full"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80';">
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-6 -left-6 bg-white p-3.5 px-4 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3.5 hidden sm:flex">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100/90 border border-amber-200 text-amber-700 flex flex-col items-center justify-center p-1 leading-none shadow-inner">
+                                <span class="text-xs leading-none mb-0.5">⭐</span>
+                                <span class="text-base font-extrabold text-amber-800 leading-none">4.9</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900 text-sm">Khách Hàng Hài Lòng</p>
+                                <p class="text-xs text-gray-500 mt-0.5">+1,500 Lượt Đánh Giá 5 Sao</p>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Hàng 3: Họ Tên & Số Điện Thoại (Grid 2 cột) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div>
-                            <label class="block text-[11px] font-bold text-gray-700 mb-1">👤 Họ và Tên:</label>
-                            <input
-                                type="text"
-                                id="customerName"
-                                placeholder="Nhập họ tên..."
-                                required
-                                class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-rose-500" />
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold text-gray-700 mb-1">📞 Số Điện Thoại:</label>
-                            <input
-                                type="tel"
-                                id="customerPhone"
-                                placeholder="0909xxxxxx"
-                                required
-                                class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-rose-500" />
-                        </div>
-                    </div>
-
-                    <!-- Hàng 4: Ghi chú dòng đơn -->
-                    <div>
-                        <label class="block text-[11px] font-bold text-gray-700 mb-1">💬 Ghi Chú Đặc Biệt:</label>
-                        <input
-                            type="text"
-                            id="customerNote"
-                            placeholder="Ví dụ: Da nhạy cảm, phòng yên tĩnh..."
-                            class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-rose-500" />
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button
-                        type="submit"
-                        class="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold py-2.5 rounded-xl shadow-md transition text-xs mt-1">
-                        XÁC NHẬN ĐẶT LỊCH HẸN ✨
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- ========================================== -->
-        <!-- 🌟 POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
-        <!-- ========================================== -->
-        <div
-            id="successModal"
-            class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-            <div
-                class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-rose-100 animate-bounce-in">
-                <div
-                    class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto font-bold shadow-inner">
-                    ✓
-                </div>
+    <!-- 3. DANH MỤC DỊCH VỤ (SERVICES) -->
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Menu Dịch Vụ</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Dịch Vụ Chăm Sóc Nổi Bật</h2>
+                <p class="text-gray-600 text-sm">Các liệu trình được thiết kế bài bản giúp phục hồi sức khỏe và làn da tươi trẻ</p>
+            </div>
 
-                <div class="space-y-0.5">
-                    <h3 class="text-xl font-extrabold text-gray-900">ĐẶT LỊCH THÀNH CÔNG!</h3>
-                    <p class="text-xs text-gray-500">AuraSpa đã tiếp nhận lịch hẹn của bạn</p>
-                </div>
+            <!-- Grid 4 Dịch vụ chính -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                <!-- Thẻ Chi Tiết Lịch Hẹn -->
-                <div class="bg-rose-50/70 p-3.5 rounded-2xl border border-rose-200 text-left text-xs space-y-1.5">
-                    <div class="flex justify-between border-b border-rose-200/60 pb-1.5">
-                        <span class="text-gray-500">Mã Lịch Hẹn:</span>
-                        <span id="resCode" class="font-extrabold text-rose-600 text-sm">AURA-8942</span>
+                <!-- Service 1 -->
+                <div class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-rose-500/20">
+                            🌿
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full">⏱️ 60 Phút</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-2">Gội Đầu Dưỡng Sinh Thảo Dược</h3>
+                            <p class="text-gray-600 text-xs mt-2 leading-relaxed">Gội đầu bằng nước bồ kết nấu tươi, massage ấn huyệt da đầu, vòm nước tuần hoàn giúp giảm đau đầu sảng khoái.</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Khách Hàng:</span>
-                        <span id="resName" class="font-bold text-gray-900">Sữa Nguyễn</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Dịch Vụ:</span>
-                        <span id="resService" class="font-bold text-gray-900">Gội Đầu Dưỡng Sinh</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Thời Gian Hẹn:</span>
-                        <span id="resTime" class="font-bold text-gray-900">09:30 - 2026-09-03</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Kỹ Thuật Viên:</span>
-                        <span id="resStaff" class="font-bold text-gray-900">Hệ thống tự xếp</span>
-                    </div>
-                    <div class="flex justify-between pt-1.5 border-t border-rose-200/60">
-                        <span class="text-gray-500">Tổng Tiền Dự Kiến:</span>
-                        <span id="resPrice" class="font-extrabold text-rose-600 text-sm">199.000 đ</span>
+                    <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-rose-600">199.000 đ</span>
+                        <button onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
                     </div>
                 </div>
 
-                <p class="text-[11px] text-gray-400">
-                    Vui lòng đến trước 10 phút so với giờ hẹn để Spa phục vụ chu đáo nhất.
-                </p>
+                <!-- Service 2 -->
+                <div class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-pink-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-pink-500/20">
+                            ✨
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-pink-100 text-pink-700 px-2.5 py-0.5 rounded-full">⏱️ 75 Phút</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-2">Chăm Sóc Da Mặt Chuyên Sâu</h3>
+                            <p class="text-gray-600 text-xs mt-2 leading-relaxed">Tẩy tế bào chết, hút mụn cám, điện di tinh chất Vitamin C kết hợp đắp mặt nạ sinh học giúp da căng bóng sáng mịn.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-rose-600">350.000 đ</span>
+                        <button onclick="openBookingModal('Chăm Sóc Da Mặt Chuyên Sâu', 350000)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                    </div>
+                </div>
 
-                <button
-                    onclick="closeSuccessPopup()"
-                    class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl shadow-md transition text-xs uppercase tracking-wider">
-                    Đóng & Hoàn Tất
+                <!-- Service 3 -->
+                <div class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-amber-500/20">
+                            💆‍♀️
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full">⏱️ 45 Phút</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-2">Massage Cổ Vai Gáy Trị Liệu</h3>
+                            <p class="text-gray-600 text-xs mt-2 leading-relaxed">Ấn huyệt chuyên sâu giải tỏa bó cơ vai gáy, chườm đá nóng bazo và thảo dược kết hợp hỗ trợ giấc ngủ ngon.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-rose-600">250.000 đ</span>
+                        <button onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                    </div>
+                </div>
+
+                <!-- Service 4 (VIP Combo) -->
+                <div class="bg-gradient-to-b from-rose-500 to-pink-600 text-white rounded-2xl p-6 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition duration-300 relative overflow-hidden">
+                    <span class="absolute top-3 right-3 bg-amber-400 text-gray-900 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">HOT VIP</span>
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center text-2xl backdrop-blur-sm">
+                            👑
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-white/20 text-white px-2.5 py-0.5 rounded-full">⏱️ 90 Phút</span>
+                            <h3 class="text-lg font-bold mt-2">Combo Chăm Sóc Da & Gội Đầu VIP</h3>
+                            <p class="text-rose-100 text-xs mt-2 leading-relaxed">Gói chăm sóc toàn diện: Gội đầu thảo dược + Chăm sóc da C vitamin + Massage cổ vai gáy chườm đá nóng.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/20 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-amber-300">499.000 đ</span>
+                        <button onclick="openBookingModal('Combo Chăm Sóc Da & Gội Đầu VIP', 499000)" class="bg-white hover:bg-rose-50 text-rose-600 text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">Đặt Lịch VIP</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ĐỘI NGŨ KỸ THUẬT VIÊN (STAFF SHOWCASE) -->
+    <section id="staff" class="py-16 bg-rose-50/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Đội Ngũ Tay Nghề Cao</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Kỹ Thuật Viên Được Yêu Thích</h2>
+                <p class="text-gray-600 text-sm">Các kỹ thuật viên đều có chứng chỉ hành nghề, thái độ tận tâm và được khách hàng đánh giá cao</p>
+            </div>
+
+            <!-- Grid 3 KTV -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- KTV 1 -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
+                    <div class="relative w-28 h-28 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" 
+                             alt="KTV Minh Anh" 
+                             class="w-full h-full rounded-full object-cover border-4 border-rose-200"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80';">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Nguyễn Minh Anh</h3>
+                        <p class="text-xs text-rose-600 font-semibold mt-1">Chuyên Gia Chăm Sóc Da (Skin Specialist)</p>
+                        <p class="text-xs text-gray-500 mt-2">5 năm kinh nghiệm. Chuyên về điện di C, hút mụn bài bản và tư vấn liệu trình da.</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        <span class="text-amber-500 font-bold">⭐ 4.9 / 5.0 (180+ Đánh giá)</span>
+                        <button onclick="openBookingModal('Chăm Sóc Da Mặt Chuyên Sâu', 350000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
+                    </div>
+                </div>
+
+                <!-- KTV 2 -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
+                    <div class="relative w-28 h-28 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" 
+                             alt="KTV Thu Hà" 
+                             class="w-full h-full rounded-full object-cover border-4 border-rose-200"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=300&q=80';">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Trần Thu Hà</h3>
+                        <p class="text-xs text-rose-600 font-semibold mt-1">Chuyên Gia Gội Đầu Dưỡng Sinh</p>
+                        <p class="text-xs text-gray-500 mt-2">4 năm kinh nghiệm. Kỹ thuật bấm huyệt da đầu cực mượt, được khen bấm êm tay.</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        <span class="text-amber-500 font-bold">⭐ 5.0 / 5.0 (210+ Đánh giá)</span>
+                        <button onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
+                    </div>
+                </div>
+
+                <!-- KTV 3 -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
+                    <div class="relative w-28 h-28 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80" 
+                             alt="KTV Ngọc Lan" 
+                             class="w-full h-full rounded-full object-cover border-4 border-rose-200"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80';">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Lê Ngọc Lan</h3>
+                        <p class="text-xs text-rose-600 font-semibold mt-1">Kỹ Thuật Viên Massage Trị Liệu</p>
+                        <p class="text-xs text-gray-500 mt-2">3 năm kinh nghiệm. Chuyên trị liệu vai gáy, chườm đá nóng giúp giải tỏa căng thẳng.</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        <span class="text-amber-500 font-bold">⭐ 4.8 / 5.0 (140+ Đánh giá)</span>
+                        <button onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CÔNG NGHỆ & THIẾT BỊ HIỆN ĐẠI -->
+    <section id="equipment" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Đầu Tư Hiện Đại</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Trang Thiết Bị & Công Nghệ Hiện Đại</h2>
+                <p class="text-gray-600 text-sm">AuraSpa trang bị hệ thống máy móc cao cấp hỗ trợ liệu trình đạt hiệu quả tối ưu nhất</p>
+            </div>
+
+            <!-- Grid 3 Thiết bị Công nghệ -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Thiết bị 1 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" 
+                         alt="Máy soi da 3D Smart Scanner" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80';">
+                    <div class="p-6 space-y-2">
+                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Công Nghệ AI</span>
+                        <h3 class="text-lg font-bold text-gray-900">Máy Soi Da & Phân Tích Da 3D Smart Scanner</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">Phân tích chính xác độ ẩm, sắc tố melanin, lỗ chân lông và độ lão hóa để đưa ra liệu trình chăm sóc chuẩn xác nhất cho từng loại da.</p>
+                    </div>
+                </div>
+
+                <!-- Thiết bị 2 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80" 
+                         alt="Giường gội vòm nước" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80';">
+                    <div class="p-6 space-y-2">
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Chuẩn Dưỡng Sinh</span>
+                        <h3 class="text-lg font-bold text-gray-900">Giường Gội Đầu Massge & Vòm Nước Tuần Hoàn</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">Hệ thống vòm phun nước thảo dược ấm 360 độ kết hợp đệm massage lưng giúp cơ thể thư giãn tuyệt đối trong suốt quá trình gội.</p>
+                    </div>
+                </div>
+
+                <!-- Thiết bị 3 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" 
+                         alt="Máy điện di C" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1512290900673-0fb66f5c880c?auto=format&fit=crop&w=600&q=80';">
+                    <div class="p-6 space-y-2">
+                        <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Trẻ Hóa Da</span>
+                        <h3 class="text-lg font-bold text-gray-900">Máy Điện Di Tinh Chất & Đèn Ánh Sáng Bio-Light</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">Đẩy sâu serum Vitamin C và Collagen vào tế bào da không gây xâm lấn, kết hợp chiếu ánh sáng sinh học diệt khuẩn mụn.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. KHU VỰC KHÁCH HÀNG FEEDBACK & ĐÁNH GIÁ (REVIEWS) -->
+    <section id="reviews" class="py-16 bg-rose-50/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Phản Hồi Trực Tuyến</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Khách Hàng Nói Gì Về AuraSpa?</h2>
+                <p class="text-gray-600 text-sm">Các đánh giá thực tế được khách hàng gửi sau khi trải nghiệm dịch vụ</p>
+            </div>
+
+            <!-- Grid 3 Feedback Card -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Feedback 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-sm">
+                                HP
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Hoàng Phương</h4>
+                                <p class="text-[11px] text-gray-400">Đã dùng: Gội đầu dưỡng sinh (60p)</p>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-gray-600 text-xs leading-relaxed">"Bạn KTV Thu Hà làm cực kỳ êm tay! Nước bồ kết thơm tự nhiên, vòm nước rửa xong nhẹ hết cả đầu. Rất đáng tiền, sẽ quay lại tuần sau!"</p>
+                </div>
+
+                <!-- Feedback 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-700 font-bold flex items-center justify-center text-sm">
+                                TH
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Thanh Hằng</h4>
+                                <p class="text-[11px] text-gray-400">Đã dùng: Chăm sóc da chuyên sâu</p>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-gray-600 text-xs leading-relaxed">"Ấn tượng nhất là bước soi da 3D được KTV Minh Anh phân tích rất kỹ. Điện di C xong da căng bóng hẳn. Hệ thống đặt lịch trên web rất tiện không phải đợi!"</p>
+                </div>
+
+                <!-- Feedback 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-sm">
+                                NT
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Ngọc Trâm</h4>
+                                <p class="text-[11px] text-gray-400">Đã dùng: Combo VIP (90p)</p>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-gray-600 text-xs leading-relaxed">"Gói Combo VIP 90p rất xứng đáng! Vừa được làm sạch da vừa gội đầu và chườm đá nóng cổ vai gáy. Không gian yên tĩnh nhạc thiền thích mê."</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🌟 MODAL FORM ĐẶT LỊCH HẸN TRỰC TUYẾN -->
+    <!-- ========================================== -->
+    <div id="bookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-rose-100 relative animate-fade-in my-auto">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">✕</button>
+
+            <div class="text-center space-y-0.5 mb-3">
+                <span class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">AuraSpa Booking</span>
+                <h3 class="text-xl font-extrabold text-gray-900 leading-tight">ĐẶT LỊCH HẸN GIỜ</h3>
+                <p class="text-[11px] text-gray-500">Giữ chỗ mượt mà & không phải chờ đợi</p>
+            </div>
+
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-2.5">
+                <input type="hidden" id="inputService" value="Gội Đầu Dưỡng Sinh Thảo Dược">
+                <input type="hidden" id="inputPrice" value="199000">
+
+                <div>
+                    <label class="block text-[11px] font-bold text-rose-600 uppercase mb-1">🌺 Chọn Dịch Vụ Spa:</label>
+                    <div class="flex items-center gap-2">
+                        <select id="serviceSelect" onchange="updateSelectedServicePrice()" class="w-full px-3 py-2 bg-rose-50 border border-rose-200 rounded-xl text-xs font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-rose-500 shadow-sm">
+                            <option value="Gội Đầu Dưỡng Sinh Thảo Dược">Gội Đầu Dưỡng Sinh Thảo Dược (60p)</option>
+                            <option value="Chăm Sóc Da Mặt Chuyên Sâu">Chăm Sóc Da Mặt Chuyên Sâu (75p)</option>
+                            <option value="Massage Cổ Vai Gáy Trị Liệu">Massage Cổ Vai Gáy Trị Liệu (45p)</option>
+                            <option value="Combo Chăm Sóc Da & Gội Đầu VIP">Combo Chăm Sóc Da & Gội Đầu VIP (90p)</option>
+                        </select>
+                        <span id="selectedServicePrice" class="text-sm font-extrabold text-rose-600 whitespace-nowrap bg-rose-50 px-3 py-1.5 rounded-xl border border-rose-200">199.000 đ</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">📅 Ngày Hẹn:</label>
+                        <input type="date" id="bookingDate" required class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">👩‍🎨 Chọn Kỹ Thuật Viên:</label>
+                        <select id="staffSelect" class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-rose-500">
+                            <option value="Hệ thống tự xếp KTV">Xếp KTV ngẫu nhiên</option>
+                            <option value="KTV Nguyễn Minh Anh">Minh Anh (Da - ⭐4.9)</option>
+                            <option value="KTV Trần Thu Hà">Thu Hà (Gội - ⭐5.0)</option>
+                            <option value="KTV Lê Ngọc Lan">Ngọc Lan (Massage - ⭐4.8)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-700 mb-1">⏰ Chọn Khung Giờ:</label>
+                    <div class="grid grid-cols-4 gap-1.5">
+                        <button type="button" onclick="selectTimeSlot(this, '09:00')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">09:00</button>
+                        <button type="button" onclick="selectTimeSlot(this, '09:30')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-rose-600 bg-rose-600 text-white transition">09:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '10:30')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">10:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '14:00')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">14:00</button>
+                        <button type="button" onclick="selectTimeSlot(this, '15:30')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">15:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '17:00')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">17:00</button>
+                        <button type="button" onclick="selectTimeSlot(this, '18:30')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">18:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '19:30')" class="time-slot-btn py-1 text-[11px] font-bold rounded-lg border border-gray-200 bg-gray-50 hover:border-rose-400 transition">19:30</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">👤 Họ và Tên:</label>
+                        <input type="text" id="customerName" placeholder="Nhập họ tên..." required class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">📞 Số Điện Thoại:</label>
+                        <input type="tel" id="customerPhone" placeholder="0909xxxxxx" required class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-700 mb-1">💬 Ghi Chú Đặc Biệt:</label>
+                    <input type="text" id="customerNote" placeholder="Ví dụ: Da nhạy cảm, phòng yên tĩnh..." class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-rose-500">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold py-2.5 rounded-xl shadow-md transition text-xs mt-1">
+                    XÁC NHẬN ĐẶT LỊCH HẸN ✨
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🔍 MODAL TRA CỨU & HỦY LỊCH HẸN KHÁCH HÀNG -->
+    <!-- ========================================== -->
+    <div id="lookupModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-rose-100 relative my-auto animate-fade-in space-y-4">
+            <button onclick="closeLookupModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">✕</button>
+
+            <div class="text-center space-y-1">
+                <span class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">Khách Hàng Tra Cứu</span>
+                <h3 class="text-xl font-extrabold text-gray-900">TRA CỨU & HỦY LỊCH HẸN</h3>
+                <p class="text-xs text-gray-500">Nhập Mã đơn (VD: AURA-8942) hoặc Số điện thoại để tra cứu</p>
+            </div>
+
+            <!-- Form tìm kiếm -->
+            <div class="flex gap-2">
+                <input type="text" id="lookupInput" placeholder="Nhập AURA-XXXX hoặc SĐT..." class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                <button onclick="handleLookupSearch()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm whitespace-nowrap">
+                    🔍 Tìm Đơn
                 </button>
             </div>
+
+            <!-- Kết quả tra cứu -->
+            <div id="lookupResultArea" class="hidden space-y-3 max-h-72 overflow-y-auto pr-1">
+                <div id="lookupResultList" class="space-y-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🌟 POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
+    <!-- ========================================== -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-rose-100 animate-bounce-in">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto font-bold shadow-inner">
+                ✓
+            </div>
+            
+            <div class="space-y-0.5">
+                <h3 class="text-xl font-extrabold text-gray-900">ĐẶT LỊCH THÀNH CÔNG!</h3>
+                <p class="text-xs text-gray-500">AuraSpa đã tiếp nhận lịch hẹn của bạn</p>
+            </div>
+
+            <div class="bg-rose-50/70 p-3.5 rounded-2xl border border-rose-200 text-left text-xs space-y-1.5">
+                <div class="flex justify-between border-b border-rose-200/60 pb-1.5">
+                    <span class="text-gray-500">Mã Lịch Hẹn:</span>
+                    <span id="resCode" class="font-extrabold text-rose-600 text-sm">AURA-8942</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Khách Hàng:</span>
+                    <span id="resName" class="font-bold text-gray-900">Sữa Nguyễn</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Dịch Vụ:</span>
+                    <span id="resService" class="font-bold text-gray-900">Gội Đầu Dưỡng Sinh</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Thời Gian Hẹn:</span>
+                    <span id="resTime" class="font-bold text-gray-900">09:30 - 2026-09-03</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Kỹ Thuật Viên:</span>
+                    <span id="resStaff" class="font-bold text-gray-900">Hệ thống tự xếp</span>
+                </div>
+                <div class="flex justify-between pt-1.5 border-t border-rose-200/60">
+                    <span class="text-gray-500">Tổng Tiền Dự Kiến:</span>
+                    <span id="resPrice" class="font-extrabold text-rose-600 text-sm">199.000 đ</span>
+                </div>
+            </div>
+
+            <p class="text-[11px] text-gray-400">Vui lòng đến trước 10 phút so với giờ hẹn để Spa phục vụ chu đáo nhất.</p>
+
+            <button onclick="closeSuccessPopup()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl shadow-md transition text-xs uppercase tracking-wider">
+                Đóng & Hoàn Tất
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🌸</span>
+                    <span class="text-2xl font-bold text-white">AuraSpa</span>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">Hệ thống Spa chăm sóc da & gội đầu dưỡng sinh hàng đầu dành cho phái đẹp.</p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Dịch Vụ Nổi Bật</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li><a href="#" class="hover:text-rose-400">Gội Đầu Dưỡng Sinh Thảo Dược</a></li>
+                    <li><a href="#" class="hover:text-rose-400">Chăm Sóc Da Mặt Chuyên Sâu</a></li>
+                    <li><a href="#" class="hover:text-rose-400">Massage Cổ Vai Gáy Trị Liệu</a></li>
+                    <li><a href="#" class="hover:text-rose-400">Combo Thư Giãn VIP</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Thời Gian Mở Cửa</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li>Thứ 2 - Thứ 6: 08:30 - 20:30</li>
+                    <li>Thứ 7 - Chủ Nhật: 08:00 - 21:00</li>
+                    <li class="text-rose-400 font-semibold">Khuyên dùng: Đặt lịch trước 30p</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Liên Hệ & Tra Cứu</h4>
+                <button onclick="openLookupModal()" class="text-xs text-rose-400 hover:underline font-bold block mb-2">🔍 Tra Cứu / Hủy Lịch Hẹn Đã Đặt</button>
+                <p class="text-xs text-slate-400">📍 Số 123 Đường Hoa Hồng, Phường 2, Q. Phú Nhuận, TP.HCM</p>
+                <p class="text-xs text-slate-400 mt-2">📞 Hotline: 0909.123.456</p>
+            </div>
         </div>
 
-        <!-- FOOTER -->
-        <footer class="bg-slate-900 text-slate-300 py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2">
-                        <span class="text-2xl">🌸</span>
-                        <span class="text-2xl font-bold text-white">AuraSpa</span>
-                    </div>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Hệ thống Spa chăm sóc da & gội đầu dưỡng sinh hàng đầu dành cho phái đẹp.
-                    </p>
-                </div>
+        <div class="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>© 2026 AuraSpa Project - Đồ án tốt nghiệp Lập trình Web Hiện đại</p>
+        </div>
+    </footer>
 
-                <div>
-                    <h4 class="font-bold text-white text-sm mb-3">Dịch Vụ Nổi Bật</h4>
-                    <ul class="space-y-2 text-xs text-slate-400">
-                        <li><a href="#" class="hover:text-rose-400">Gội Đầu Dưỡng Sinh Thảo Dược</a></li>
-                        <li><a href="#" class="hover:text-rose-400">Chăm Sóc Da Mặt Chuyên Sâu</a></li>
-                        <li><a href="#" class="hover:text-rose-400">Massage Cổ Vai Gáy Trị Liệu</a></li>
-                        <li><a href="#" class="hover:text-rose-400">Combo Thư Giãn VIP</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-white text-sm mb-3">Thời Gian Mở Cửa</h4>
-                    <ul class="space-y-2 text-xs text-slate-400">
-                        <li>Thứ 2 - Thứ 6: 08:30 - 20:30</li>
-                        <li>Thứ 7 - Chủ Nhật: 08:00 - 21:00</li>
-                        <li class="text-rose-400 font-semibold">Khuyên dùng: Đặt lịch trước 30p</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-white text-sm mb-3">Liên Hệ & Địa Chỉ</h4>
-                    <p class="text-xs text-slate-400">📍 Số 123 Đường Hoa Hồng, Phường 2, Q. Phú Nhuận, TP.HCM</p>
-                    <p class="text-xs text-slate-400 mt-2">📞 Hotline: 0909.123.456</p>
-                </div>
-            </div>
-
-            <div class="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
-                <p>© 2026 AuraSpa Project - Đồ án tốt nghiệp Lập trình Web Hiện đại</p>
-            </div>
-        </footer>
-
-        <!-- Nhúng file Script xử lý Đặt Lịch -->
-        <script src="js/booking.js"></script>
-    </body>
+    <!-- Nhúng file Script xử lý Đặt Lịch -->
+    <script src="js/booking.js"></script>
+</body>
 </html>
