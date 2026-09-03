@@ -39,7 +39,24 @@ function protectPage(allowedRoles = []) {
     return true;
 }
 
-// Cập nhật giao diện Header gọn gàng không bị vỡ layout
+// Toggle Mở/Đóng User Avatar Dropdown Menu
+function toggleUserDropdown(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('userDropdownMenu');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+}
+
+// Tự động đóng Dropdown khi click ra ngoài
+window.addEventListener('click', () => {
+    const menu = document.getElementById('userDropdownMenu');
+    if (menu && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+    }
+});
+
+// Cập nhật giao diện Header Siêu Tối Giản (Minimalist Header)
 function updateHeaderAuthNav() {
     const user = getCurrentUser();
     const navContainer = document.getElementById('navAuthContainer');
@@ -50,7 +67,7 @@ function updateHeaderAuthNav() {
     if (!user) {
         // TRẠNG THÁI: CHƯA ĐĂNG NHẬP (GUEST)
         const guestHTML = `
-            <button onclick="openAuthModal()" class="flex items-center gap-1.5 text-xs font-extrabold text-white bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 px-4 py-2 rounded-full shadow-md transition active:scale-95 whitespace-nowrap">
+            <button onclick="openAuthModal()" class="flex items-center gap-1.5 text-xs font-extrabold text-white bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 px-4 py-2.5 rounded-full shadow-md transition active:scale-95 whitespace-nowrap">
                 <span>🔑</span> Đăng Nhập / Đăng Ký
             </button>
         `;
@@ -65,38 +82,65 @@ function updateHeaderAuthNav() {
             `;
         }
     } else {
-        // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP (GỌN GÀNG GỌN TRONG 1 THẺ PILL SANG TRỌNG)
+        // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP (ẨN CHỨC NĂNG VÀO MENU DROPDOWN NHỎ GỌN)
         let roleBadge = '';
         let targetPage = 'customer.html';
-        let pageBtnText = '👑 Trang VIP';
+        let pageBtnText = 'Trang VIP Khách Hàng';
+        let pageBtnIcon = '👑';
 
         if (user.role === 'admin') {
-            roleBadge = `<span class="bg-purple-100 text-purple-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">ADMIN</span>`;
+            roleBadge = `<span class="bg-purple-100 text-purple-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">ADMIN</span>`;
             targetPage = 'spa_admin.html';
-            pageBtnText = '⚙️ Trang Quản Lý';
+            pageBtnText = 'Trang Quản Lý Admin';
+            pageBtnIcon = '⚙️';
         } else if (user.role === 'ktv') {
-            roleBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">KTV</span>`;
+            roleBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">KTV</span>`;
             targetPage = 'spa_admin.html';
-            pageBtnText = '📋 Lịch Phục Vụ';
+            pageBtnText = 'Lịch Phục Vụ KTV';
+            pageBtnIcon = '📋';
         } else {
-            roleBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">${user.rank_badge || 'VIP'}</span>`;
+            roleBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${user.rank_badge || 'VIP GOLD'}</span>`;
             targetPage = 'customer.html';
-            pageBtnText = '👑 Trang VIP';
+            pageBtnText = 'Trang VIP Cá Nhân';
+            pageBtnIcon = '👑';
         }
 
+        // HTML DROPDOWN THỎA MÃN YÊU CẦU SIÊU GỌN GÀNG
         const userHTML = `
-            <div class="flex items-center gap-2 bg-slate-900 text-white pl-1.5 pr-2.5 py-1 rounded-full shadow-md border border-slate-800 text-xs whitespace-nowrap">
-                <span class="w-6 h-6 rounded-full bg-rose-500 text-white font-bold text-[11px] flex items-center justify-center shadow-inner">
-                    ${user.name ? user.name.charAt(0) : 'U'}
-                </span>
-                <span class="font-bold text-xs truncate max-w-[110px]">${user.name}</span>
-                ${roleBadge}
-                <a href="${targetPage}" class="bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold px-3 py-1 rounded-full transition shadow-sm whitespace-nowrap ml-0.5">
-                    ${pageBtnText}
-                </a>
-                <button onclick="handleLogout()" class="text-slate-400 hover:text-red-400 p-1 font-bold text-xs transition" title="Đăng Xuất">
-                    🚪
+            <div class="relative">
+                <button onclick="toggleUserDropdown(event)" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white pl-2 pr-3 py-1.5 rounded-full shadow-md transition text-xs font-bold border border-slate-800">
+                    <span class="w-6 h-6 rounded-full bg-rose-500 text-white font-extrabold text-[11px] flex items-center justify-center shadow-inner">
+                        ${user.name ? user.name.charAt(0) : 'U'}
+                    </span>
+                    <span class="truncate max-w-[100px]">${user.name}</span>
+                    <span class="text-[10px] text-slate-400">▼</span>
                 </button>
+
+                <!-- DROPDOWN MENU ẨN NỘI DUNG -->
+                <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-rose-100 py-2 z-50 animate-fade-in text-xs">
+                    <div class="px-4 py-2.5 border-b border-gray-100 space-y-1">
+                        <p class="font-extrabold text-gray-900 truncate">${user.name}</p>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[10px] text-gray-400">📞 ${user.phone}</span>
+                            ${roleBadge}
+                        </div>
+                    </div>
+
+                    <div class="py-1">
+                        <a href="${targetPage}" class="flex items-center gap-2 px-4 py-2.5 text-gray-700 hover:bg-rose-50 hover:text-rose-600 font-bold transition">
+                            <span>${pageBtnIcon}</span> ${pageBtnText}
+                        </a>
+                        <button onclick="openLookupModal()" class="w-full text-left flex items-center gap-2 px-4 py-2.5 text-gray-700 hover:bg-rose-50 hover:text-rose-600 font-bold transition">
+                            <span>🔍</span> Tra Cứu & Hủy Lịch Hẹn
+                        </button>
+                    </div>
+
+                    <div class="pt-1 border-t border-gray-100">
+                        <button onclick="handleLogout()" class="w-full text-left flex items-center gap-2 px-4 py-2.5 text-red-600 hover:bg-red-50 font-bold transition">
+                            <span>🚪</span> Đăng Xuất Tài Khoản
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
 
@@ -109,11 +153,11 @@ function updateHeaderAuthNav() {
                         <span class="font-bold text-gray-900">👤 ${user.name}</span>
                         ${roleBadge}
                     </div>
-                    <div class="pt-2 border-t border-rose-200/60 flex items-center justify-between gap-2">
-                        <a href="${targetPage}" class="bg-rose-600 text-white font-bold px-3.5 py-2 rounded-xl text-center text-[11px] flex-1">
-                            ${pageBtnText}
+                    <div class="pt-2 border-t border-rose-200/60 flex flex-col gap-2">
+                        <a href="${targetPage}" class="bg-rose-600 text-white font-bold px-3.5 py-2.5 rounded-xl text-center flex items-center justify-center gap-2 text-xs">
+                            <span>${pageBtnIcon}</span> ${pageBtnText}
                         </a>
-                        <button onclick="handleLogout()" class="bg-red-50 text-red-600 font-bold px-3.5 py-2 rounded-xl text-center text-[11px] border border-red-200">
+                        <button onclick="handleLogout()" class="bg-red-50 text-red-600 font-bold px-3.5 py-2.5 rounded-xl text-center border border-red-200 text-xs">
                             🚪 Đăng Xuất
                         </button>
                     </div>
