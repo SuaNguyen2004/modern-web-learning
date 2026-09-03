@@ -2,7 +2,7 @@
 // SPA ADMIN & STAFF DASHBOARD SCRIPT
 // ==========================================
 
-// Dữ liệu mẫu ban đầu nếu localStorage chưa có dữ liệu
+// Dữ liệu mẫu ban đầu nếu localStorage chưa có dữ liệu (đảm bảo mã đơn luôn độc nhất)
 const INITIAL_DUMMY_BOOKINGS = [
     {
         code: 'AURA-8942',
@@ -58,14 +58,41 @@ const INITIAL_DUMMY_BOOKINGS = [
     }
 ];
 
-// Khởi tạo dữ liệu
+// Tự động kiểm tra và khử trùng lặp mã đơn trong localStorage
+function sanitizeDuplicateCodes(bookings) {
+    const seenCodes = new Set();
+    let modified = false;
+
+    bookings.forEach(b => {
+        if (seenCodes.has(b.code)) {
+            // Nếu phát hiện trùng mã (VD: AURA-6586), sinh lại mã độc nhất mới
+            let newCode;
+            do {
+                newCode = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
+            } while (seenCodes.has(newCode));
+
+            console.warn(`Đã xử lý mã đơn trùng: ${b.code} -> ${newCode}`);
+            b.code = newCode;
+            modified = true;
+        }
+        seenCodes.add(b.code);
+    });
+
+    if (modified) {
+        localStorage.setItem('aura_bookings', JSON.stringify(bookings));
+    }
+    return bookings;
+}
+
+// Khởi tạo dữ liệu từ localStorage
 function getStoredBookings() {
     let stored = localStorage.getItem('aura_bookings');
     if (!stored) {
         localStorage.setItem('aura_bookings', JSON.stringify(INITIAL_DUMMY_BOOKINGS));
         return INITIAL_DUMMY_BOOKINGS;
     }
-    return JSON.parse(stored);
+    let parsed = JSON.parse(stored);
+    return sanitizeDuplicateCodes(parsed);
 }
 
 // Lưu dữ liệu vào LocalStorage

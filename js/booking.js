@@ -85,6 +85,19 @@ function selectTimeSlot(element, time) {
     selectedTimeSlot = time;
 }
 
+// Hàm sinh Mã đơn ĐỘC NHẤT (Không trùng lặp)
+function generateUniqueBookingCode() {
+    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
+    let existingCodes = new Set(existingBookings.map(b => b.code));
+    let newCode;
+    
+    do {
+        newCode = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
+    } while (existingCodes.has(newCode));
+
+    return newCode;
+}
+
 // Xử lý gửi Form Đặt Lịch
 function handleBookingSubmit(event) {
     event.preventDefault();
@@ -102,8 +115,8 @@ function handleBookingSubmit(event) {
         return;
     }
 
-    // Sinh mã lịch hẹn ngẫu nhiên (VD: AURA-8942)
-    const bookingCode = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
+    // Sinh mã đơn ĐỘC NHẤT không trùng lặp
+    const bookingCode = generateUniqueBookingCode();
 
     const bookingData = {
         code: bookingCode,
