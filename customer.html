@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSpa - Trang Cá Nhân & Ưu Đãi Khách Hàng VIP</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- 1. HEADER / NAVBAR -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Spa -->
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 to-pink-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition">
+                    🌸
+                </div>
+                <div class="leading-tight">
+                    <span class="text-2xl font-extrabold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">AuraSpa</span>
+                    <span class="block text-[10px] text-rose-400 font-semibold tracking-widest uppercase">VIP Customer Portal</span>
+                </div>
+            </a>
+
+            <!-- Navigation Buttons -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-4 py-2.5 rounded-full border border-gray-200 transition flex items-center gap-1.5">
+                    <span>🏠</span> Về Trang Chủ
+                </a>
+                <a href="index.html#services" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5">
+                    <span>📅</span> Đặt Lịch Mới
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. BANNER VIP & HỒ SƠ KHÁCH HÀNG THÂN THIẾT -->
+    <section class="bg-gradient-to-r from-slate-900 via-rose-950 to-slate-900 text-white py-10 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Hồ sơ Khách hàng -->
+            <div class="flex items-center gap-5 text-center md:text-left">
+                <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-400 to-rose-500 text-white font-black text-2xl flex items-center justify-center border-4 border-white/20 shadow-xl shadow-amber-500/20">
+                    TH
+                </div>
+                <div class="space-y-1">
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                        <h1 id="custName" class="text-2xl font-extrabold">Nguyễn Thanh Hằng</h1>
+                        <span id="custRank" class="bg-amber-400 text-slate-950 text-xs font-extrabold px-3 py-0.5 rounded-full uppercase shadow-sm">👑 VIP GOLD</span>
+                    </div>
+                    <p class="text-xs text-rose-200">📞 <span id="custPhone">0908123456</span> • Khách hàng thân thiết từ 2025</p>
+                    <p class="text-[11px] text-slate-400">Ưu đãi dành riêng: Giảm 10% các dịch vụ & Ưu tiên chọn khung giờ đẹp</p>
+                </div>
+            </div>
+
+            <!-- Thẻ Điểm Thưởng VIP -->
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 p-5 rounded-2xl flex items-center gap-6 shadow-xl">
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-amber-300 uppercase tracking-widest block">Điểm Thưởng tích lũy</span>
+                    <span id="custPoints" class="text-3xl font-black text-white">1.250</span>
+                    <span class="text-xs text-slate-300 block">Điểm Aura</span>
+                </div>
+                <div class="h-10 w-px bg-white/20"></div>
+                <button onclick="document.getElementById('exchangeSection').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs shadow-md transition active:scale-95 whitespace-nowrap">
+                    🎁 Đổi Điểm Thưởng
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. CONTAINER CHÍNH -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 flex-1 w-full">
+
+        <!-- 3.1 THỐNG KÊ NHANH -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="bg-white p-5 rounded-2xl border border-rose-100 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Lịch Hẹn Đã Đặt</p>
+                    <h3 class="text-2xl font-extrabold text-gray-900 mt-1">4 Ca Hẹn</h3>
+                    <p class="text-[11px] text-rose-600 font-semibold mt-1">Theo dõi tiến trình</p>
+                </div>
+                <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    📅
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-rose-100 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-amber-500 uppercase tracking-wider">Kho Voucher VIP</p>
+                    <h3 class="text-2xl font-extrabold text-amber-600 mt-1">3 Mã Giảm Giá</h3>
+                    <p class="text-[11px] text-amber-600 font-semibold mt-1">Đã sẵn sàng sử dụng</p>
+                </div>
+                <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    🎟️
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-rose-100 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-purple-500 uppercase tracking-wider">Hạng Đạt Được</p>
+                    <h3 class="text-2xl font-extrabold text-purple-600 mt-1">Thành Viên Vàng</h3>
+                    <p class="text-[11px] text-purple-600 font-semibold mt-1">Tích 250đ nữa lên Kim Cương</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    👑
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.2 DANH SÁCH LỊCH HẸN CỦA TÔI -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-rose-200/60 pb-3">
+                <div>
+                    <h2 class="text-xl font-extrabold text-gray-900">📅 Lịch Hẹn Của Tôi</h2>
+                    <p class="text-xs text-gray-500">Danh sách các ca gội đầu & chăm sóc da bạn đã đăng ký</p>
+                </div>
+                <a href="index.html#services" class="text-xs font-bold text-rose-600 hover:underline">
+                    + Đặt Lịch Hẹn Mới
+                </a>
+            </div>
+
+            <div id="myBookingsList" class="space-y-3">
+                <!-- Code JS render lịch hẹn của khách -->
+            </div>
+        </div>
+
+        <!-- 3.3 KHO VOUCHER & ƯU ĐÃI DÀNH RIÊNG -->
+        <div class="space-y-4">
+            <div class="border-b border-rose-200/60 pb-3">
+                <h2 class="text-xl font-extrabold text-gray-900">🎟️ Kho Voucher & Mã Giảm Giá Dành Riêng Cho Bạn</h2>
+                <p class="text-xs text-gray-500">Mã ưu đãi độc quyền dành cho khách hàng thân thiết hạng VIP</p>
+            </div>
+
+            <div id="vouchersContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Code JS render danh sách Voucher -->
+            </div>
+        </div>
+
+        <!-- 3.4 KHU VỰC ĐỔI ĐIỂM THƯỞNG (POINT EXCHANGE) -->
+        <div id="exchangeSection" class="bg-white rounded-3xl p-6 border border-rose-100 shadow-sm space-y-6">
+            <div class="border-b border-gray-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-xl font-extrabold text-gray-900">🎁 Đổi Điểm Thưởng Tích Lũy Lấy Quà Spa</h2>
+                    <p class="text-xs text-gray-500">Dùng điểm thưởng đổi các Voucher giảm giá cực hấp dẫn</p>
+                </div>
+                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3.5 py-1 rounded-full border border-amber-200 self-start sm:self-auto">
+                    Số điểm hiện có: 1.250 Điểm
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Quà 1 -->
+                <div class="p-5 rounded-2xl border border-gray-200 bg-gray-50 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <span class="bg-rose-100 text-rose-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full">500 ĐIỂM</span>
+                        <h4 class="font-bold text-gray-900 text-sm">Voucher Giảm 50.000đ</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">Áp dụng cho dịch vụ Gội Đầu Dưỡng Sinh Thảo Dược.</p>
+                    </div>
+                    <button onclick="redeemPoints(500, 'Voucher Giảm 50k Gội Đầu')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 rounded-xl text-xs transition">
+                        Đổi 500 Điểm
+                    </button>
+                </div>
+
+                <!-- Quà 2 -->
+                <div class="p-5 rounded-2xl border border-rose-200 bg-rose-50/50 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">800 ĐIỂM</span>
+                        <h4 class="font-bold text-gray-900 text-sm">Voucher Giảm 100.000đ Chăm Sóc Da</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">Áp dụng cho liệu trình Chăm sóc da mặt chuyên sâu 75 phút.</p>
+                    </div>
+                    <button onclick="redeemPoints(800, 'Voucher Giảm 100k Chăm Sóc Da')" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 rounded-xl text-xs transition">
+                        Đổi 800 Điểm
+                    </button>
+                </div>
+
+                <!-- Quà 3 -->
+                <div class="p-5 rounded-2xl border border-purple-200 bg-purple-50/50 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">1.200 ĐIỂM</span>
+                        <h4 class="font-bold text-gray-900 text-sm">Miễn Phí 1 Lần Điện Di Vitamin C</h4>
+                        <p class="text-gray-600 text-xs leading-relaxed">Quà tặng tặng kèm khi sử dụng bất kỳ liệu trình Spa nào.</p>
+                    </div>
+                    <button onclick="redeemPoints(1200, 'Miễn Phí 1 Lần Điện Di C')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-xl text-xs transition">
+                        Đổi 1.200 Điểm
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs border-t border-slate-800 mt-auto">
+        <p>© 2026 AuraSpa Customer Portal - Dành Riêng Cho Khách Hàng VIP & Thân Thiết</p>
+    </footer>
+
+    <!-- Script xử lý Trang Cá Nhân Khách Hàng -->
+    <script src="js/customer.js"></script>
+</body>
+</html>
