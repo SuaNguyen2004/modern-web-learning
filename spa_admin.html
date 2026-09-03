@@ -10,10 +10,15 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
+    <script src="js/auth.js"></script>
+    <script>
+        // Bảo vệ phân quyền RBAC: Chỉ Admin hoặc KTV mới được vào
+        protectPage(['admin', 'ktv']);
+    </script>
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 antialiased flex flex-col">
 
-    <!-- 1. HEADER ADMIN NAVBAR (FULL MOBILE & DESKTOP SUPPORT) -->
+    <!-- 1. HEADER ADMIN NAVBAR (PROTECTED RBAC) -->
     <header class="bg-slate-900 text-white sticky top-0 z-50 border-b border-slate-800 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- Logo Admin -->
@@ -28,37 +33,13 @@
                     <span class="animate-pulse">💬</span> Chat Với Khách Hàng
                 </button>
                 <a href="index.html" class="hidden sm:flex text-xs font-semibold text-rose-400 hover:text-rose-300 transition items-center gap-1.5 bg-slate-800 px-3 py-2 rounded-xl border border-slate-700">
-                    <span>🌐</span> Trình Xem Khách Hàng
+                    <span>🌐</span> Xem Trang Chủ
                 </a>
                 <div class="h-6 w-px bg-slate-800 hidden sm:block"></div>
-                <div class="flex items-center gap-2.5 hidden sm:flex">
-                    <div class="w-8 h-8 rounded-full bg-rose-500 text-white font-bold flex items-center justify-center text-xs">
-                        AD
-                    </div>
-                    <div class="text-xs">
-                        <p class="font-bold text-white leading-none">Chủ Spa / Quản Lý</p>
-                        <p class="text-[10px] text-slate-400 mt-0.5">Quản lý hệ thống</p>
-                    </div>
-                </div>
-
-                <!-- Nút Hamburger Menu Mobile -->
-                <button onclick="toggleMobileAdminMenu()" class="sm:hidden p-2 rounded-xl text-white bg-slate-800 hover:bg-slate-700 text-xl font-bold transition ml-1">
-                    ☰
+                <button onclick="handleLogout()" class="text-xs font-bold text-red-400 hover:text-red-300 bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+                    <span>🚪</span> Đăng Xuất
                 </button>
             </div>
-        </div>
-
-        <!-- 📱 MOBILE MENU DRAWER DÀNH CHO ADMIN -->
-        <div id="mobileAdminMenuDrawer" class="hidden sm:hidden bg-slate-900 border-b border-slate-800 px-4 py-4 space-y-2.5 animate-fade-in shadow-xl text-xs">
-            <button onclick="toggleAdminChatModal(); toggleMobileAdminMenu();" class="w-full bg-rose-600 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition">
-                <span>💬</span> Mở Khung Live Chat Với Khách Hàng
-            </button>
-            <a href="customer.html" class="bg-slate-800 text-rose-400 font-bold px-4 py-3 rounded-xl border border-slate-700 text-center flex items-center justify-center gap-2 transition">
-                <span>👑</span> Xem Trang VIP Khách Hàng (customer.html)
-            </a>
-            <a href="index.html" class="bg-slate-800 text-white font-bold px-4 py-3 rounded-xl border border-slate-700 text-center flex items-center justify-center gap-2 transition">
-                <span>🌐</span> Quay Về Trang Chủ Website (index.html)
-            </a>
         </div>
     </header>
 
@@ -258,7 +239,7 @@
         </div>
     </div>
 
-    <!-- 💬 FLOATING ADMIN LIVE CHAT MODAL -->
+    <!-- FLOATING ADMIN LIVE CHAT MODAL -->
     <div id="adminChatModal" class="fixed bottom-6 right-6 z-50 hidden flex-col w-96 h-[500px] bg-slate-900 text-white rounded-3xl shadow-2xl border border-slate-800 overflow-hidden animate-fade-in">
         <div class="p-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between shadow-md">
             <div class="flex items-center gap-2.5">
@@ -291,11 +272,5 @@
 
     <!-- Script Admin -->
     <script src="js/admin_spa.js"></script>
-    <script>
-        function toggleMobileAdminMenu() {
-            const drawer = document.getElementById('mobileAdminMenuDrawer');
-            if (drawer) drawer.classList.toggle('hidden');
-        }
-    </script>
 </body>
 </html>

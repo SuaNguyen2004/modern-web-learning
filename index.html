@@ -14,7 +14,7 @@
 </head>
 <body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen">
 
-    <!-- 1. HEADER / NAVBAR (DÀNH CHO CẢ MÀN HÌNH MÁY TÍNH VÀ ĐIỆN THOẠI DI ĐỘNG) -->
+    <!-- 1. HEADER / NAVBAR (ẨN LINK NỘI BỘ, HIỂN THỊ ĐĂNG NHẬP PHÂN QUYỀN RBAC) -->
     <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo Spa -->
@@ -37,20 +37,20 @@
                 <a href="#reviews" class="hover:text-rose-600 transition">Đánh Giá</a>
             </nav>
 
-            <!-- CTA Booking & Links Desktop -->
-            <div class="flex items-center gap-2">
-                <button onclick="openLookupModal()" class="hidden xl:flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-full border border-gray-200 transition">
+            <!-- CTA Booking & Auth Nav Desktop -->
+            <div class="flex items-center gap-2.5">
+                <button onclick="openLookupModal()" class="hidden xl:flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3.5 py-2 rounded-full border border-gray-200 transition">
                     <span>🔍</span> Tra Cứu
                 </button>
-                <a href="customer.html" class="hidden sm:flex items-center gap-1 text-xs font-bold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 px-3.5 py-2 rounded-full border border-rose-200 transition">
-                    <span>👑</span> Trang VIP Khách Hàng
-                </a>
-                <a href="spa_admin.html" class="hidden md:flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-full border border-gray-200 transition">
-                    <span>⚙️</span> Trang Quản Lý
-                </a>
+                
                 <button onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-4 py-2 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5">
                     <span>📅</span> Đặt Lịch Ngay
                 </button>
+
+                <!-- KHU VỰC ĐĂNG NHẬP / ĐĂNG KÝ PHÂN QUYỀN (DYNAMIC NAV CONTAINER) -->
+                <div id="navAuthContainer" class="hidden sm:block">
+                    <!-- Được render tự động bằng JS auth.js -->
+                </div>
 
                 <!-- Nút Hamburger Menu cho Mobile -->
                 <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl text-gray-700 bg-gray-100 hover:bg-rose-50 text-xl font-bold transition ml-1">
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <!-- 📱 MOBILE MENU DRAWER (XỬ LÝ MÀN HÌNH NHỎ CHUYỂN TRANG MƯỢT MÀ) -->
+        <!-- 📱 MOBILE MENU DRAWER (RESPONSIVE PHÂN QUYỀN ON MOBILE) -->
         <div id="mobileMenuDrawer" class="hidden md:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-3 animate-fade-in shadow-xl">
             <div class="flex flex-col gap-2.5 font-medium text-sm text-gray-700 border-b border-gray-100 pb-3">
                 <a href="#home" onclick="toggleMobileMenu()" class="text-rose-600 font-bold flex items-center gap-2"><span>🏠</span> Trang Chủ</a>
@@ -69,18 +69,14 @@
                 <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-rose-600 flex items-center gap-2"><span>⭐</span> Đánh Giá Khách Hàng</a>
             </div>
             
-            <!-- Các nút chuyển màn hình chính trên Mobile -->
-            <div class="flex flex-col gap-2 text-xs pt-1">
-                <a href="customer.html" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold px-4 py-3 rounded-xl border border-rose-200 text-center flex items-center justify-center gap-2 transition shadow-sm">
-                    <span>👑</span> Trang Cá Nhân & VIP Khách Hàng
-                </a>
-                <a href="spa_admin.html" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition shadow-sm">
-                    <span>⚙️</span> Trang Điều Hành Quản Lý Spa (Admin)
-                </a>
-                <button onclick="openLookupModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-xl border border-gray-200 text-center flex items-center justify-center gap-2 transition">
-                    <span>🔍</span> Tra Cứu & Hủy Lịch Hẹn Đã Đặt
-                </button>
+            <!-- Khu vực Phân Quyền Đăng Nhập trên Mobile -->
+            <div id="mobileNavAuthContainer" class="pt-1">
+                <!-- Được render tự động bằng JS auth.js -->
             </div>
+
+            <button onclick="openLookupModal()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-xl border border-gray-200 text-center flex items-center justify-center gap-2 transition text-xs">
+                <span>🔍</span> Tra Cứu & Hủy Lịch Hẹn Đã Đặt
+            </button>
         </div>
     </header>
 
@@ -246,7 +242,6 @@
 
             <!-- Grid 3 KTV -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
                 <!-- KTV 1 -->
                 <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
                     <div class="relative w-28 h-28 mx-auto">
@@ -306,7 +301,6 @@
                         <button onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -422,8 +416,81 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 🌟 MODAL FORM ĐẶT LỊCH HẸN TRỰC TUYẾN -->
+    <!-- 🔑 MODAL ĐĂNG NHẬP & ĐĂNG KÝ PHÂN QUYỀN RBAC -->
     <!-- ========================================== -->
+    <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-rose-100 relative animate-fade-in my-auto space-y-4">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">✕</button>
+
+            <!-- TABS CHUYỂN ĐỔI ĐĂNG NHẬP / ĐĂNG KÝ -->
+            <div class="flex border-b border-gray-200 text-sm font-bold text-center">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 border-b-2 border-rose-600 text-rose-600 font-extrabold transition">
+                    🔑 ĐĂNG NHẬP
+                </button>
+                <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 border-b-2 border-transparent text-gray-400 transition">
+                    ✨ ĐĂNG KÝ MỚI
+                </button>
+            </div>
+
+            <!-- FORM 1: ĐĂNG NHẬP -->
+            <div id="loginFormArea">
+                <form onsubmit="submitLoginForm(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1 uppercase">Tài khoản / Số điện thoại:</label>
+                        <input type="text" id="loginUsername" placeholder="Nhập admin, SĐT hoặc username..." required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1 uppercase">Mật khẩu:</label>
+                        <input type="password" id="loginPassword" placeholder="Nhập mật khẩu..." required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold py-2.5 rounded-xl shadow-md transition text-xs">
+                        XÁC NHẬN ĐĂNG NHẬP ✨
+                    </button>
+                </form>
+
+                <!-- DEMO QUICK LOGIN BUTTONS -->
+                <div class="mt-4 pt-3 border-t border-gray-100 text-center space-y-2">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">👉 Chọn nhanh tài khoản mẫu thử nghiệm (Demo):</p>
+                    <div class="grid grid-cols-3 gap-1.5 text-[11px]">
+                        <button onclick="quickDemoLogin('customer')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold py-1.5 px-2 rounded-lg border border-rose-200 transition">
+                            👤 Khách VIP
+                        </button>
+                        <button onclick="quickDemoLogin('ktv')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-1.5 px-2 rounded-lg border border-blue-200 transition">
+                            👩‍🎨 KTV Da
+                        </button>
+                        <button onclick="quickDemoLogin('admin')" class="bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold py-1.5 px-2 rounded-lg border border-purple-200 transition">
+                            ⚙️ Admin Spa
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORM 2: ĐĂNG KÝ -->
+            <div id="registerFormArea" class="hidden">
+                <form onsubmit="submitRegisterForm(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1 uppercase">Họ và Tên:</label>
+                        <input type="text" id="regFullName" placeholder="Nhập họ và tên..." required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1 uppercase">Số Điện Thoại:</label>
+                        <input type="tel" id="regPhone" placeholder="0909xxxxxx" required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1 uppercase">Mật Khẩu Mới:</label>
+                        <input type="password" id="regPassword" placeholder="Nhập mật khẩu..." required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold py-2.5 rounded-xl shadow-md transition text-xs">
+                        TẠO TÀI KHOẢN KHÁCH HÀNG MỚI 🌸
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FORM ĐẶT LỊCH HẸN TRỰC TUYẾN -->
     <div id="bookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
         <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-rose-100 relative animate-fade-in my-auto">
             <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">✕</button>
@@ -511,9 +578,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 🔍 MODAL TRA CỨU & HỦY LỊCH HẸN KHÁCH HÀNG -->
-    <!-- ========================================== -->
+    <!-- MODAL TRA CỨU & HỦY LỊCH HẸN KHÁCH HÀNG -->
     <div id="lookupModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-rose-100 relative my-auto animate-fade-in space-y-4">
             <button onclick="closeLookupModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">✕</button>
@@ -537,9 +602,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 🌟 POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
-    <!-- ========================================== -->
+    <!-- POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
     <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-rose-100 animate-bounce-in">
             <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto font-bold shadow-inner">
@@ -586,9 +649,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 💬 LIVE CHAT WIDGET TRỰC TUYẾN (BOTTOM-RIGHT) -->
-    <!-- ========================================== -->
+    <!-- LIVE CHAT WIDGET TRỰC TUYẾN -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         <button onclick="toggleChatWidget()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white p-3.5 px-5 rounded-full shadow-2xl flex items-center gap-2.5 active:scale-95 transition group border-2 border-white">
             <span class="text-xl animate-bounce">💬</span>
@@ -668,7 +729,8 @@
         </div>
     </footer>
 
-    <!-- Nhúng file Script xử lý Đặt Lịch & Chat -->
+    <!-- Nhúng Script Xử Lý Đăng Nhập, Đặt Lịch & Chat -->
+    <script src="js/auth.js"></script>
     <script src="js/booking.js"></script>
     <script src="js/chat.js"></script>
 </body>

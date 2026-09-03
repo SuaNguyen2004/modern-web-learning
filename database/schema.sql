@@ -6,7 +6,22 @@
 CREATE DATABASE IF NOT EXISTS `auraspa_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `auraspa_db`;
 
--- 1. BẢNG DỊCH VỤ SPA (services)
+-- 1. BẢNG TÀI KHOẢN & PHÂN QUYỀN (users)
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(100) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL,
+    `full_name` VARCHAR(255) NOT NULL,
+    `phone` VARCHAR(20) NOT NULL UNIQUE,
+    `role` ENUM('admin', 'ktv', 'customer') NOT NULL DEFAULT 'customer',
+    `rank_name` VARCHAR(100) DEFAULT 'Thành Viên Vàng (Gold Member)',
+    `rank_badge` VARCHAR(50) DEFAULT '👑 VIP GOLD',
+    `points` INT DEFAULT 1250,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 2. BẢNG DỊCH VỤ SPA (services)
 DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,7 +33,7 @@ CREATE TABLE `services` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 2. BẢNG KỸ THUẬT VIÊN (staff)
+-- 3. BẢNG KỸ THUẬT VIÊN (staff)
 DROP TABLE IF EXISTS `staff`;
 CREATE TABLE `staff` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,19 +43,6 @@ CREATE TABLE `staff` (
     `reviews_count` INT DEFAULT 0,
     `avatar_url` VARCHAR(500),
     `status` ENUM('Available', 'Busy', 'Off') DEFAULT 'Available',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 3. BẢNG KHÁCH HÀNG (customers)
-DROP TABLE IF EXISTS `customers`;
-CREATE TABLE `customers` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `phone` VARCHAR(20) NOT NULL UNIQUE,
-    `email` VARCHAR(255),
-    `rank_name` VARCHAR(100) DEFAULT 'Thành Viên Vàng (Gold Member)',
-    `rank_badge` VARCHAR(50) DEFAULT '👑 VIP GOLD',
-    `points` INT DEFAULT 1250,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -88,6 +90,13 @@ CREATE TABLE `chat_messages` (
 -- SEED DỮ LIỆU BAN ĐẦU (INITIAL SEED DATA)
 -- ==========================================
 
+-- Seed Tài Khoản Phân Quyền (Pass mã hóa bcrypt cho 'admin123', 'ktv123', '123456')
+-- password: admin123 (Admin), ktv123 (KTV), 123456 (Customer)
+INSERT INTO `users` (`username`, `password`, `full_name`, `phone`, `role`, `rank_name`, `rank_badge`, `points`) VALUES
+('admin', '$2y$10$e.wMhJ/Jt1O0.5694M4K1.G0EaA3jF65WdO73zG.H7n.42398N4.K', 'Chủ Spa / Quản Lý Aura', '0909123456', 'admin', 'Quản Lý Hệ Thống', '⚙️ ADMIN', 9999),
+('ktv_minhanh', '$2y$10$e.wMhJ/Jt1O0.5694M4K1.G0EaA3jF65WdO73zG.H7n.42398N4.K', 'KTV Nguyễn Minh Anh', '0909888777', 'ktv', 'Chuyên Gia Chăm Sóc Da', '👩‍🎨 KTV SPECIALIST', 5000),
+('0908123456', '$2y$10$e.wMhJ/Jt1O0.5694M4K1.G0EaA3jF65WdO73zG.H7n.42398N4.K', 'Nguyễn Thanh Hằng', '0908123456', 'customer', 'Thành Viên Vàng (Gold Member)', '👑 VIP GOLD', 1250);
+
 -- Seed Dịch Vụ
 INSERT INTO `services` (`name`, `price`, `duration`, `description`, `image_url`) VALUES
 ('Gội Đầu Dưỡng Sinh Thảo Dược', 199000, '60 Phút', 'Gội đầu bằng nước bồ kết nấu tươi, massage ấn huyệt da đầu, vòm nước tuần hoàn giúp giảm đau đầu sảng khoái.', 'https://images.unsplash.com/photo-1540555700478-4be289fbecef'),
@@ -100,10 +109,6 @@ INSERT INTO `staff` (`name`, `role`, `rating`, `reviews_count`, `avatar_url`, `s
 ('Nguyễn Minh Anh', 'Chuyên Gia Chăm Sóc Da', 4.9, 180, 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2', 'Available'),
 ('Trần Thu Hà', 'Chuyên Gia Gội Đầu Dưỡng Sinh', 5.0, 210, 'https://images.unsplash.com/photo-1580489944761-15a19d654956', 'Available'),
 ('Lê Ngọc Lan', 'KTV Massage Trị Liệu', 4.8, 140, 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604', 'Available');
-
--- Seed Khách Hàng VIP
-INSERT INTO `customers` (`name`, `phone`, `email`, `rank_name`, `rank_badge`, `points`) VALUES
-('Nguyễn Thanh Hằng', '0908123456', 'thanhhang.aura@gmail.com', 'Thành Viên Vàng (Gold Member)', '👑 VIP GOLD', 1250);
 
 -- Seed Lịch Hẹn
 INSERT INTO `bookings` (`code`, `customer_name`, `customer_phone`, `service_name`, `service_price`, `booking_date`, `booking_time`, `staff_name`, `note`, `status`) VALUES
