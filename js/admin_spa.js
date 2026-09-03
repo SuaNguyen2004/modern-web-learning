@@ -203,23 +203,23 @@ function renderBookingsTable(bookings) {
 
     tbody.innerHTML = filtered.map(b => `
         <tr class="hover:bg-rose-50/40 transition border-b border-gray-100">
-            <td class="p-4 font-extrabold text-rose-600 text-xs">
+            <td class="p-3.5 font-extrabold text-rose-600 text-xs whitespace-nowrap">
                 ${b.code}
             </td>
-            <td class="p-4">
+            <td class="p-3.5 whitespace-nowrap">
                 <p class="font-bold text-gray-900 text-xs">${b.customerName}</p>
                 <p class="text-[11px] text-gray-500">📞 ${b.customerPhone}</p>
-                ${b.note ? `<p class="text-[10px] text-amber-600 italic">📝 ${b.note}</p>` : ''}
+                ${b.note ? `<p class="text-[10px] text-amber-600 italic max-w-[150px] truncate">📝 ${b.note}</p>` : ''}
             </td>
-            <td class="p-4">
+            <td class="p-3.5">
                 <p class="font-bold text-gray-800 text-xs">${b.serviceName}</p>
                 <p class="text-[11px] text-rose-600 font-extrabold">${(b.servicePrice || 0).toLocaleString('vi-VN')} đ</p>
             </td>
-            <td class="p-4 text-xs">
+            <td class="p-3.5 text-xs whitespace-nowrap">
                 <p class="font-bold text-gray-800">⏰ ${b.time}</p>
                 <p class="text-[11px] text-gray-500">📅 ${b.date}</p>
             </td>
-            <td class="p-4 text-xs">
+            <td class="p-3.5 text-xs whitespace-nowrap">
                 ${(b.status === 'Pending' || b.status === 'Confirmed') ? `
                     <select onchange="reassignStaff('${b.code}', this.value)" class="bg-gray-50 border border-gray-200 text-xs font-semibold rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-500">
                         <option value="Hệ thống tự xếp KTV" ${b.staff.includes('tự xếp') ? 'selected' : ''}>Tự xếp ngẫu nhiên</option>
@@ -229,10 +229,10 @@ function renderBookingsTable(bookings) {
                     </select>
                 ` : `<span class="font-semibold text-gray-700">${b.staff}</span>`}
             </td>
-            <td class="p-4">
+            <td class="p-3.5 whitespace-nowrap">
                 ${getStatusBadge(b.status)}
             </td>
-            <td class="p-4 text-right space-x-1">
+            <td class="p-3.5 text-right whitespace-nowrap space-x-1">
                 ${renderAdminActionButtons(b.code, b.status)}
             </td>
         </tr>
@@ -242,29 +242,29 @@ function renderBookingsTable(bookings) {
 function getStatusBadge(status) {
     switch (status) {
         case 'Pending':
-            return `<span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-amber-200">⏳ Chờ Duyệt</span>`;
+            return `<span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-amber-200 inline-block whitespace-nowrap">⏳ Chờ Duyệt</span>`;
         case 'Confirmed':
-            return `<span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-200">✓ Đã Duyệt</span>`;
+            return `<span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-200 inline-block whitespace-nowrap">✓ Đã Duyệt</span>`;
         case 'In_Progress':
-            return `<span class="bg-purple-100 text-purple-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-purple-200 animate-pulse">💆‍♀️ Đang Phục Vụ</span>`;
+            return `<span class="bg-purple-100 text-purple-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-purple-200 animate-pulse inline-block whitespace-nowrap">💆‍♀️ Đang Phục Vụ</span>`;
         case 'Completed':
-            return `<span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-200">🎉 Hoàn Thành</span>`;
+            return `<span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-200 inline-block whitespace-nowrap">🎉 Hoàn Thành</span>`;
         case 'Cancelled':
-            return `<span class="bg-red-100 text-red-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-red-200">✕ Đã Hủy</span>`;
+            return `<span class="bg-red-100 text-red-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-red-200 inline-block whitespace-nowrap">✕ Đã Hủy</span>`;
         default:
-            return `<span class="bg-gray-100 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-full">${status}</span>`;
+            return `<span class="bg-gray-100 text-gray-700 text-[11px] font-bold px-2.5 py-1 rounded-full inline-block whitespace-nowrap">${status}</span>`;
     }
 }
 
 function renderAdminActionButtons(code, status) {
     if (status === 'Pending') {
         return `
-            <button onclick="updateBookingStatus('${code}', 'Confirmed')" class="bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold px-3 py-1 rounded-lg transition shadow-sm">✓ Duyệt Đơn</button>
-            <button onclick="cancelBookingByStaff('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2 py-1 rounded-lg transition">Hủy</button>
+            <button onclick="updateBookingStatus('${code}', 'Confirmed')" class="bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition shadow-sm whitespace-nowrap">✓ Duyệt Đơn</button>
+            <button onclick="cancelBookingByStaff('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition whitespace-nowrap">Hủy</button>
         `;
     } else if (status === 'Confirmed') {
         return `
-            <button onclick="cancelBookingByStaff('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2 py-1 rounded-lg transition">✕ Hủy Ca (KTV Bận)</button>
+            <button onclick="cancelBookingByStaff('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition whitespace-nowrap">✕ Hủy Ca (Bận)</button>
         `;
     } else {
         return `<span class="text-[11px] text-gray-400">Đã khóa</span>`;
@@ -313,6 +313,19 @@ function updateBookingStatus(code, newStatus) {
 // 💬 CHỨC NĂNG LIVE CHAT VỚI KHÁCH HÀNG (ADMIN SIDE)
 // ==========================================
 
+function toggleAdminChatModal() {
+    const modal = document.getElementById('adminChatModal');
+    if (!modal) return;
+    if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        renderAdminChat();
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
 function renderAdminChat() {
     const adminChatBody = document.getElementById('adminChatMessagesBody');
     if (!adminChatBody) return;
@@ -324,8 +337,10 @@ function renderAdminChat() {
         const isAdmin = msg.sender === 'spa';
         return `
             <div class="flex flex-col ${isAdmin ? 'items-end' : 'items-start'} mb-3">
-                <span class="text-[10px] text-slate-400 mb-1 px-1">${msg.senderName || (isAdmin ? 'Chủ Spa' : 'Khách Hàng')} • ${msg.time}</span>
-                <div class="${isAdmin ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none' : 'bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none'} p-3 max-w-[85%] text-xs leading-relaxed">
+                <span class="text-[10px] text-slate-400 font-semibold mb-1 px-1">
+                    ${isAdmin ? '🌸 Lễ Tân AuraSpa (Bạn)' : '👤 Khách Hàng'} • ${msg.time}
+                </span>
+                <div class="${isAdmin ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none shadow-sm' : 'bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[85%] text-xs leading-relaxed">
                     ${msg.text}
                 </div>
             </div>
@@ -356,7 +371,6 @@ function handleAdminSendChat(event) {
     renderAdminChat();
 }
 
-// Tự động đồng bộ tin nhắn từ phía Khách Hàng gửi tới
 window.addEventListener('storage', (e) => {
     if (e.key === 'aura_chat_messages') {
         renderAdminChat();

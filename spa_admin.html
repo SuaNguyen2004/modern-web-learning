@@ -22,17 +22,20 @@
                 <span class="text-xl font-bold tracking-wide">AuraSpa Panel</span>
             </div>
 
-            <!-- Navigation Links & User Profile -->
-            <div class="flex items-center gap-6">
-                <a href="index.html" class="text-xs font-semibold text-rose-400 hover:text-rose-300 transition flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
-                    <span>🌐</span> Trình Xem Khách Hàng (Website)
+            <!-- Navigation Links & Live Chat Trigger -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleAdminChatModal()" class="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">
+                    <span class="animate-pulse">💬</span> Chat Với Khách Hàng
+                </button>
+                <a href="index.html" class="text-xs font-semibold text-rose-400 hover:text-rose-300 transition flex items-center gap-1.5 bg-slate-800 px-3 py-2 rounded-xl border border-slate-700">
+                    <span>🌐</span> Trình Xem Khách Hàng
                 </a>
-                <div class="h-6 w-px bg-slate-800"></div>
-                <div class="flex items-center gap-2.5">
+                <div class="h-6 w-px bg-slate-800 hidden sm:block"></div>
+                <div class="flex items-center gap-2.5 hidden sm:flex">
                     <div class="w-8 h-8 rounded-full bg-rose-500 text-white font-bold flex items-center justify-center text-xs">
                         AD
                     </div>
-                    <div class="text-xs hidden sm:block">
+                    <div class="text-xs">
                         <p class="font-bold text-white leading-none">Chủ Spa / Quản Lý</p>
                         <p class="text-[10px] text-slate-400 mt-0.5">Quản lý hệ thống</p>
                     </div>
@@ -41,7 +44,7 @@
         </div>
     </header>
 
-    <!-- 2. CONTAINER CHÍNH -->
+    <!-- 2. CONTAINER CHÍNH (RỘNG RÃI FULL-WIDTH) -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-1 w-full">
 
         <!-- TIÊU ĐỀ DASHBOARD -->
@@ -50,9 +53,14 @@
                 <h1 class="text-2xl font-extrabold text-slate-900">📊 Quản Lý Lịch Hẹn & Chat Khách Hàng</h1>
                 <p class="text-slate-500 text-xs mt-1">Hệ thống tự động chuyển trạng thái ca hẹn theo giờ • Trả lời chat tư vấn trực tuyến với Khách</p>
             </div>
-            <button onclick="renderDashboard()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 self-start sm:self-auto">
-                <span>🔄</span> Cập Nhật Dữ Liệu
-            </button>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleAdminChatModal()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                    <span>💬</span> Mở Khung Chat Trực Tuyến
+                </button>
+                <button onclick="renderDashboard()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                    <span>🔄</span> Cập Nhật Dữ Liệu
+                </button>
+            </div>
         </div>
 
         <!-- 3. THỐNG KÊ 4 THẺ CHÍNH (STAT CARDS) -->
@@ -72,7 +80,7 @@
                 <div>
                     <p class="text-[11px] font-bold text-amber-500 uppercase tracking-wider">Chờ Duyệt Đơn</p>
                     <h3 id="statPending" class="text-3xl font-extrabold text-amber-600 mt-1">0</h3>
-                    <p class="text-[11px] text-amber-600 font-medium mt-1">⚡ Admin chỉ cần bấm duyệt 1 lần</p>
+                    <p class="text-[11px] text-amber-600 font-medium mt-1">⚡ Admin duyệt đơn 1 lần</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
                     ⏳
@@ -83,7 +91,7 @@
                 <div>
                     <p class="text-[11px] font-bold text-purple-500 uppercase tracking-wider">Đang Phục Vụ</p>
                     <h3 id="statInProgress" class="text-3xl font-extrabold text-purple-600 mt-1">0</h3>
-                    <p class="text-[11px] text-purple-600 font-medium mt-1">⏰ Tự động chuyển theo giờ hẹn</p>
+                    <p class="text-[11px] text-purple-600 font-medium mt-1">⏰ Tự động theo giờ hẹn</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
                     ✨
@@ -94,7 +102,7 @@
                 <div>
                     <p class="text-[11px] font-bold text-emerald-500 uppercase tracking-wider">Doanh Thu Dự Kiến</p>
                     <h3 id="statRevenue" class="text-2xl font-extrabold text-emerald-600 mt-1">0 đ</h3>
-                    <p class="text-[11px] text-emerald-600 font-medium mt-1">↑ Thống kê các đơn hợp lệ</p>
+                    <p class="text-[11px] text-emerald-600 font-medium mt-1">↑ Thống kê đơn hợp lệ</p>
                 </div>
                 <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
                     💵
@@ -102,82 +110,53 @@
             </div>
         </div>
 
-        <!-- 4. KHU VỰC CHAT TRỰC TUYẾN DÀNH CHO ADMIN / LỄ TÂN SPA -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Cột trái: Bảng Quản Lý Lịch Hẹn (2/3 chiều rộng) -->
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
-                <div class="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
-                    <div>
-                        <h2 class="font-extrabold text-slate-900 text-lg">Danh Sách Lịch Hẹn Spa</h2>
-                        <p class="text-slate-500 text-xs">Admin duyệt đơn 1 lần • Tự động chuyển ca theo giờ</p>
-                    </div>
+        <!-- 4. BẢNG QUẢN LÝ LỊCH HẸN FULL WIDTH (KHÔNG BỊ ÉP HẸP) -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
+            <div class="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
+                <div>
+                    <h2 class="font-extrabold text-slate-900 text-lg">Danh Sách Lịch Hẹn Spa</h2>
+                    <p class="text-slate-500 text-xs">Admin duyệt đơn 1 lần • Tự động chuyển ca theo giờ • Đổi KTV linh hoạt</p>
+                </div>
 
-                    <div class="flex flex-wrap items-center gap-2">
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-gray-700 whitespace-nowrap">👩‍🎨 Xem Theo KTV:</span>
                         <select onchange="filterByStaff(this.value)" class="bg-white border border-slate-300 text-xs font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-rose-500 shadow-sm">
-                            <option value="ALL">Tất cả KTV</option>
+                            <option value="ALL">Tất cả Kỹ Thuật Viên</option>
                             <option value="Minh Anh">KTV Minh Anh</option>
                             <option value="Thu Hà">KTV Thu Hà</option>
                             <option value="Ngọc Lan">KTV Ngọc Lan</option>
                         </select>
                     </div>
-                </div>
 
-                <!-- Tabs Filter Status -->
-                <div class="px-5 flex flex-wrap gap-1">
-                    <button onclick="filterBookings('ALL', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-rose-600 text-white text-xs shadow-sm transition">Tất Cả</button>
-                    <button onclick="filterBookings('Pending', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 text-xs transition">⏳ Chờ Duyệt</button>
-                    <button onclick="filterBookings('Confirmed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 text-xs transition">✓ Đã Duyệt</button>
-                    <button onclick="filterBookings('In_Progress', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 text-xs transition">💆‍♀️ Đang Phục Vụ</button>
-                    <button onclick="filterBookings('Completed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 text-xs transition">🎉 Hoàn Thành</button>
-                </div>
-
-                <!-- TABLE CONTENT -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100/70 text-slate-700 font-extrabold uppercase tracking-wider text-[11px] border-b border-slate-200">
-                            <tr>
-                                <th class="p-3.5">Mã Đơn</th>
-                                <th class="p-3.5">Khách Hàng</th>
-                                <th class="p-3.5">Dịch Vụ</th>
-                                <th class="p-3.5">Thời Gian</th>
-                                <th class="p-3.5">KTV</th>
-                                <th class="p-3.5">Trạng Thái</th>
-                                <th class="p-3.5 text-right">Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bookingsTbody" class="divide-y divide-slate-100">
-                            <!-- Code JS sẽ render vào đây -->
-                        </tbody>
-                    </table>
+                    <div class="flex flex-wrap gap-1 bg-slate-200/70 p-1 rounded-xl text-xs">
+                        <button onclick="filterBookings('ALL', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-rose-600 text-white shadow-sm transition">Tất Cả</button>
+                        <button onclick="filterBookings('Pending', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">⏳ Chờ Duyệt</button>
+                        <button onclick="filterBookings('Confirmed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">✓ Đã Duyệt</button>
+                        <button onclick="filterBookings('In_Progress', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">💆‍♀️ Đang Phục Vụ</button>
+                        <button onclick="filterBookings('Completed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">🎉 Hoàn Thành</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Cột phải: KHUNG LIVE CHAT TRỰC TUYẾN VỚI KHÁCH HÀNG (1/3 chiều rộng) -->
-            <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md flex flex-col h-[520px] overflow-hidden">
-                <!-- Header Khung Chat Admin -->
-                <div class="p-4 bg-slate-800/80 border-b border-slate-700 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="text-xl animate-pulse">💬</span>
-                        <div>
-                            <h3 class="font-bold text-sm text-white">Live Chat Tư Vấn Khách Hàng</h3>
-                            <p class="text-[10px] text-slate-400">Đồng bộ tin nhắn Realtime từ Website</p>
-                        </div>
-                    </div>
-                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">Online</span>
-                </div>
-
-                <!-- Body Tin Nhắn -->
-                <div id="adminChatMessagesBody" class="flex-1 p-4 overflow-y-auto bg-slate-950/40 text-xs">
-                    <!-- Code JS render tin nhắn ở đây -->
-                </div>
-
-                <!-- Footer Nhập Tin Nhắn Admin -->
-                <form onsubmit="handleAdminSendChat(event)" class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-                    <input type="text" id="adminChatInput" placeholder="Nhập tin nhắn trả lời Khách..." required class="flex-1 px-3.5 py-2 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500">
-                    <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm">
-                        Gửi 📩
-                    </button>
-                </form>
+            <!-- TABLE CONTENT (SPACIOUS & FULL-WIDTH) -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-100/70 text-slate-700 font-extrabold uppercase tracking-wider text-[11px] border-b border-slate-200">
+                        <tr>
+                            <th class="p-4 whitespace-nowrap">Mã Đơn</th>
+                            <th class="p-4 whitespace-nowrap">Khách Hàng</th>
+                            <th class="p-4 whitespace-nowrap">Dịch Vụ & Giá</th>
+                            <th class="p-4 whitespace-nowrap">Thời Gian Hẹn</th>
+                            <th class="p-4 whitespace-nowrap">Kỹ Thuật Viên Phụ Trách</th>
+                            <th class="p-4 whitespace-nowrap">Trạng Thái</th>
+                            <th class="p-4 text-right whitespace-nowrap">Thao Tác Duyệt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTbody" class="divide-y divide-slate-100">
+                        <!-- Code JS render dữ liệu -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -192,7 +171,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <!-- Review Item 1 -->
                 <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2 text-xs">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-slate-900">Nguyễn Thanh Hằng</span>
@@ -202,7 +180,6 @@
                     <p class="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">Phục vụ bởi: KTV Nguyễn Minh Anh • 03/09/2026</p>
                 </div>
 
-                <!-- Review Item 2 -->
                 <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2 text-xs">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-slate-900">Trần Hoàng Phương</span>
@@ -212,7 +189,6 @@
                     <p class="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">Phục vụ bởi: KTV Trần Thu Hà • 03/09/2026</p>
                 </div>
 
-                <!-- Review Item 3 -->
                 <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2 text-xs">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-slate-900">Lê Ngọc Trâm</span>
@@ -225,6 +201,36 @@
         </div>
 
     </main>
+
+    <!-- 💬 FLOATING ADMIN LIVE CHAT MODAL (WIDGET SANG TRỌNG GÓC PHẢI) -->
+    <div id="adminChatModal" class="fixed bottom-6 right-6 z-50 hidden flex-col w-96 h-[500px] bg-slate-900 text-white rounded-3xl shadow-2xl border border-slate-800 overflow-hidden animate-fade-in">
+        <!-- Header Chat Admin -->
+        <div class="p-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between shadow-md">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-sm shadow-sm">
+                    🌸
+                </div>
+                <div>
+                    <h3 class="font-bold text-xs text-white">Live Chat Tư Vấn Khách Hàng</h3>
+                    <p class="text-[10px] text-emerald-400 font-medium">● Đang kết nối Realtime từ Website</p>
+                </div>
+            </div>
+            <button onclick="toggleAdminChatModal()" class="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center text-sm transition">✕</button>
+        </div>
+
+        <!-- Body Tin Nhắn Chat Admin -->
+        <div id="adminChatMessagesBody" class="flex-1 p-4 overflow-y-auto bg-slate-950/50 text-xs space-y-3">
+            <!-- Code JS render bong bóng tin nhắn -->
+        </div>
+
+        <!-- Footer Nhập Tin Nhắn Admin -->
+        <form onsubmit="handleAdminSendChat(event)" class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
+            <input type="text" id="adminChatInput" placeholder="Nhập tin nhắn trả lời Khách..." required class="flex-1 px-3.5 py-2 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm">
+                Gửi 📩
+            </button>
+        </form>
+    </div>
 
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">

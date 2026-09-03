@@ -5,7 +5,7 @@
 const INITIAL_WELCOME_CHAT = [
     {
         sender: 'spa',
-        senderName: 'AuraSpa Support',
+        senderName: 'Lễ Tân AuraSpa',
         text: 'Xin chào bạn! 🌸 AuraSpa có thể hỗ trợ tư vấn dịch vụ gội đầu hay chăm sóc da nào cho bạn hôm nay ạ?',
         time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
     }
@@ -43,7 +43,7 @@ function toggleChatWidget() {
     }
 }
 
-// Render tin nhắn ra khung chat
+// Render tin nhắn ra khung chat phía Khách hàng
 function renderChatMessages() {
     const chatBody = document.getElementById('chatMessagesBody');
     if (!chatBody) return;
@@ -54,8 +54,10 @@ function renderChatMessages() {
         const isCustomer = msg.sender === 'customer';
         return `
             <div class="flex flex-col ${isCustomer ? 'items-end' : 'items-start'} mb-3">
-                <span class="text-[10px] text-gray-400 mb-1 px-1">${msg.senderName || (isCustomer ? 'Khách Hàng' : 'AuraSpa')} • ${msg.time}</span>
-                <div class="${isCustomer ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none' : 'bg-white text-gray-800 border border-rose-100 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[80%] text-xs leading-relaxed">
+                <span class="text-[10px] text-gray-400 font-semibold mb-1 px-1">
+                    ${isCustomer ? 'Bạn' : (msg.senderName || 'Lễ Tân AuraSpa')} • ${msg.time}
+                </span>
+                <div class="${isCustomer ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none shadow-sm' : 'bg-white text-gray-800 border border-rose-100 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[85%] text-xs leading-relaxed">
                     ${msg.text}
                 </div>
             </div>
@@ -88,7 +90,7 @@ function generateSmartReply(userText) {
     } else if (textLower.includes('tư vấn') || textLower.includes('chưa') || textLower.includes('alo')) {
         return 'Dạ em Lễ tân AuraSpa đây ạ! Anh/chị cần tư vấn gói chăm sóc da hay gội đầu dưỡng sinh ạ? Em sẵn sàng giải đáp ngay ạ ✨';
     } else {
-        return 'Dạ em đã nhận được tin nhắn của anh/chị ạ! Chuyên viên Lễ tân Spa đang trả lời anh/chị ngay đây ạ ✨';
+        return 'Dạ em đã nhận được tin nhắn của anh/chị ạ! Chuyên viên Lễ tân Spa đang sẵn sàng hỗ trợ anh/chị ngay đây ạ ✨';
     }
 }
 
@@ -103,7 +105,6 @@ function handleCustomerSendChat(event) {
     const nowTime = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
     const messages = getStoredChat();
 
-    // Thêm tin nhắn của Khách
     messages.push({
         sender: 'customer',
         senderName: 'Khách Hàng',
@@ -119,7 +120,6 @@ function handleCustomerSendChat(event) {
         const updatedMessages = getStoredChat();
         const lastMsg = updatedMessages[updatedMessages.length - 1];
 
-        // Nếu tin nhắn cuối vẫn là của khách (Admin chưa trả lời trực tiếp)
         if (lastMsg && lastMsg.sender === 'customer') {
             const replyText = generateSmartReply(text);
             updatedMessages.push({
@@ -140,7 +140,6 @@ window.addEventListener('storage', (e) => {
     }
 });
 
-// Khởi chạy khi load trang
 document.addEventListener('DOMContentLoaded', () => {
     renderChatMessages();
 });
