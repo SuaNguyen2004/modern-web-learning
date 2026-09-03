@@ -50,13 +50,13 @@ function toggleMobileMenu() {
     mobileMenu.classList.toggle('hidden');
 }
 
-// Mở Modal Đặt Lịch (CHẶN ADMIN/KTV VÀ NHẬN DIỆN CHÍNH XÁC USER ĐĂNG NHẬP)
+// Mở Modal Đặt Lịch (TỰ ĐỘNG CHUYỂN SANG TRANG ADMIN NẾU LÀ ADMIN MÀ KHÔNG HIỆN POPUP ALERT)
 function openBookingModal(serviceName = null, price = null, voucherCode = null) {
     const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
 
-    // 1. Nếu là Admin hoặc KTV ➔ KHÔNG CHO ĐẶT LỊCH!
+    // 1. Nếu là Admin hoặc KTV ➔ Tự động chuyển sang Trang Admin yên lặng không hiện Popup Alert!
     if (user && (user.role === 'admin' || user.role === 'ktv')) {
-        alert('⚠️ Bạn đang đăng nhập với tài khoản ' + (user.role === 'admin' ? 'Chủ Spa / Admin' : 'Kỹ Thuật Viên') + '. Quyền Quản lý không cần Đặt lịch dịch vụ!');
+        window.location.href = 'spa_admin.html';
         return;
     }
 

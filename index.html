@@ -14,7 +14,7 @@
 </head>
 <body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen">
 
-    <!-- 1. HEADER / NAVBAR (ẨN LINK NỘI BỘ, HIỂN THỊ ĐĂNG NHẬP PHÂN QUYỀN RBAC) -->
+    <!-- 1. HEADER / NAVBAR (ẨN NÚT ĐẶT LỊCH KHI ĐĂNG NHẬP ADMIN / KTV) -->
     <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo Spa -->
@@ -39,16 +39,13 @@
 
             <!-- CTA Booking & Auth Nav Desktop -->
             <div class="flex items-center gap-2.5">
-                <button onclick="openLookupModal()" class="hidden xl:flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3.5 py-2 rounded-full border border-gray-200 transition">
-                    <span>🔍</span> Tra Cứu
-                </button>
-                
-                <button onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-4 py-2 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5">
+                <!-- Nút Đặt Lịch Ngay trên Header (Sẽ tự động ẩn đi nếu là Admin/KTV) -->
+                <button id="headerBookingBtn" onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-4 py-2 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5 whitespace-nowrap">
                     <span>📅</span> Đặt Lịch Ngay
                 </button>
 
                 <!-- KHU VỰC ĐĂNG NHẬP / ĐĂNG KÝ PHÂN QUYỀN (DYNAMIC NAV CONTAINER) -->
-                <div id="navAuthContainer" class="hidden sm:block">
+                <div id="navAuthContainer">
                     <!-- Được render tự động bằng JS auth.js -->
                 </div>
 
@@ -59,7 +56,7 @@
             </div>
         </div>
 
-        <!-- 📱 MOBILE MENU DRAWER (RESPONSIVE PHÂN QUYỀN ON MOBILE) -->
+        <!-- 📱 MOBILE MENU DRAWER -->
         <div id="mobileMenuDrawer" class="hidden md:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-3 animate-fade-in shadow-xl">
             <div class="flex flex-col gap-2.5 font-medium text-sm text-gray-700 border-b border-gray-100 pb-3">
                 <a href="#home" onclick="toggleMobileMenu()" class="text-rose-600 font-bold flex items-center gap-2"><span>🏠</span> Trang Chủ</a>
@@ -69,9 +66,8 @@
                 <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-rose-600 flex items-center gap-2"><span>⭐</span> Đánh Giá Khách Hàng</a>
             </div>
             
-            <!-- Khu vực Phân Quyền Đăng Nhập trên Mobile -->
             <div id="mobileNavAuthContainer" class="pt-1">
-                <!-- Được render tự động bằng JS auth.js -->
+                <!-- Render bằng auth.js -->
             </div>
 
             <button onclick="openLookupModal()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-xl border border-gray-200 text-center flex items-center justify-center gap-2 transition text-xs">
@@ -98,7 +94,7 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
-                        <button onclick="openBookingModal()" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
+                        <button id="heroBookingBtn" onclick="openBookingModal()" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
                             Đặt Lịch Hẹn Ngay 🌸
                         </button>
                         <button onclick="openLookupModal()" class="w-full sm:w-auto bg-white hover:bg-rose-50 text-gray-700 font-bold px-6 py-3.5 rounded-full border border-gray-200 shadow-sm transition text-center flex items-center justify-center gap-2">
@@ -415,9 +411,7 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 🔑 MODAL ĐĂNG NHẬP & ĐĂNG KÝ PHÂN QUYỀN RBAC -->
-    <!-- ========================================== -->
+    <!-- MODAL ĐĂNG NHẬP & ĐĂNG KÝ PHÂN QUYỀN RBAC -->
     <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 overflow-hidden">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-rose-100 relative animate-fade-in my-auto space-y-4">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-base transition">✕</button>

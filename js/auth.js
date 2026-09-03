@@ -56,11 +56,28 @@ window.addEventListener('click', () => {
     }
 });
 
-// Cập nhật giao diện Header Siêu Tối Giản (Minimalist Header)
+// Cập nhật giao diện Header Siêu Tối Giản (Tự động Ẩn/Hiện theo Quyền Hạn)
 function updateHeaderAuthNav() {
     const user = getCurrentUser();
     const navContainer = document.getElementById('navAuthContainer');
     const mobileNavContainer = document.getElementById('mobileNavAuthContainer');
+    const headerBookingBtn = document.getElementById('headerBookingBtn');
+    const heroBookingBtn = document.getElementById('heroBookingBtn');
+
+    // 1. XỬ LÝ ẨN HOÀN TOÀN NÚT ĐẶT LỊCH KHI LÀ ADMIN HẶC KTV
+    if (user && (user.role === 'admin' || user.role === 'ktv')) {
+        if (headerBookingBtn) headerBookingBtn.classList.add('hidden');
+        if (heroBookingBtn) {
+            heroBookingBtn.innerText = '⚙️ Đến Trang Quản Lý Spa';
+            heroBookingBtn.onclick = function() { window.location.href = 'spa_admin.html'; };
+        }
+    } else {
+        if (headerBookingBtn) headerBookingBtn.classList.remove('hidden');
+        if (heroBookingBtn) {
+            heroBookingBtn.innerText = 'Đặt Lịch Hẹn Ngay 🌸';
+            heroBookingBtn.onclick = function() { openBookingModal(); };
+        }
+    }
 
     if (!navContainer && !mobileNavContainer) return;
 
@@ -82,7 +99,7 @@ function updateHeaderAuthNav() {
             `;
         }
     } else {
-        // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP (ẨN CHỨC NĂNG VÀO MENU DROPDOWN NHỎ GỌN)
+        // TRẠNG THÁI: ĐÃ ĐĂNG NHẬP
         let roleBadge = '';
         let targetPage = 'customer.html';
         let pageBtnText = 'Trang VIP Khách Hàng';
@@ -105,7 +122,6 @@ function updateHeaderAuthNav() {
             pageBtnIcon = '👑';
         }
 
-        // HTML DROPDOWN THỎA MÃN YÊU CẦU SIÊU GỌN GÀNG
         const userHTML = `
             <div class="relative">
                 <button onclick="toggleUserDropdown(event)" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white pl-2 pr-3 py-1.5 rounded-full shadow-md transition text-xs font-bold border border-slate-800">
