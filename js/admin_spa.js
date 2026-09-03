@@ -58,14 +58,7 @@ const INITIAL_DUMMY_BOOKINGS = [
     }
 ];
 
-// Danh sách KTV mẫu để đổi ca
-const ALL_STAFF_LIST = [
-    'KTV Nguyễn Minh Anh',
-    'KTV Trần Thu Hà',
-    'Lê Ngọc Lan'
-];
-
-// ⏰ TỰ ĐỘNG CHUYỂN TRẠNG THÁI THEO THỜI GIAN
+// Tự động chuyển trạng thái theo thời gian
 function autoUpdateBookingStatusByTime(bookings) {
     const now = new Date();
     let modified = false;
@@ -73,25 +66,17 @@ function autoUpdateBookingStatusByTime(bookings) {
     bookings.forEach(b => {
         if (b.status === 'Cancelled' || b.status === 'Completed') return;
 
-        // Parse ngày giờ hẹn (VD: "2026-09-03" + "09:30")
         if (b.date && b.time) {
             const [hours, minutes] = b.time.split(':').map(Number);
             const bookingDateTime = new Date(b.date);
             bookingDateTime.setHours(hours, minutes, 0, 0);
-
-            // Thời gian kết thúc dự kiến (sau 60 phút)
             const endDateTime = new Date(bookingDateTime.getTime() + 60 * 60 * 1000);
 
-            // 1. Đã duyệt (Confirmed) ➔ Nếu đến giờ hẹn ➔ Tự động thành Đang Phục Vụ (In_Progress)
             if (b.status === 'Confirmed' && now >= bookingDateTime && now < endDateTime) {
                 b.status = 'In_Progress';
-                console.log(`⏰ Tự động đổi đơn ${b.code} -> In_Progress`);
                 modified = true;
-            }
-            // 2. Đang Phục Vụ (In_Progress) ➔ Nếu quá thời gian kết thúc ➔ Tự động thành Hoàn Thành (Completed)
-            else if ((b.status === 'In_Progress' || b.status === 'Confirmed') && now >= endDateTime) {
+            } else if ((b.status === 'In_Progress' || b.status === 'Confirmed') && now >= endDateTime) {
                 b.status = 'Completed';
-                console.log(`⏰ Tự động đổi đơn ${b.code} -> Completed`);
                 modified = true;
             }
         }
@@ -103,7 +88,7 @@ function autoUpdateBookingStatusByTime(bookings) {
     return bookings;
 }
 
-// Tự động kiểm tra và khử trùng lặp mã đơn
+// Khử trùng lặp mã đơn
 function sanitizeDuplicateCodes(bookings) {
     const seenCodes = new Set();
     let modified = false;
@@ -139,17 +124,16 @@ function getStoredBookings() {
     return autoUpdateBookingStatusByTime(parsed);
 }
 
-// Lưu dữ liệu vào LocalStorage
 function saveBookings(bookings) {
     localStorage.setItem('aura_bookings', JSON.stringify(bookings));
 }
 
-// Bộ lọc
 let currentFilterStatus = 'ALL';
 let currentStaffFilter = 'ALL';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderDashboard();
+    renderAdminChat();
 });
 
 function renderDashboard() {
@@ -158,7 +142,6 @@ function renderDashboard() {
     renderBookingsTable(bookings);
 }
 
-// Thống kê 4 thẻ đầu trang
 function renderStats(bookings) {
     const totalCount = bookings.length;
     const pendingCount = bookings.filter(b => b.status === 'Pending').length;
@@ -174,7 +157,6 @@ function renderStats(bookings) {
     document.getElementById('statRevenue').innerText = totalRevenue.toLocaleString('vi-VN') + ' đ';
 }
 
-// Lọc danh sách lịch hẹn theo tab Status
 function filterBookings(status, btnElement) {
     currentFilterStatus = status;
 
@@ -189,25 +171,21 @@ function filterBookings(status, btnElement) {
     renderDashboard();
 }
 
-// Lọc danh sách lịch hẹn theo KTV
 function filterByStaff(staffName) {
     currentStaffFilter = staffName;
     renderDashboard();
 }
 
-// Render Bảng Dữ Liệu Lịch Hẹn
 function renderBookingsTable(bookings) {
     const tbody = document.getElementById('bookingsTbody');
     if (!tbody) return;
 
     let filtered = bookings;
 
-    // Lọc theo Status
     if (currentFilterStatus !== 'ALL') {
         filtered = filtered.filter(b => b.status === currentFilterStatus);
     }
 
-    // Lọc theo KTV
     if (currentStaffFilter !== 'ALL') {
         filtered = filtered.filter(b => b.staff.includes(currentStaffFilter));
     }
@@ -225,34 +203,25 @@ function renderBookingsTable(bookings) {
 
     tbody.innerHTML = filtered.map(b => `
         <tr class="hover:bg-rose-50/40 transition border-b border-gray-100">
-            <!-- Mã đơn -->
             <td class="p-4 font-extrabold text-rose-600 text-xs">
                 ${b.code}
             </td>
-
-            <!-- Khách hàng -->
             <td class="p-4">
                 <p class="font-bold text-gray-900 text-xs">${b.customerName}</p>
                 <p class="text-[11px] text-gray-500">📞 ${b.customerPhone}</p>
                 ${b.note ? `<p class="text-[10px] text-amber-600 italic">📝 ${b.note}</p>` : ''}
             </td>
-
-            <!-- Dịch vụ & Giá -->
             <td class="p-4">
                 <p class="font-bold text-gray-800 text-xs">${b.serviceName}</p>
                 <p class="text-[11px] text-rose-600 font-extrabold">${(b.servicePrice || 0).toLocaleString('vi-VN')} đ</p>
             </td>
-
-            <!-- Thời gian hẹn -->
             <td class="p-4 text-xs">
                 <p class="font-bold text-gray-800">⏰ ${b.time}</p>
                 <p class="text-[11px] text-gray-500">📅 ${b.date}</p>
             </td>
-
-            <!-- Kỹ thuật viên (Cho phép đổi KTV linh hoạt) -->
             <td class="p-4 text-xs">
                 ${(b.status === 'Pending' || b.status === 'Confirmed') ? `
-                    <select onchange="reassignStaff('${b.code}', this.value)" class="bg-gray-50 border border-gray-200 text-xs font-semibold rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-rose-500">
+                    <select onchange="reassignStaff('${b.code}', this.value)" class="bg-gray-50 border border-gray-200 text-xs font-semibold rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-500">
                         <option value="Hệ thống tự xếp KTV" ${b.staff.includes('tự xếp') ? 'selected' : ''}>Tự xếp ngẫu nhiên</option>
                         <option value="KTV Nguyễn Minh Anh" ${b.staff.includes('Minh Anh') ? 'selected' : ''}>Minh Anh (Da)</option>
                         <option value="KTV Trần Thu Hà" ${b.staff.includes('Thu Hà') ? 'selected' : ''}>Thu Hà (Gội)</option>
@@ -260,13 +229,9 @@ function renderBookingsTable(bookings) {
                     </select>
                 ` : `<span class="font-semibold text-gray-700">${b.staff}</span>`}
             </td>
-
-            <!-- Trạng thái Badge -->
             <td class="p-4">
                 ${getStatusBadge(b.status)}
             </td>
-
-            <!-- Thao tác Duyệt & Hủy đơn -->
             <td class="p-4 text-right space-x-1">
                 ${renderAdminActionButtons(b.code, b.status)}
             </td>
@@ -274,13 +239,12 @@ function renderBookingsTable(bookings) {
     `).join('');
 }
 
-// Trả về HTML Badge Trạng Thái
 function getStatusBadge(status) {
     switch (status) {
         case 'Pending':
             return `<span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-amber-200">⏳ Chờ Duyệt</span>`;
         case 'Confirmed':
-            return `<span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-200">✓ Đã Duyệt (Tự động vào ca)</span>`;
+            return `<span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-200">✓ Đã Duyệt</span>`;
         case 'In_Progress':
             return `<span class="bg-purple-100 text-purple-800 text-[11px] font-bold px-2.5 py-1 rounded-full border border-purple-200 animate-pulse">💆‍♀️ Đang Phục Vụ</span>`;
         case 'Completed':
@@ -292,7 +256,6 @@ function getStatusBadge(status) {
     }
 }
 
-// Nút bấm Thao tác: Admin CHỈ CẦN DUYỆT ĐƠN 1 LẦN duy nhất!
 function renderAdminActionButtons(code, status) {
     if (status === 'Pending') {
         return `
@@ -308,7 +271,6 @@ function renderAdminActionButtons(code, status) {
     }
 }
 
-// Hàm đổi KTV cho đơn hàng
 function reassignStaff(code, newStaffName) {
     let bookings = getStoredBookings();
     const index = bookings.findIndex(b => b.code === code);
@@ -321,9 +283,8 @@ function reassignStaff(code, newStaffName) {
     }
 }
 
-// KTV / Admin Hủy Ca do Bận
 function cancelBookingByStaff(code) {
-    const reason = prompt(`Nhập lý do hủy ca cho đơn ${code} (VD: KTV bận đột xuất / Không sắp xếp được KTV):`, 'KTV bận đột xuất');
+    const reason = prompt(`Nhập lý do hủy ca cho đơn ${code}:`, 'KTV bận đột xuất');
     if (reason === null) return;
 
     let bookings = getStoredBookings();
@@ -337,7 +298,6 @@ function cancelBookingByStaff(code) {
     }
 }
 
-// Cập nhật trạng thái đơn thủ công
 function updateBookingStatus(code, newStatus) {
     let bookings = getStoredBookings();
     const index = bookings.findIndex(b => b.code === code);
@@ -348,3 +308,57 @@ function updateBookingStatus(code, newStatus) {
         renderDashboard();
     }
 }
+
+// ==========================================
+// 💬 CHỨC NĂNG LIVE CHAT VỚI KHÁCH HÀNG (ADMIN SIDE)
+// ==========================================
+
+function renderAdminChat() {
+    const adminChatBody = document.getElementById('adminChatMessagesBody');
+    if (!adminChatBody) return;
+
+    let stored = localStorage.getItem('aura_chat_messages');
+    let messages = stored ? JSON.parse(stored) : [];
+
+    adminChatBody.innerHTML = messages.map(msg => {
+        const isAdmin = msg.sender === 'spa';
+        return `
+            <div class="flex flex-col ${isAdmin ? 'items-end' : 'items-start'} mb-3">
+                <span class="text-[10px] text-slate-400 mb-1 px-1">${msg.senderName || (isAdmin ? 'Chủ Spa' : 'Khách Hàng')} • ${msg.time}</span>
+                <div class="${isAdmin ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none' : 'bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none'} p-3 max-w-[85%] text-xs leading-relaxed">
+                    ${msg.text}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    adminChatBody.scrollTop = adminChatBody.scrollHeight;
+}
+
+function handleAdminSendChat(event) {
+    event.preventDefault();
+    const input = document.getElementById('adminChatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    let stored = localStorage.getItem('aura_chat_messages');
+    let messages = stored ? JSON.parse(stored) : [];
+
+    messages.push({
+        sender: 'spa',
+        senderName: 'Lễ Tân AuraSpa',
+        text: text,
+        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+    });
+
+    input.value = '';
+    localStorage.setItem('aura_chat_messages', JSON.stringify(messages));
+    renderAdminChat();
+}
+
+// Tự động đồng bộ tin nhắn từ phía Khách Hàng gửi tới
+window.addEventListener('storage', (e) => {
+    if (e.key === 'aura_chat_messages') {
+        renderAdminChat();
+    }
+});
