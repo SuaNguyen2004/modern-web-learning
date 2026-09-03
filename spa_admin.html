@@ -44,7 +44,7 @@
         </div>
     </header>
 
-    <!-- 2. CONTAINER CHÍNH (RỘNG RÃI FULL-WIDTH) -->
+    <!-- 2. CONTAINER CHÍNH -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-1 w-full">
 
         <!-- TIÊU ĐỀ DASHBOARD -->
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <!-- 4. BẢNG QUẢN LÝ LỊCH HẸN FULL WIDTH (KHÔNG BỊ ÉP HẸP) -->
+        <!-- 4. BẢNG QUẢN LÝ LỊCH HẸN FULL WIDTH -->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
             <div class="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
                 <div>
@@ -139,7 +139,7 @@
                 </div>
             </div>
 
-            <!-- TABLE CONTENT (SPACIOUS & FULL-WIDTH) -->
+            <!-- TABLE CONTENT -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
                     <thead class="bg-slate-100/70 text-slate-700 font-extrabold uppercase tracking-wider text-[11px] border-b border-slate-200">
@@ -160,7 +160,7 @@
             </div>
         </div>
 
-        <!-- 5. KHU VỰC THEO DÕI FEEDBACK KHÁCH HÀNG (CUSTOMER FEEDBACK HUB) -->
+        <!-- 5. KHU VỰC THEO DÕI FEEDBACK KHÁCH HÀNG -->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div>
@@ -202,9 +202,48 @@
 
     </main>
 
-    <!-- 💬 FLOATING ADMIN LIVE CHAT MODAL (WIDGET SANG TRỌNG GÓC PHẢI) -->
+    <!-- ========================================== -->
+    <!-- 🌟 MODAL HỦY CA BẰNG TAILWIND (THAY THẾ BROWSER PROMPT NỔI DỒI ÔI) -->
+    <!-- ========================================== -->
+    <div id="cancelReasonModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-rose-100 space-y-4 animate-fade-in my-auto">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-sm">✕</span>
+                    <h3 class="text-base font-extrabold text-slate-900">XÁC NHẬN HỦY CA PHỤC VỤ</h3>
+                </div>
+                <button onclick="closeCancelReasonModal()" class="text-slate-400 hover:text-slate-600 text-sm">✕</button>
+            </div>
+
+            <p class="text-xs text-slate-600">Vui lòng chọn hoặc nhập lý do hủy ca phục vụ cho đơn <strong id="cancelCodeDisplay" class="text-rose-600 font-extrabold">AURA-XXXX</strong>:</p>
+
+            <div class="space-y-1.5">
+                <label class="block text-[11px] font-bold text-slate-500 uppercase">Gợi ý lý do nhanh:</label>
+                <div class="flex flex-wrap gap-1.5 text-xs">
+                    <button type="button" onclick="setQuickReason('KTV bận đột xuất')" class="bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 px-3 py-1 rounded-xl border border-slate-200 font-semibold transition">KTV bận đột xuất</button>
+                    <button type="button" onclick="setQuickReason('Trùng lịch phòng')" class="bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 px-3 py-1 rounded-xl border border-slate-200 font-semibold transition">Trùng lịch phòng</button>
+                    <button type="button" onclick="setQuickReason('Thiết bị bảo trì')" class="bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 px-3 py-1 rounded-xl border border-slate-200 font-semibold transition">Thiết bị bảo trì</button>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Lý do chi tiết:</label>
+                <input type="text" id="cancelReasonInput" placeholder="Ví dụ: KTV sốt cao, đã báo khách đổi giờ..." class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <button onclick="closeCancelReasonModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
+                    Hủy Bỏ
+                </button>
+                <button onclick="confirmCancelBookingByStaff()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs shadow-md transition">
+                    Xác Nhận Hủy Ca
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 💬 FLOATING ADMIN LIVE CHAT MODAL -->
     <div id="adminChatModal" class="fixed bottom-6 right-6 z-50 hidden flex-col w-96 h-[500px] bg-slate-900 text-white rounded-3xl shadow-2xl border border-slate-800 overflow-hidden animate-fade-in">
-        <!-- Header Chat Admin -->
         <div class="p-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between shadow-md">
             <div class="flex items-center gap-2.5">
                 <div class="w-9 h-9 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-sm shadow-sm">
@@ -218,12 +257,9 @@
             <button onclick="toggleAdminChatModal()" class="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center text-sm transition">✕</button>
         </div>
 
-        <!-- Body Tin Nhắn Chat Admin -->
         <div id="adminChatMessagesBody" class="flex-1 p-4 overflow-y-auto bg-slate-950/50 text-xs space-y-3">
-            <!-- Code JS render bong bóng tin nhắn -->
         </div>
 
-        <!-- Footer Nhập Tin Nhắn Admin -->
         <form onsubmit="handleAdminSendChat(event)" class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
             <input type="text" id="adminChatInput" placeholder="Nhập tin nhắn trả lời Khách..." required class="flex-1 px-3.5 py-2 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500">
             <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm">

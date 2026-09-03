@@ -10,8 +10,19 @@ const SERVICES_LIST = [
     { name: 'Combo Chăm Sóc Da & Gội Đầu VIP', price: 499000, duration: '90 Phút' }
 ];
 
-// Mở Modal Đặt Lịch
-function openBookingModal(serviceName = null, price = null) {
+// Khởi tạo phiên Đăng Nhập Mặc Định Khách VIP nếu chưa có
+function getLoggedInCustomer() {
+    let logged = localStorage.getItem('aura_logged_customer');
+    if (!logged) {
+        const defaultVIP = { name: 'Nguyễn Thanh Hằng', phone: '0908123456', rank: 'VIP GOLD' };
+        localStorage.setItem('aura_logged_customer', JSON.stringify(defaultVIP));
+        return defaultVIP;
+    }
+    return JSON.parse(logged);
+}
+
+// Mở Modal Đặt Lịch (Tự động điền Họ Tên & SĐT nếu đã đăng nhập)
+function openBookingModal(serviceName = null, price = null, voucherCode = null) {
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
 
@@ -25,11 +36,50 @@ function openBookingModal(serviceName = null, price = null) {
         updateSelectedServicePrice();
     }
 
+    // Tự động điền Voucher nếu có
+    const voucherInput = document.getElementById('inputVoucherCode');
+    if (voucherInput) {
+        voucherInput.value = voucherCode || '';
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const dateInput = document.getElementById('bookingDate');
     if (dateInput) {
         dateInput.value = today;
         dateInput.min = today;
+    }
+
+    // ⚡ KIỂM TRA PHIÊN KHÁCH HÀNG ĐÃ ĐĂNG NHẬP VIP ⚡
+    const loggedCustomer = getLoggedInCustomer();
+    const nameInput = document.getElementById('customerName');
+    const phoneInput = document.getElementById('customerPhone');
+    const vipBadge = document.getElementById('vipStatusNotice');
+
+    if (loggedCustomer && loggedCustomer.name && loggedCustomer.phone) {
+        if (nameInput) {
+            nameInput.value = loggedCustomer.name;
+            nameInput.readOnly = true;
+            nameInput.classList.add('bg-slate-100', 'text-slate-700', 'font-bold', 'cursor-not-allowed');
+        }
+        if (phoneInput) {
+            phoneInput.value = loggedCustomer.phone;
+            phoneInput.readOnly = true;
+            phoneInput.classList.add('bg-slate-100', 'text-slate-700', 'font-bold', 'cursor-not-allowed');
+        }
+        if (vipBadge) {
+            vipBadge.innerText = `✨ Tự động nhận diện: Khách hàng ${loggedCustomer.rank || 'VIP'} (${loggedCustomer.name})`;
+            vipBadge.classList.remove('hidden');
+        }
+    } else {
+        if (nameInput) {
+            nameInput.readOnly = false;
+            nameInput.classList.remove('bg-slate-100', 'cursor-not-allowed');
+        }
+        if (phoneInput) {
+            phoneInput.readOnly = false;
+            phoneInput.classList.remove('bg-slate-100', 'cursor-not-allowed');
+        }
+        if (vipBadge) vipBadge.classList.add('hidden');
     }
 
     modal.classList.remove('hidden');
@@ -73,7 +123,7 @@ function selectTimeSlot(element, time) {
     selectedTimeSlot = time;
 }
 
-// Hàm sinh Mã đơn ĐỘC NHẤT (Không trùng lặp)
+// Sinh Mã đơn ĐỘC NHẤT
 function generateUniqueBookingCode() {
     let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
     let existingCodes = new Set(existingBookings.map(b => b.code));
@@ -96,7 +146,8 @@ function handleBookingSubmit(event) {
     const servicePrice = parseInt(document.getElementById('inputPrice').value);
     const bookingDate = document.getElementById('bookingDate').value;
     const staffSelect = document.getElementById('staffSelect').value;
-    const note = document.getElementById('customerNote').value.trim();
+    const noteInput = document.getElementById('customerNote').value.trim();
+    const voucherInput = document.getElementById('inputVoucherCode') ? document.getElementById('inputVoucherCode').value.trim() : '';
 
     if (!customerName || !customerPhone) {
         alert('Vui lòng nhập Họ tên và Số điện thoại!');
@@ -104,6 +155,10 @@ function handleBookingSubmit(event) {
     }
 
     const bookingCode = generateUniqueBookingCode();
+    let finalNote = noteInput;
+    if (voucherInput) {
+        finalNote += ` [Mã ưu đãi: ${voucherInput}]`;
+    }
 
     const bookingData = {
         code: bookingCode,
@@ -114,8 +169,8 @@ function handleBookingSubmit(event) {
         date: bookingDate,
         time: selectedTimeSlot,
         staff: staffSelect,
-        note: note,
-        status: 'Pending', // Mới đặt: Chờ Admin duyệt
+        note: finalNote,
+        status: 'Pending',
         createdAt: new Date().toLocaleString('vi-VN')
     };
 
@@ -143,7 +198,6 @@ function showSuccessPopup(data) {
     successModal.classList.add('flex');
 }
 
-// Đóng Popup Thành công
 function closeSuccessPopup() {
     const successModal = document.getElementById('successModal');
     if (successModal) {
@@ -173,7 +227,6 @@ function closeLookupModal() {
     }
 }
 
-// Xử lý tra cứu lịch hẹn
 function handleLookupSearch() {
     const query = document.getElementById('lookupInput').value.trim().toUpperCase();
     if (!query) {
@@ -217,7 +270,6 @@ function handleLookupSearch() {
     resultArea.classList.remove('hidden');
 }
 
-// Khách hàng tự hủy lịch hẹn
 function cancelBookingByCustomer(code) {
     if (!confirm(`Bạn có chắc chắn muốn HỦY lịch hẹn ${code} không?`)) return;
 
@@ -230,11 +282,10 @@ function cancelBookingByCustomer(code) {
         localStorage.setItem('aura_bookings', JSON.stringify(existingBookings));
 
         alert(`Đã hủy lịch hẹn ${code} thành công!`);
-        handleLookupSearch(); // Refresh lại danh sách tra cứu
+        handleLookupSearch();
     }
 }
 
-// Trả về HTML Badge trạng thái
 function getStatusBadgeHTML(status) {
     switch (status) {
         case 'Pending':

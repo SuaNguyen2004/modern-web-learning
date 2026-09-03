@@ -2,7 +2,6 @@
 // AURA SPA CUSTOMER PORTAL SCRIPT (KHÁCH HÀNG THÂN THIẾT)
 // ==========================================
 
-// Thông tin Hồ sơ Khách hàng Thân Thiết mẫu
 const CURRENT_CUSTOMER = {
     name: 'Nguyễn Thanh Hằng',
     phone: '0908123456',
@@ -13,7 +12,6 @@ const CURRENT_CUSTOMER = {
     avatar: 'TH'
 };
 
-// Danh sách Voucher & Ưu Đãi dành riêng cho Khách Hàng Thân Thiết
 const INITIAL_VOUCHERS = [
     {
         code: 'AURA100K',
@@ -44,22 +42,31 @@ const INITIAL_VOUCHERS = [
     }
 ];
 
-// Khởi chạy khi load trang Trang Cá Nhân Khách Hàng
 document.addEventListener('DOMContentLoaded', () => {
+    // Đảm bảo lưu phiên khách hàng VIP vào localStorage
+    localStorage.setItem('aura_logged_customer', JSON.stringify({
+        name: CURRENT_CUSTOMER.name,
+        phone: CURRENT_CUSTOMER.phone,
+        rank: CURRENT_CUSTOMER.rankBadge
+    }));
+
     renderCustomerProfile();
     renderMyBookings();
     renderVouchers();
 });
 
-// Render thông tin hồ sơ khách
 function renderCustomerProfile() {
-    document.getElementById('custName').innerText = CURRENT_CUSTOMER.name;
-    document.getElementById('custPhone').innerText = CURRENT_CUSTOMER.phone;
-    document.getElementById('custRank').innerText = CURRENT_CUSTOMER.rankBadge;
-    document.getElementById('custPoints').innerText = CURRENT_CUSTOMER.points.toLocaleString('vi-VN');
+    const custName = document.getElementById('custName');
+    const custPhone = document.getElementById('custPhone');
+    const custRank = document.getElementById('custRank');
+    const custPoints = document.getElementById('custPoints');
+
+    if (custName) custName.innerText = CURRENT_CUSTOMER.name;
+    if (custPhone) custPhone.innerText = CURRENT_CUSTOMER.phone;
+    if (custRank) custRank.innerText = CURRENT_CUSTOMER.rankBadge;
+    if (custPoints) custPoints.innerText = CURRENT_CUSTOMER.points.toLocaleString('vi-VN');
 }
 
-// Render Lịch Hẹn Của Tôi từ localStorage
 function renderMyBookings() {
     const listContainer = document.getElementById('myBookingsList');
     if (!listContainer) return;
@@ -67,10 +74,8 @@ function renderMyBookings() {
     let stored = localStorage.getItem('aura_bookings');
     let allBookings = stored ? JSON.parse(stored) : [];
 
-    // Lọc theo SĐT hoặc lấy các đơn đầu làm mẫu cho Khách Hàng Thân Thiết
     let myBookings = allBookings.filter(b => b.customerPhone === CURRENT_CUSTOMER.phone || b.customerName === CURRENT_CUSTOMER.name);
     
-    // Nếu chưa có đơn theo tên khách, lấy 3 đơn gần nhất làm demo
     if (myBookings.length === 0) {
         myBookings = allBookings.slice(0, 3);
     }
@@ -104,16 +109,15 @@ function renderMyBookings() {
                         ✕ Hủy Lịch
                     </button>
                 ` : `
-                    <a href="index.html#services" class="bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-bold px-3.5 py-2 rounded-xl transition">
+                    <button onclick="openBookingModal('${b.serviceName}', ${b.servicePrice})" class="bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-bold px-3.5 py-2 rounded-xl transition">
                         🔄 Đặt Lại
-                    </a>
+                    </button>
                 `}
             </div>
         </div>
     `).join('');
 }
 
-// Khách tự hủy đơn từ trang cá nhân
 function cancelBookingCustomer(code) {
     if (!confirm(`Bạn có chắc chắn muốn hủy lịch hẹn ${code} không?`)) return;
 
@@ -130,7 +134,6 @@ function cancelBookingCustomer(code) {
     }
 }
 
-// Render danh sách Voucher Ưu Đãi
 function renderVouchers() {
     const voucherList = document.getElementById('vouchersContainer');
     if (!voucherList) return;
@@ -148,21 +151,23 @@ function renderVouchers() {
                     <span class="text-[10px] text-white/80 block">Hạn sử dụng: ${v.expiry}</span>
                     <span class="text-sm font-black text-amber-200">${v.discountText}</span>
                 </div>
-                <button onclick="copyVoucherCode('${v.code}')" class="bg-white hover:bg-rose-50 text-gray-900 font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-md transition active:scale-95">
-                    Dùng Ngay
+                <button onclick="useVoucherDirectly('${v.code}')" class="bg-white hover:bg-rose-50 text-gray-900 font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-md transition active:scale-95">
+                    Dùng Ngay ✨
                 </button>
             </div>
         </div>
     `).join('');
 }
 
-// Sao chép mã Voucher
-function copyVoucherCode(code) {
-    navigator.clipboard.writeText(code);
-    alert(`Đã sao chép mã ưu đãi: ${code}! Bạn có thể dán mã này khi đặt lịch hẹn nhé ✨`);
+// Bấm "Dùng Ngay" voucher ➔ Mở Modal Đặt Lịch kèm áp mã ưu đãi
+function useVoucherDirectly(code) {
+    if (typeof openBookingModal === 'function') {
+        openBookingModal(null, null, code);
+    } else {
+        alert(`Mã ưu đãi ${code} đã sẵn sàng! Bạn hãy qua trang Đặt Lịch để sử dụng nhé.`);
+    }
 }
 
-// Đổi điểm thưởng lấy voucher
 function redeemPoints(cost, voucherName) {
     if (CURRENT_CUSTOMER.points < cost) {
         alert(`Bạn cần thêm ${(cost - CURRENT_CUSTOMER.points)} điểm thưởng nữa để đổi voucher này!`);
@@ -171,10 +176,9 @@ function redeemPoints(cost, voucherName) {
 
     CURRENT_CUSTOMER.points -= cost;
     renderCustomerProfile();
-    alert(`🎉 Chúc mừng bạn đã đổi thành công ${voucherName}! Mã ưu đãi đã được lưu vào Kho Voucher của bạn.`);
+    alert(`🎉 Chúc mừng bạn đã đổi thành công ${voucherName}! Mã ưu đãi đã được áp dụng cho tài khoản VIP của bạn.`);
 }
 
-// Trả về HTML Badge trạng thái
 function getStatusBadgeHTML(status) {
     switch (status) {
         case 'Pending':

@@ -260,11 +260,11 @@ function renderAdminActionButtons(code, status) {
     if (status === 'Pending') {
         return `
             <button onclick="updateBookingStatus('${code}', 'Confirmed')" class="bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition shadow-sm whitespace-nowrap">✓ Duyệt Đơn</button>
-            <button onclick="cancelBookingByStaff('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition whitespace-nowrap">Hủy</button>
+            <button onclick="openCancelReasonModal('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition whitespace-nowrap">Hủy</button>
         `;
     } else if (status === 'Confirmed') {
         return `
-            <button onclick="cancelBookingByStaff('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition whitespace-nowrap">✕ Hủy Ca (Bận)</button>
+            <button onclick="openCancelReasonModal('${code}')" class="bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition whitespace-nowrap">✕ Hủy Ca (Bận)</button>
         `;
     } else {
         return `<span class="text-[11px] text-gray-400">Đã khóa</span>`;
@@ -283,17 +283,50 @@ function reassignStaff(code, newStaffName) {
     }
 }
 
-function cancelBookingByStaff(code) {
-    const reason = prompt(`Nhập lý do hủy ca cho đơn ${code}:`, 'KTV bận đột xuất');
-    if (reason === null) return;
+// ==========================================
+// 🌟 MODAL HỦY CA BẰNG TAILWIND (THAY THẾ BROWSER PROMPT NỔI DỒI ÔI)
+// ==========================================
+
+let targetCancelCode = '';
+
+function openCancelReasonModal(code) {
+    targetCancelCode = code;
+    const modal = document.getElementById('cancelReasonModal');
+    if (!modal) return;
+
+    document.getElementById('cancelCodeDisplay').innerText = code;
+    document.getElementById('cancelReasonInput').value = 'KTV bận đột xuất';
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closeCancelReasonModal() {
+    const modal = document.getElementById('cancelReasonModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+function setQuickReason(text) {
+    const input = document.getElementById('cancelReasonInput');
+    if (input) input.value = text;
+}
+
+function confirmCancelBookingByStaff() {
+    const reasonInput = document.getElementById('cancelReasonInput');
+    const reason = reasonInput ? reasonInput.value.trim() : 'KTV bận';
+
+    if (!targetCancelCode) return;
 
     let bookings = getStoredBookings();
-    const index = bookings.findIndex(b => b.code === code);
+    const index = bookings.findIndex(b => b.code === targetCancelCode);
 
     if (index !== -1) {
         bookings[index].status = 'Cancelled';
-        bookings[index].note = (bookings[index].note || '') + ` [Đã hủy: ${reason}]`;
+        bookings[index].note = (bookings[index].note || '') + ` [Đã hủy ca: ${reason}]`;
         saveBookings(bookings);
+        closeCancelReasonModal();
         renderDashboard();
     }
 }
