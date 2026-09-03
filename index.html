@@ -38,9 +38,9 @@
             </nav>
 
             <!-- CTA Booking Button -->
-            <a href="#services" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-sm shadow-lg shadow-rose-500/25 active:scale-95 transition flex items-center gap-2">
+            <button onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-sm shadow-lg shadow-rose-500/25 active:scale-95 transition flex items-center gap-2">
                 <span>📅</span> Đặt Lịch Ngay
-            </a>
+            </button>
         </div>
     </header>
 
@@ -58,13 +58,13 @@
                         <span class="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">Thư Giãn Tâm Hồn</span>
                     </h1>
                     <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
-                        Chuyên chăm sóc da mặt chuyên sâu & gội đầu dưỡng sinh thảo dược. Không không gian yên tĩnh, âm nhạc thư thái cùng kỹ thuật viên nhiều năm kinh nghiệm.
+                        Chuyên chăm sóc da mặt chuyên sâu & gội đầu dưỡng sinh thảo dược. Không gian yên tĩnh, âm nhạc thư thái cùng kỹ thuật viên nhiều năm kinh nghiệm.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                        <a href="#services" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
-                            Khám Phá Dịch Vụ 🌸
-                        </a>
+                        <button onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
+                            Đặt Lịch Hẹn Ngay 🌸
+                        </button>
                         <a href="#staff" class="w-full sm:w-auto bg-white hover:bg-rose-50 text-gray-700 font-bold px-6 py-3.5 rounded-full border border-gray-200 shadow-sm transition text-center">
                             Xem Kỹ Thuật Viên 👥
                         </a>
@@ -84,16 +84,20 @@
                 <!-- Banner Image Right -->
                 <div class="relative">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Spa Relaxing" class="rounded-3xl shadow-2xl border-4 border-white object-cover h-[420px] w-full">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" 
+                             alt="Spa Relaxing" 
+                             class="rounded-3xl shadow-2xl border-4 border-white object-cover h-[420px] w-full"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80';">
                         
-                        <!-- Floating Badge 1 -->
-                        <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3 hidden sm:flex">
-                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 font-bold text-xl flex items-center justify-center">
-                                ⭐ 4.9
+                        <!-- FIX LỖI 1: Floating Badge - Chỉnh layout ô màu vàng không bị tràn/đè chữ -->
+                        <div class="absolute -bottom-6 -left-6 bg-white p-3.5 px-4 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3.5 hidden sm:flex">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100/90 border border-amber-200 text-amber-700 flex flex-col items-center justify-center p-1 leading-none shadow-inner">
+                                <span class="text-xs leading-none mb-0.5">⭐</span>
+                                <span class="text-base font-extrabold text-amber-800 leading-none">4.9</span>
                             </div>
                             <div>
                                 <p class="font-bold text-gray-900 text-sm">Khách Hàng Hài Lòng</p>
-                                <p class="text-xs text-gray-500">+1,500 Lượt Đánh Giá 5 Sao</p>
+                                <p class="text-xs text-gray-500 mt-0.5">+1,500 Lượt Đánh Giá 5 Sao</p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +132,7 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
                         <span class="text-xl font-extrabold text-rose-600">199.000 đ</span>
-                        <button class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                        <button onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
                     </div>
                 </div>
 
@@ -146,7 +150,7 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
                         <span class="text-xl font-extrabold text-rose-600">350.000 đ</span>
-                        <button class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                        <button onclick="openBookingModal('Chăm Sóc Da Mặt Chuyên Sâu', 350000)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
                     </div>
                 </div>
 
@@ -164,7 +168,7 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
                         <span class="text-xl font-extrabold text-rose-600">250.000 đ</span>
-                        <button class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                        <button onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
                     </div>
                 </div>
 
@@ -183,7 +187,7 @@
                     </div>
                     <div class="mt-6 pt-4 border-t border-white/20 flex items-center justify-between">
                         <span class="text-xl font-extrabold text-amber-300">499.000 đ</span>
-                        <button class="bg-white hover:bg-rose-50 text-rose-600 text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">Đặt Lịch VIP</button>
+                        <button onclick="openBookingModal('Combo Chăm Sóc Da & Gội Đầu VIP', 499000)" class="bg-white hover:bg-rose-50 text-rose-600 text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">Đặt Lịch VIP</button>
                     </div>
                 </div>
 
@@ -206,7 +210,10 @@
                 <!-- KTV 1 -->
                 <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
                     <div class="relative w-28 h-28 mx-auto">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="KTV Minh Anh" class="w-full h-full rounded-full object-cover border-4 border-rose-200">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" 
+                             alt="KTV Minh Anh" 
+                             class="w-full h-full rounded-full object-cover border-4 border-rose-200"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80';">
                         <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
                     </div>
                     <div>
@@ -216,14 +223,17 @@
                     </div>
                     <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
                         <span class="text-amber-500 font-bold">⭐ 4.9 / 5.0 (180+ Đánh giá)</span>
-                        <span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Kinh nghiệm 5 năm</span>
+                        <button onclick="openBookingModal('Chăm Sóc Da Mặt Chuyên Sâu', 350000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
                     </div>
                 </div>
 
                 <!-- KTV 2 -->
                 <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
                     <div class="relative w-28 h-28 mx-auto">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" alt="KTV Thu Hà" class="w-full h-full rounded-full object-cover border-4 border-rose-200">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" 
+                             alt="KTV Thu Hà" 
+                             class="w-full h-full rounded-full object-cover border-4 border-rose-200"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=300&q=80';">
                         <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
                     </div>
                     <div>
@@ -233,14 +243,17 @@
                     </div>
                     <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
                         <span class="text-amber-500 font-bold">⭐ 5.0 / 5.0 (210+ Đánh giá)</span>
-                        <span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Kinh nghiệm 4 năm</span>
+                        <button onclick="openBookingModal('Gội Đầu Dưỡng Sinh Thảo Dược', 199000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
                     </div>
                 </div>
 
                 <!-- KTV 3 -->
                 <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
                     <div class="relative w-28 h-28 mx-auto">
-                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80" alt="KTV Ngọc Lan" class="w-full h-full rounded-full object-cover border-4 border-rose-200">
+                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80" 
+                             alt="KTV Ngọc Lan" 
+                             class="w-full h-full rounded-full object-cover border-4 border-rose-200"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80';">
                         <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
                     </div>
                     <div>
@@ -250,7 +263,7 @@
                     </div>
                     <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
                         <span class="text-amber-500 font-bold">⭐ 4.8 / 5.0 (140+ Đánh giá)</span>
-                        <span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Kinh nghiệm 3 năm</span>
+                        <button onclick="openBookingModal('Massage Cổ Vai Gáy Trị Liệu', 250000)" class="bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold px-3 py-1 rounded-full text-[11px] transition">Đặt KTV Này</button>
                     </div>
                 </div>
 
@@ -258,7 +271,7 @@
         </div>
     </section>
 
-    <!-- 5. CÔNG NGHỆ & THIẾT BỊ HIỆN ĐẠI (EQUIPMENT SHOWCASE WITH IMAGES) -->
+    <!-- FIX LỖI 2: CÔNG NGHỆ & THIẾT BỊ HIỆN ĐẠI - Sử dụng link ảnh chất lượng cao có fallback tự động -->
     <section id="equipment" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
@@ -272,7 +285,10 @@
 
                 <!-- Thiết bị 1 -->
                 <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
-                    <img src="https://images.unsplash.com/photo-1512290900673-0fb66f5c880c?auto=format&fit=crop&w=600&q=80" alt="Máy soi da 3D" class="w-full h-48 object-cover">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" 
+                         alt="Máy soi da 3D Smart Scanner" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80';">
                     <div class="p-6 space-y-2">
                         <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Công Nghệ AI</span>
                         <h3 class="text-lg font-bold text-gray-900">Máy Soi Da & Phân Tích Da 3D Smart Scanner</h3>
@@ -282,7 +298,10 @@
 
                 <!-- Thiết bị 2 -->
                 <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
-                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80" alt="Giường gội vòm nước" class="w-full h-48 object-cover">
+                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80" 
+                         alt="Giường gội vòm nước" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80';">
                     <div class="p-6 space-y-2">
                         <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Chuẩn Dưỡng Sinh</span>
                         <h3 class="text-lg font-bold text-gray-900">Giường Gội Đầu Massge & Vòm Nước Tuần Hoàn</h3>
@@ -292,7 +311,10 @@
 
                 <!-- Thiết bị 3 -->
                 <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
-                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Máy điện di C" class="w-full h-48 object-cover">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" 
+                         alt="Máy điện di C" 
+                         class="w-full h-48 object-cover"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1512290900673-0fb66f5c880c?auto=format&fit=crop&w=600&q=80';">
                     <div class="p-6 space-y-2">
                         <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Trẻ Hóa Da</span>
                         <h3 class="text-lg font-bold text-gray-900">Máy Điện Di Tinh Chất & Đèn Ánh Sáng Bio-Light</h3>
@@ -371,6 +393,143 @@
         </div>
     </section>
 
+    <!-- ========================================== -->
+    <!-- 🌟 MODAL FORM ĐẶT LỊCH HẸN TRỰC TUYẾN -->
+    <!-- ========================================== -->
+    <div id="bookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-rose-100 relative animate-fade-in my-8">
+            <!-- Nút đóng Modal -->
+            <button onclick="closeBookingModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-lg transition">✕</button>
+
+            <!-- Tiêu đề Form -->
+            <div class="text-center space-y-1 mb-6">
+                <span class="text-xs font-bold text-rose-600 uppercase tracking-widest">AuraSpa Booking</span>
+                <h3 class="text-2xl font-extrabold text-gray-900">ĐẶT LỊCH HẸN GIỜ</h3>
+                <p class="text-xs text-gray-500">Điền thông tin bên dưới để giữ chỗ mượt mà nhất</p>
+            </div>
+
+            <!-- Form Đặt Lịch -->
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <input type="hidden" id="inputService" value="">
+                <input type="hidden" id="inputPrice" value="0">
+
+                <!-- Thẻ Dịch vụ đã chọn -->
+                <div class="bg-rose-50/70 p-3.5 rounded-2xl border border-rose-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold text-rose-500 uppercase">Dịch vụ đang chọn</p>
+                        <p id="selectedServiceName" class="font-bold text-gray-900 text-sm">Gội Đầu Dưỡng Sinh</p>
+                    </div>
+                    <span id="selectedServicePrice" class="text-base font-extrabold text-rose-600">199.000 đ</span>
+                </div>
+
+                <!-- Chọn Ngày -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">📅 Chọn Ngày Hẹn:</label>
+                    <input type="date" id="bookingDate" required class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                </div>
+
+                <!-- Chọn Khung Giờ (Grid Time Slots) -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">⏰ Chọn Khung Giờ:</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button type="button" onclick="selectTimeSlot(this, '09:00')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">09:00</button>
+                        <button type="button" onclick="selectTimeSlot(this, '09:30')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-rose-600 bg-rose-600 text-white transition">09:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '10:30')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">10:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '14:00')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">14:00</button>
+                        <button type="button" onclick="selectTimeSlot(this, '15:30')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">15:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '17:00')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">17:00</button>
+                        <button type="button" onclick="selectTimeSlot(this, '18:30')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">18:30</button>
+                        <button type="button" onclick="selectTimeSlot(this, '19:30')" class="time-slot-btn px-2 py-2 text-xs font-bold rounded-xl border border-gray-200 bg-gray-50 hover:border-rose-400 transition">19:30</button>
+                    </div>
+                </div>
+
+                <!-- Chọn Kỹ Thuật Viên -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">👩‍🎨 Chọn Kỹ Thuật Viên:</label>
+                    <select id="staffSelect" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium">
+                        <option value="Hệ thống tự xếp KTV">Xếp KTV ngẫu nhiên (Phù hợp nhất)</option>
+                        <option value="KTV Nguyễn Minh Anh">Nguyễn Minh Anh (Chuyên gia Da - ⭐4.9)</option>
+                        <option value="KTV Trần Thu Hà">Trần Thu Hà (Chuyên gia Gội đầu - ⭐5.0)</option>
+                        <option value="KTV Lê Ngọc Lan">Lê Ngọc Lan (KTV Trị liệu - ⭐4.8)</option>
+                    </select>
+                </div>
+
+                <!-- Họ Tên & Số Điện Thoại -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">👤 Họ và Tên Khách:</label>
+                        <input type="text" id="customerName" placeholder="Nhập họ tên..." required class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">📞 Số Điện Thoại:</label>
+                        <input type="tel" id="customerPhone" placeholder="0909xxxxxx" required class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    </div>
+                </div>
+
+                <!-- Ghi chú -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">💬 Ghi Chú Đặt Biệt (Nếu có):</label>
+                    <textarea id="customerNote" rows="2" placeholder="Ví dụ: Da em nhạy cảm, muốn phòng yên tĩnh..." class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-rose-500/30 transition text-sm">
+                    XÁC NHẬN ĐẶT LỊCH HẸN ✨
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🌟 POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
+    <!-- ========================================== -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-5 shadow-2xl border border-rose-100 animate-bounce-in">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold shadow-inner">
+                ✓
+            </div>
+            
+            <div class="space-y-1">
+                <h3 class="text-2xl font-extrabold text-gray-900">ĐẶT LỊCH THÀNH CÔNG!</h3>
+                <p class="text-xs text-gray-500">AuraSpa đã tiếp nhận lịch hẹn của bạn</p>
+            </div>
+
+            <!-- Thẻ Chi Tiết Lịch Hẹn -->
+            <div class="bg-rose-50/70 p-4 rounded-2xl border border-rose-200 text-left text-xs space-y-2">
+                <div class="flex justify-between border-b border-rose-200/60 pb-2">
+                    <span class="text-gray-500">Mã Lịch Hẹn:</span>
+                    <span id="resCode" class="font-extrabold text-rose-600 text-sm">AURA-8942</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Khách Hàng:</span>
+                    <span id="resName" class="font-bold text-gray-900">Sữa Nguyễn</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Dịch Vụ:</span>
+                    <span id="resService" class="font-bold text-gray-900">Gội Đầu Dưỡng Sinh</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Thời Gian Hẹn:</span>
+                    <span id="resTime" class="font-bold text-gray-900">09:30 - 2026-09-03</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Kỹ Thuật Viên:</span>
+                    <span id="resStaff" class="font-bold text-gray-900">Hệ thống tự xếp</span>
+                </div>
+                <div class="flex justify-between pt-2 border-t border-rose-200/60">
+                    <span class="text-gray-500">Tổng Tiền Dự Kiến:</span>
+                    <span id="resPrice" class="font-extrabold text-rose-600 text-sm">199.000 đ</span>
+                </div>
+            </div>
+
+            <p class="text-[11px] text-gray-400">Vui lòng đến trước 10 phút so với giờ hẹn để Spa phục vụ chu đáo nhất.</p>
+
+            <button onclick="closeSuccessPopup()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl shadow-md transition text-xs uppercase tracking-wider">
+                Đóng & Hoàn Tất
+            </button>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-300 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -413,5 +572,7 @@
         </div>
     </footer>
 
+    <!-- Nhúng file Script xử lý Đặt Lịch -->
+    <script src="js/booking.js"></script>
 </body>
 </html>
