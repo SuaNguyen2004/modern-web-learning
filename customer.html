@@ -13,7 +13,7 @@
 </head>
 <body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen flex flex-col">
 
-    <!-- 1. HEADER / NAVBAR -->
+    <!-- 1. HEADER / NAVBAR (HỖ TRỢ FULL MOBILE & DESKTOP) -->
     <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo Spa -->
@@ -27,15 +27,32 @@
                 </div>
             </a>
 
-            <!-- Navigation Buttons -->
+            <!-- Navigation Buttons Desktop -->
             <div class="flex items-center gap-3">
-                <a href="index.html" class="text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-4 py-2.5 rounded-full border border-gray-200 transition flex items-center gap-1.5">
+                <a href="index.html" class="hidden sm:flex text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-4 py-2.5 rounded-full border border-gray-200 transition items-center gap-1.5">
                     <span>🏠</span> Về Trang Chủ
                 </a>
-                <button onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5">
+                <button onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-4 sm:px-5 py-2.5 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5">
                     <span>📅</span> Đặt Lịch Mới (VIP)
                 </button>
+                <!-- Hamburger Menu Mobile -->
+                <button onclick="toggleMobileMenu()" class="sm:hidden p-2 rounded-xl text-gray-700 bg-gray-100 hover:bg-rose-50 text-xl font-bold transition ml-1">
+                    ☰
+                </button>
             </div>
+        </div>
+
+        <!-- 📱 MOBILE MENU DRAWER DÀNH CHO CUSTOMER PORTAL -->
+        <div id="mobileMenuDrawer" class="hidden sm:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-2.5 animate-fade-in shadow-xl text-xs">
+            <a href="index.html" class="bg-gray-100 text-gray-700 font-bold px-4 py-3 rounded-xl border border-gray-200 text-center flex items-center justify-center gap-2 transition">
+                <span>🏠</span> Quay Về Trang Chủ Website
+            </a>
+            <a href="spa_admin.html" class="bg-slate-900 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition">
+                <span>⚙️</span> Trang Điều Hành Quản Lý Spa (Admin)
+            </a>
+            <button onclick="openBookingModal()" class="w-full bg-rose-600 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition">
+                <span>📅</span> Đặt Lịch Hẹn Mới (Khách VIP)
+            </button>
         </div>
     </header>
 
@@ -279,9 +296,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 🌟 POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
-    <!-- ========================================== -->
+    <!-- POPUP XÁC NHẬN ĐẶT LỊCH THÀNH CÔNG -->
     <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl border border-rose-100 animate-bounce-in">
             <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto font-bold shadow-inner">

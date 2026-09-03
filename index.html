@@ -14,7 +14,7 @@
 </head>
 <body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen">
 
-    <!-- 1. HEADER / NAVBAR -->
+    <!-- 1. HEADER / NAVBAR (DÀNH CHO CẢ MÀN HÌNH MÁY TÍNH VÀ ĐIỆN THOẠI DI ĐỘNG) -->
     <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo Spa -->
@@ -28,7 +28,7 @@
                 </div>
             </a>
 
-            <!-- Navigation Links -->
+            <!-- Navigation Links Desktop -->
             <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-600">
                 <a href="#home" class="text-rose-600 font-semibold">Trang Chủ</a>
                 <a href="#services" class="hover:text-rose-600 transition">Dịch Vụ</a>
@@ -37,7 +37,7 @@
                 <a href="#reviews" class="hover:text-rose-600 transition">Đánh Giá</a>
             </nav>
 
-            <!-- CTA Booking & Lookup & Customer VIP & Admin Link -->
+            <!-- CTA Booking & Links Desktop -->
             <div class="flex items-center gap-2">
                 <button onclick="openLookupModal()" class="hidden xl:flex items-center gap-1 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-full border border-gray-200 transition">
                     <span>🔍</span> Tra Cứu
@@ -50,6 +50,35 @@
                 </a>
                 <button onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-4 py-2 rounded-full text-xs shadow-md active:scale-95 transition flex items-center gap-1.5">
                     <span>📅</span> Đặt Lịch Ngay
+                </button>
+
+                <!-- Nút Hamburger Menu cho Mobile -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl text-gray-700 bg-gray-100 hover:bg-rose-50 text-xl font-bold transition ml-1">
+                    ☰
+                </button>
+            </div>
+        </div>
+
+        <!-- 📱 MOBILE MENU DRAWER (XỬ LÝ MÀN HÌNH NHỎ CHUYỂN TRANG MƯỢT MÀ) -->
+        <div id="mobileMenuDrawer" class="hidden md:hidden bg-white border-b border-rose-100 px-4 py-4 space-y-3 animate-fade-in shadow-xl">
+            <div class="flex flex-col gap-2.5 font-medium text-sm text-gray-700 border-b border-gray-100 pb-3">
+                <a href="#home" onclick="toggleMobileMenu()" class="text-rose-600 font-bold flex items-center gap-2"><span>🏠</span> Trang Chủ</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="hover:text-rose-600 flex items-center gap-2"><span>🌺</span> Dịch Vụ Spa</a>
+                <a href="#staff" onclick="toggleMobileMenu()" class="hover:text-rose-600 flex items-center gap-2"><span>👩‍🎨</span> Đội Ngũ KTV</a>
+                <a href="#equipment" onclick="toggleMobileMenu()" class="hover:text-rose-600 flex items-center gap-2"><span>🔬</span> Thiết Bị Hiện Đại</a>
+                <a href="#reviews" onclick="toggleMobileMenu()" class="hover:text-rose-600 flex items-center gap-2"><span>⭐</span> Đánh Giá Khách Hàng</a>
+            </div>
+            
+            <!-- Các nút chuyển màn hình chính trên Mobile -->
+            <div class="flex flex-col gap-2 text-xs pt-1">
+                <a href="customer.html" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold px-4 py-3 rounded-xl border border-rose-200 text-center flex items-center justify-center gap-2 transition shadow-sm">
+                    <span>👑</span> Trang Cá Nhân & VIP Khách Hàng
+                </a>
+                <a href="spa_admin.html" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition shadow-sm">
+                    <span>⚙️</span> Trang Điều Hành Quản Lý Spa (Admin)
+                </a>
+                <button onclick="openLookupModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-xl border border-gray-200 text-center flex items-center justify-center gap-2 transition">
+                    <span>🔍</span> Tra Cứu & Hủy Lịch Hẹn Đã Đặt
                 </button>
             </div>
         </div>
@@ -403,8 +432,7 @@
                 <span class="text-[10px] font-bold text-rose-600 uppercase tracking-widest">AuraSpa Booking</span>
                 <h3 class="text-xl font-extrabold text-gray-900 leading-tight">ĐẶT LỊCH HẸN GIỜ</h3>
                 <p class="text-[11px] text-gray-500">Giữ chỗ mượt mà & không phải chờ đợi</p>
-                <!-- Thông báo tự động điền thông tin Khách VIP -->
-                <p id="vipStatusNotice" class="hidden text-[11px] font-bold text-rose-600 bg-rose-50 py-1 px-2.5 rounded-lg border border-rose-200 mt-1"></p>
+                <p id="vipStatusNotice" class="hidden text-[11px] font-bold text-rose-600 bg-rose-50 py-1.5 px-3 rounded-lg border border-rose-200 mt-1"></p>
             </div>
 
             <form onsubmit="handleBookingSubmit(event)" class="space-y-2.5">

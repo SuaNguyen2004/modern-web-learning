@@ -13,7 +13,7 @@
 </head>
 <body class="bg-slate-50 min-h-screen text-slate-800 antialiased flex flex-col">
 
-    <!-- 1. HEADER ADMIN NAVBAR -->
+    <!-- 1. HEADER ADMIN NAVBAR (FULL MOBILE & DESKTOP SUPPORT) -->
     <header class="bg-slate-900 text-white sticky top-0 z-50 border-b border-slate-800 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- Logo Admin -->
@@ -22,12 +22,12 @@
                 <span class="text-xl font-bold tracking-wide">AuraSpa Panel</span>
             </div>
 
-            <!-- Navigation Links & Live Chat Trigger -->
-            <div class="flex items-center gap-4">
-                <button onclick="toggleAdminChatModal()" class="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">
+            <!-- Navigation Links Desktop -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleAdminChatModal()" class="hidden sm:flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">
                     <span class="animate-pulse">💬</span> Chat Với Khách Hàng
                 </button>
-                <a href="index.html" class="text-xs font-semibold text-rose-400 hover:text-rose-300 transition flex items-center gap-1.5 bg-slate-800 px-3 py-2 rounded-xl border border-slate-700">
+                <a href="index.html" class="hidden sm:flex text-xs font-semibold text-rose-400 hover:text-rose-300 transition items-center gap-1.5 bg-slate-800 px-3 py-2 rounded-xl border border-slate-700">
                     <span>🌐</span> Trình Xem Khách Hàng
                 </a>
                 <div class="h-6 w-px bg-slate-800 hidden sm:block"></div>
@@ -40,7 +40,25 @@
                         <p class="text-[10px] text-slate-400 mt-0.5">Quản lý hệ thống</p>
                     </div>
                 </div>
+
+                <!-- Nút Hamburger Menu Mobile -->
+                <button onclick="toggleMobileAdminMenu()" class="sm:hidden p-2 rounded-xl text-white bg-slate-800 hover:bg-slate-700 text-xl font-bold transition ml-1">
+                    ☰
+                </button>
             </div>
+        </div>
+
+        <!-- 📱 MOBILE MENU DRAWER DÀNH CHO ADMIN -->
+        <div id="mobileAdminMenuDrawer" class="hidden sm:hidden bg-slate-900 border-b border-slate-800 px-4 py-4 space-y-2.5 animate-fade-in shadow-xl text-xs">
+            <button onclick="toggleAdminChatModal(); toggleMobileAdminMenu();" class="w-full bg-rose-600 text-white font-bold px-4 py-3 rounded-xl text-center flex items-center justify-center gap-2 transition">
+                <span>💬</span> Mở Khung Live Chat Với Khách Hàng
+            </button>
+            <a href="customer.html" class="bg-slate-800 text-rose-400 font-bold px-4 py-3 rounded-xl border border-slate-700 text-center flex items-center justify-center gap-2 transition">
+                <span>👑</span> Xem Trang VIP Khách Hàng (customer.html)
+            </a>
+            <a href="index.html" class="bg-slate-800 text-white font-bold px-4 py-3 rounded-xl border border-slate-700 text-center flex items-center justify-center gap-2 transition">
+                <span>🌐</span> Quay Về Trang Chủ Website (index.html)
+            </a>
         </div>
     </header>
 
@@ -202,9 +220,7 @@
 
     </main>
 
-    <!-- ========================================== -->
-    <!-- 🌟 MODAL HỦY CA BẰNG TAILWIND (THAY THẾ BROWSER PROMPT NỔI DỒI ÔI) -->
-    <!-- ========================================== -->
+    <!-- MODAL HỦY CA BẰNG TAILWIND -->
     <div id="cancelReasonModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-rose-100 space-y-4 animate-fade-in my-auto">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -273,7 +289,13 @@
         <p>© 2026 AuraSpa Admin Panel - Bảng Điều Hành Quản Lý Spa Thực Tế</p>
     </footer>
 
-    <!-- Nhúng File Script Admin -->
+    <!-- Script Admin -->
     <script src="js/admin_spa.js"></script>
+    <script>
+        function toggleMobileAdminMenu() {
+            const drawer = document.getElementById('mobileAdminMenuDrawer');
+            if (drawer) drawer.classList.toggle('hidden');
+        }
+    </script>
 </body>
 </html>

@@ -21,10 +21,23 @@ function getLoggedInCustomer() {
     return JSON.parse(logged);
 }
 
+// Toggle Mở/Đóng Menu Mobile (Hamburger Menu)
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenuDrawer');
+    if (!mobileMenu) return;
+    mobileMenu.classList.toggle('hidden');
+}
+
 // Mở Modal Đặt Lịch (Tự động điền Họ Tên & SĐT nếu đã đăng nhập)
 function openBookingModal(serviceName = null, price = null, voucherCode = null) {
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
+
+    // Đóng mobile menu nếu đang mở
+    const mobileMenu = document.getElementById('mobileMenuDrawer');
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+    }
 
     const serviceSelect = document.getElementById('serviceSelect');
     if (serviceSelect) {
@@ -36,7 +49,6 @@ function openBookingModal(serviceName = null, price = null, voucherCode = null) 
         updateSelectedServicePrice();
     }
 
-    // Tự động điền Voucher nếu có
     const voucherInput = document.getElementById('inputVoucherCode');
     if (voucherInput) {
         voucherInput.value = voucherCode || '';
@@ -49,7 +61,6 @@ function openBookingModal(serviceName = null, price = null, voucherCode = null) 
         dateInput.min = today;
     }
 
-    // ⚡ KIỂM TRA PHIÊN KHÁCH HÀNG ĐÃ ĐĂNG NHẬP VIP ⚡
     const loggedCustomer = getLoggedInCustomer();
     const nameInput = document.getElementById('customerName');
     const phoneInput = document.getElementById('customerPhone');
@@ -213,6 +224,12 @@ function closeSuccessPopup() {
 function openLookupModal() {
     const modal = document.getElementById('lookupModal');
     if (!modal) return;
+
+    const mobileMenu = document.getElementById('mobileMenuDrawer');
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+    }
+
     document.getElementById('lookupInput').value = '';
     document.getElementById('lookupResultArea').classList.add('hidden');
     modal.classList.remove('hidden');
