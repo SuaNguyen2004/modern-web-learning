@@ -3,139 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animation & Interactive - Tailwind CSS</title>
-    <!-- Nhúng Tailwind CSS CDN -->
+    <title>AuraSpa - Chăm Sóc Da & Gội Đầu Dưỡng Sinh</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
+<body class="bg-rose-50/30 text-gray-800 antialiased min-h-screen">
 
-    <!-- 1. HEADER / THANH ĐIỀU HƯỚNG -->
-    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Logo với hiệu ứng Hover xoay nhẹ -->
-            <div class="flex items-center gap-2 group cursor-pointer">
-                <span class="bg-blue-600 group-hover:bg-indigo-600 text-white font-bold p-2 rounded-lg text-lg transition duration-300 group-hover:rotate-12">MW</span>
-                <span class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition">ModernWeb</span>
-            </div>
-
-            <!-- Nút Thông báo có chấm đỏ nhấp nháy animate-ping -->
-            <div class="flex items-center gap-4">
-                <div class="relative">
-                    <button class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition">
-                        🔔
-                    </button>
-                    <!-- Chấm đỏ hoạt họa animate-ping -->
-                    <span class="absolute top-1 right-1 flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                    </span>
+    <!-- 1. HEADER / NAVBAR -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Spa -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 to-pink-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition">
+                    🌸
                 </div>
+                <div class="leading-tight">
+                    <span class="text-2xl font-extrabold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">AuraSpa</span>
+                    <span class="block text-[10px] text-rose-400 font-semibold tracking-widest uppercase">Beauty & Wellness</span>
+                </div>
+            </a>
 
-                <!-- Nút Bấm có hiệu ứng Active Scale khi bấm xuống -->
-                <button class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-sm font-medium px-4 py-2 rounded-lg transition duration-200 shadow-md hover:shadow-blue-200">
-                    Đăng Nhập
-                </button>
-            </div>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-600">
+                <a href="#home" class="text-rose-600 font-semibold">Trang Chủ</a>
+                <a href="#services" class="hover:text-rose-600 transition">Dịch Vụ</a>
+                <a href="#staff" class="hover:text-rose-600 transition">Kỹ Thuật Viên</a>
+                <a href="#equipment" class="hover:text-rose-600 transition">Công Nghệ & Thiết Bị</a>
+                <a href="#reviews" class="hover:text-rose-600 transition">Đánh Giá</a>
+            </nav>
+
+            <!-- CTA Booking Button -->
+            <a href="#services" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-sm shadow-lg shadow-rose-500/25 active:scale-95 transition flex items-center gap-2">
+                <span>📅</span> Đặt Lịch Ngay
+            </a>
         </div>
     </header>
 
-    <!-- 2. CONTAINER CHÍNH -->
-    <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
-
-        <!-- TIÊU ĐỀ BÀI HỌC ANIMATION -->
-        <section class="text-center space-y-2">
-            <h1 class="text-3xl font-extrabold text-gray-900">✨ Chuyên Đề: Animation & Hiệu Ứng Chuyển Động</h1>
-            <p class="text-gray-600 max-w-xl mx-auto">Khám phá cách hoạt động của `transition`, `transform`, `hover:`, `active:` và các Animation dựng sẵn trong Tailwind CSS.</p>
-        </section>
-
-        <!-- KHU VỰC 1: CÁC ANIMATION DỰNG SẴN (BUILT-IN ANIMATIONS) -->
-        <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
-            <h2 class="text-xl font-bold text-gray-900 border-b pb-2">1. Các Animation Dựng Sẵn (Built-in Animations)</h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <!-- Spin (Xoay tròn) -->
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
-                    <div class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p class="font-semibold text-sm">`animate-spin`</p>
-                    <p class="text-xs text-gray-500">Dùng cho icon Loading 🔄</p>
-                </div>
-
-                <!-- Ping (Sóng lan tỏa) -->
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
-                    <span class="relative inline-flex h-8 w-8 mx-auto mt-1">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-8 w-8 bg-sky-500 text-white text-xs items-center justify-center font-bold">NEW</span>
+    <!-- 2. HERO BANNER -->
+    <section id="home" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-rose-100/50 via-pink-50/30 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Banner Content Left -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 text-xs font-bold px-3.5 py-1.5 rounded-full border border-rose-200">
+                        <span>✨</span> Trải Nghiệm Spa Chuẩn Dưỡng Sinh
                     </span>
-                    <p class="font-semibold text-sm">`animate-ping`</p>
-                    <p class="text-xs text-gray-500">Dùng cho điểm chú ý 🎯</p>
-                </div>
-
-                <!-- Pulse (Mờ rồi rõ) -->
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
-                    <div class="animate-pulse space-y-2">
-                        <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
-                        <div class="h-3 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
+                        Đánh Thức Vẻ Đẹp & <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">Thư Giãn Tâm Hồn</span>
+                    </h1>
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Chuyên chăm sóc da mặt chuyên sâu & gội đầu dưỡng sinh thảo dược. Không không gian yên tĩnh, âm nhạc thư thái cùng kỹ thuật viên nhiều năm kinh nghiệm.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#services" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-500/30 transition text-center">
+                            Khám Phá Dịch Vụ 🌸
+                        </a>
+                        <a href="#staff" class="w-full sm:w-auto bg-white hover:bg-rose-50 text-gray-700 font-bold px-6 py-3.5 rounded-full border border-gray-200 shadow-sm transition text-center">
+                            Xem Kỹ Thuật Viên 👥
+                        </a>
                     </div>
-                    <p class="font-semibold text-sm">`animate-pulse`</p>
-                    <p class="text-xs text-gray-500">Dùng khi chờ tải dữ liệu ⏳</p>
+
+                    <!-- Small Badges -->
+                    <div class="pt-6 border-t border-rose-200/60 flex items-center justify-center lg:justify-start gap-8 text-xs font-semibold text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <span class="text-rose-500 font-bold text-base">✓</span> 100% Thảo dược tự nhiên
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-rose-500 font-bold text-base">✓</span> KTV có chứng chỉ hành nghề
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Bounce (Nảy lên xuống) -->
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
-                    <div class="text-2xl animate-bounce">👇</div>
-                    <p class="font-semibold text-sm">`animate-bounce`</p>
-                    <p class="text-xs text-gray-500">Dùng nhắc cuộn trang 📜</p>
+                <!-- Banner Image Right -->
+                <div class="relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Spa Relaxing" class="rounded-3xl shadow-2xl border-4 border-white object-cover h-[420px] w-full">
+                        
+                        <!-- Floating Badge 1 -->
+                        <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-rose-100 flex items-center gap-3 hidden sm:flex">
+                            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 font-bold text-xl flex items-center justify-center">
+                                ⭐ 4.9
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900 text-sm">Khách Hàng Hài Lòng</p>
+                                <p class="text-xs text-gray-500">+1,500 Lượt Đánh Giá 5 Sao</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- KHU VỰC 2: CÁC HIỆU ỨNG TƯƠNG TÁC (HOVER, SCALE, ROTATE, GROUP) -->
-        <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
-            <h2 class="text-xl font-bold text-gray-900 border-b pb-2">2. Hiệu Ứng Rê Chuột (Hover & Transform)</h2>
+    <!-- 3. DANH MỤC DỊCH VỤ (SERVICES) -->
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Menu Dịch Vụ</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Dịch Vụ Chăm Sóc Nổi Bật</h2>
+                <p class="text-gray-600 text-sm">Các liệu trình được thiết kế bài bản giúp phục hồi sức khỏe và làn da tươi trẻ</p>
+            </div>
 
+            <!-- Grid 4 Dịch vụ chính -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Service 1 -->
+                <div class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-rose-500/20">
+                            🌿
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full">⏱️ 60 Phút</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-2">Gội Đầu Dưỡng Sinh Thảo Dược</h3>
+                            <p class="text-gray-600 text-xs mt-2 leading-relaxed">Gội đầu bằng nước bồ kết nấu tươi, massage ấn huyệt da đầu, vòm nước tuần hoàn giúp giảm đau đầu sảng khoái.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-rose-600">199.000 đ</span>
+                        <button class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-pink-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-pink-500/20">
+                            ✨
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-pink-100 text-pink-700 px-2.5 py-0.5 rounded-full">⏱️ 75 Phút</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-2">Chăm Sóc Da Mặt Chuyên Sâu</h3>
+                            <p class="text-gray-600 text-xs mt-2 leading-relaxed">Tẩy tế bào chết, hút mụn cám, điện di tinh chất Vitamin C kết hợp đắp mặt nạ sinh học giúp da căng bóng sáng mịn.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-rose-600">350.000 đ</span>
+                        <button class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-rose-50/40 rounded-2xl p-6 border border-rose-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md shadow-amber-500/20">
+                            💆‍♀️
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full">⏱️ 45 Phút</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-2">Massage Cổ Vai Gáy Trị Liệu</h3>
+                            <p class="text-gray-600 text-xs mt-2 leading-relaxed">Ấn huyệt chuyên sâu giải tỏa bó cơ vai gáy, chườm đá nóng bazo và thảo dược kết hợp hỗ trợ giấc ngủ ngon.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-rose-200/60 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-rose-600">250.000 đ</span>
+                        <button class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Đặt Lịch</button>
+                    </div>
+                </div>
+
+                <!-- Service 4 (VIP Combo) -->
+                <div class="bg-gradient-to-b from-rose-500 to-pink-600 text-white rounded-2xl p-6 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition duration-300 relative overflow-hidden">
+                    <span class="absolute top-3 right-3 bg-amber-400 text-gray-900 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">HOT VIP</span>
+                    <div class="space-y-4">
+                        <div class="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center text-2xl backdrop-blur-sm">
+                            👑
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-bold bg-white/20 text-white px-2.5 py-0.5 rounded-full">⏱️ 90 Phút</span>
+                            <h3 class="text-lg font-bold mt-2">Combo Chăm Sóc Da & Gội Đầu VIP</h3>
+                            <p class="text-rose-100 text-xs mt-2 leading-relaxed">Gói chăm sóc toàn diện: Gội đầu thảo dược + Chăm sóc da C vitamin + Massage cổ vai gáy chườm đá nóng.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/20 flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-amber-300">499.000 đ</span>
+                        <button class="bg-white hover:bg-rose-50 text-rose-600 text-xs font-bold px-3.5 py-2 rounded-xl shadow-md transition">Đặt Lịch VIP</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ĐỘI NGŨ KỸ THUẬT VIÊN (STAFF SHOWCASE) -->
+    <section id="staff" class="py-16 bg-rose-50/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Đội Ngũ Tay Nghề Cao</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Kỹ Thuật Viên Được Yêu Thích</h2>
+                <p class="text-gray-600 text-sm">Các kỹ thuật viên đều có chứng chỉ hành nghề, thái độ tận tâm và được khách hàng đánh giá cao</p>
+            </div>
+
+            <!-- Grid 3 KTV -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- KTV 1 -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
+                    <div class="relative w-28 h-28 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="KTV Minh Anh" class="w-full h-full rounded-full object-cover border-4 border-rose-200">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Nguyễn Minh Anh</h3>
+                        <p class="text-xs text-rose-600 font-semibold mt-1">Chuyên Gia Chăm Sóc Da (Skin Specialist)</p>
+                        <p class="text-xs text-gray-500 mt-2">5 năm kinh nghiệm. Chuyên về điện di C, hút mụn bài bản và tư vấn liệu trình da.</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        <span class="text-amber-500 font-bold">⭐ 4.9 / 5.0 (180+ Đánh giá)</span>
+                        <span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Kinh nghiệm 5 năm</span>
+                    </div>
+                </div>
+
+                <!-- KTV 2 -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
+                    <div class="relative w-28 h-28 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" alt="KTV Thu Hà" class="w-full h-full rounded-full object-cover border-4 border-rose-200">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Trần Thu Hà</h3>
+                        <p class="text-xs text-rose-600 font-semibold mt-1">Chuyên Gia Gội Đầu Dưỡng Sinh</p>
+                        <p class="text-xs text-gray-500 mt-2">4 năm kinh nghiệm. Kỹ thuật bấm huyệt da đầu cực mượt, được khen bấm êm tay.</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        <span class="text-amber-500 font-bold">⭐ 5.0 / 5.0 (210+ Đánh giá)</span>
+                        <span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Kinh nghiệm 4 năm</span>
+                    </div>
+                </div>
+
+                <!-- KTV 3 -->
+                <div class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 text-center space-y-4 hover:shadow-xl transition">
+                    <div class="relative w-28 h-28 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80" alt="KTV Ngọc Lan" class="w-full h-full rounded-full object-cover border-4 border-rose-200">
+                        <span class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Sẵn sàng</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Lê Ngọc Lan</h3>
+                        <p class="text-xs text-rose-600 font-semibold mt-1">Kỹ Thuật Viên Massage Trị Liệu</p>
+                        <p class="text-xs text-gray-500 mt-2">3 năm kinh nghiệm. Chuyên trị liệu vai gáy, chườm đá nóng giúp giải tỏa căng thẳng.</p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                        <span class="text-amber-500 font-bold">⭐ 4.8 / 5.0 (140+ Đánh giá)</span>
+                        <span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[11px]">Kinh nghiệm 3 năm</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CÔNG NGHỆ & THIẾT BỊ HIỆN ĐẠI (EQUIPMENT SHOWCASE WITH IMAGES) -->
+    <section id="equipment" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Đầu Tư Hiện Đại</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Trang Thiết Bị & Công Nghệ Hiện Đại</h2>
+                <p class="text-gray-600 text-sm">AuraSpa trang bị hệ thống máy móc cao cấp hỗ trợ liệu trình đạt hiệu quả tối ưu nhất</p>
+            </div>
+
+            <!-- Grid 3 Thiết bị Công nghệ -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Thiết bị 1 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1512290900673-0fb66f5c880c?auto=format&fit=crop&w=600&q=80" alt="Máy soi da 3D" class="w-full h-48 object-cover">
+                    <div class="p-6 space-y-2">
+                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Công Nghệ AI</span>
+                        <h3 class="text-lg font-bold text-gray-900">Máy Soi Da & Phân Tích Da 3D Smart Scanner</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">Phân tích chính xác độ ẩm, sắc tố melanin, lỗ chân lông và độ lão hóa để đưa ra liệu trình chăm sóc chuẩn xác nhất cho từng loại da.</p>
+                    </div>
+                </div>
+
+                <!-- Thiết bị 2 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80" alt="Giường gội vòm nước" class="w-full h-48 object-cover">
+                    <div class="p-6 space-y-2">
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Chuẩn Dưỡng Sinh</span>
+                        <h3 class="text-lg font-bold text-gray-900">Giường Gội Đầu Massge & Vòm Nước Tuần Hoàn</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">Hệ thống vòm phun nước thảo dược ấm 360 độ kết hợp đệm massage lưng giúp cơ thể thư giãn tuyệt đối trong suốt quá trình gội.</p>
+                    </div>
+                </div>
+
+                <!-- Thiết bị 3 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Máy điện di C" class="w-full h-48 object-cover">
+                    <div class="p-6 space-y-2">
+                        <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-1 rounded-full">Trẻ Hóa Da</span>
+                        <h3 class="text-lg font-bold text-gray-900">Máy Điện Di Tinh Chất & Đèn Ánh Sáng Bio-Light</h3>
+                        <p class="text-gray-600 text-xs leading-relaxed">Đẩy sâu serum Vitamin C và Collagen vào tế bào da không gây xâm lấn, kết hợp chiếu ánh sáng sinh học diệt khuẩn mụn.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. KHU VỰC KHÁCH HÀNG FEEDBACK & ĐÁNH GIÁ (REVIEWS) -->
+    <section id="reviews" class="py-16 bg-rose-50/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Phản Hồi Trực Tuyến</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Khách Hàng Nói Gì Về AuraSpa?</h2>
+                <p class="text-gray-600 text-sm">Các đánh giá thực tế được khách hàng gửi sau khi trải nghiệm dịch vụ</p>
+            </div>
+
+            <!-- Grid 3 Feedback Card -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                <!-- Card 1: Phóng to (Scale) & Đổ bóng -->
-                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-md cursor-pointer hover:scale-105 hover:shadow-2xl transition duration-300">
-                    <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full">Kỹ thuật 1</span>
-                    <h3 class="text-lg font-bold mt-2">Phóng To Thẻ (Scale)</h3>
-                    <p class="text-xs text-blue-100 mt-2">Class: `hover:scale-105 transition duration-300`</p>
+                <!-- Feedback 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-sm">
+                                HP
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Hoàng Phương</h4>
+                                <p class="text-[11px] text-gray-400">Đã dùng: Gội đầu dưỡng sinh (60p)</p>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-gray-600 text-xs leading-relaxed">"Bạn KTV Thu Hà làm cực kỳ êm tay! Nước bồ kết thơm tự nhiên, vòm nước rửa xong nhẹ hết cả đầu. Rất đáng tiền, sẽ quay lại tuần sau!"</p>
                 </div>
 
-                <!-- Card 2: Trôi nổi lên (Translate-Y) & Xoay nghiêng (Rotate) -->
-                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-6 rounded-xl shadow-md cursor-pointer hover:-translate-y-2 hover:rotate-1 hover:shadow-2xl transition duration-300">
-                    <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full">Kỹ thuật 2</span>
-                    <h3 class="text-lg font-bold mt-2">Nổi Lên & Xoay Nghiêng</h3>
-                    <p class="text-xs text-emerald-100 mt-2">Class: `hover:-translate-y-2 hover:rotate-1`</p>
+                <!-- Feedback 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-700 font-bold flex items-center justify-center text-sm">
+                                TH
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Thanh Hằng</h4>
+                                <p class="text-[11px] text-gray-400">Đã dùng: Chăm sóc da chuyên sâu</p>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-gray-600 text-xs leading-relaxed">"Ấn tượng nhất là bước soi da 3D được KTV Minh Anh phân tích rất kỹ. Điện di C xong da căng bóng hẳn. Hệ thống đặt lịch trên web rất tiện không phải đợi!"</p>
                 </div>
 
-                <!-- Card 3: Thẻ cha tác động Thẻ con (Group Hover) -->
-                <div class="group bg-gradient-to-br from-purple-500 to-pink-600 text-white p-6 rounded-xl shadow-md cursor-pointer hover:shadow-2xl transition duration-300">
-                    <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full">Kỹ thuật 3: Group Hover</span>
-                    <h3 class="text-lg font-bold mt-2 flex items-center justify-between">
-                        <span>Rê Chuột Vào Đây</span>
-                        <!-- Mũi tên trượt sang phải khi rê chuột vào thẻ cha -->
-                        <span class="inline-block group-hover:translate-x-3 transition duration-300">➔</span>
-                    </h3>
-                    <p class="text-xs text-purple-100 mt-2">Thẻ cha có `group`, thẻ con có `group-hover:translate-x-3`</p>
+                <!-- Feedback 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-sm">
+                                NT
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Ngọc Trâm</h4>
+                                <p class="text-[11px] text-gray-400">Đã dùng: Combo VIP (90p)</p>
+                            </div>
+                        </div>
+                        <span class="text-amber-400 font-bold text-sm">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-gray-600 text-xs leading-relaxed">"Gói Combo VIP 90p rất xứng đáng! Vừa được làm sạch da vừa gội đầu và chườm đá nóng cổ vai gáy. Không gian yên tĩnh nhạc thiền thích mê."</p>
                 </div>
 
             </div>
-        </section>
-
-        <!-- DỮ LIỆU API -->
-        <section class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <h2 class="text-lg font-bold text-gray-900 mb-4">🌐 Dữ Liệu Gọi Từ API (JS Async/Await)</h2>
-            <div id="app"></div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
-        <p>© 2026 ModernWeb Learning - Thực hành Tailwind Animation</p>
+    <footer class="bg-slate-900 text-slate-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🌸</span>
+                    <span class="text-2xl font-bold text-white">AuraSpa</span>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">Hệ thống Spa chăm sóc da & gội đầu dưỡng sinh hàng đầu dành cho phái đẹp.</p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Dịch Vụ Nổi Bật</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li><a href="#" class="hover:text-rose-400">Gội Đầu Dưỡng Sinh Thảo Dược</a></li>
+                    <li><a href="#" class="hover:text-rose-400">Chăm Sóc Da Mặt Chuyên Sâu</a></li>
+                    <li><a href="#" class="hover:text-rose-400">Massage Cổ Vai Gáy Trị Liệu</a></li>
+                    <li><a href="#" class="hover:text-rose-400">Combo Thư Giãn VIP</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Thời Gian Mở Cửa</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li>Thứ 2 - Thứ 6: 08:30 - 20:30</li>
+                    <li>Thứ 7 - Chủ Nhật: 08:00 - 21:00</li>
+                    <li class="text-rose-400 font-semibold">Khuyên dùng: Đặt lịch trước 30p</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">Liên Hệ & Địa Chỉ</h4>
+                <p class="text-xs text-slate-400">📍 Số 123 Đường Hoa Hồng, Phường 2, Q. Phú Nhuận, TP.HCM</p>
+                <p class="text-xs text-slate-400 mt-2">📞 Hotline: 0909.123.456</p>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>© 2026 AuraSpa Project - Đồ án tốt nghiệp Lập trình Web Hiện đại</p>
+        </div>
     </footer>
 
-    <script src="js/main.js"></script>
 </body>
 </html>
