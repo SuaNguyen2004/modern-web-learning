@@ -1,33 +1,9 @@
 // ==========================================
-// AURA SPA LIVE CHAT SCRIPT (CLIENT SIDE)
+// SPA ONLINE LIVE CHAT SCRIPT (FETCH API & MYSQL CONNECTED)
 // ==========================================
 
-const INITIAL_WELCOME_CHAT = [
-    {
-        sender: 'spa',
-        senderName: 'Lễ Tân AuraSpa',
-        text: 'Xin chào bạn! 🌸 AuraSpa có thể hỗ trợ tư vấn dịch vụ gội đầu hay chăm sóc da nào cho bạn hôm nay ạ?',
-        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-    }
-];
+const CHAT_API_URL = 'api/chat.php';
 
-// Lấy lịch sử chat từ localStorage
-function getStoredChat() {
-    let stored = localStorage.getItem('aura_chat_messages');
-    if (!stored) {
-        localStorage.setItem('aura_chat_messages', JSON.stringify(INITIAL_WELCOME_CHAT));
-        return INITIAL_WELCOME_CHAT;
-    }
-    return JSON.parse(stored);
-}
-
-// Lưu lịch sử chat
-function saveChat(messages) {
-    localStorage.setItem('aura_chat_messages', JSON.stringify(messages));
-    renderChatMessages();
-}
-
-// Toggle Mở/Đóng Khung Chat
 function toggleChatWidget() {
     const chatBox = document.getElementById('chatBoxWidget');
     if (!chatBox) return;
@@ -36,110 +12,96 @@ function toggleChatWidget() {
         chatBox.classList.remove('hidden');
         chatBox.classList.add('flex');
         renderChatMessages();
-        scrollChatToBottom();
     } else {
         chatBox.classList.add('hidden');
         chatBox.classList.remove('flex');
     }
 }
 
-// Render tin nhắn ra khung chat phía Khách hàng
-function renderChatMessages() {
+async function renderChatMessages() {
     const chatBody = document.getElementById('chatMessagesBody');
     if (!chatBody) return;
 
-    const messages = getStoredChat();
+    try {
+        const response = await fetch(CHAT_API_URL);
+        const res = await response.json();
+        const messages = (res.status === 'success' && res.data) ? res.data : [];
 
-    chatBody.innerHTML = messages.map(msg => {
-        const isCustomer = msg.sender === 'customer';
-        return `
-            <div class="flex flex-col ${isCustomer ? 'items-end' : 'items-start'} mb-3">
-                <span class="text-[10px] text-gray-400 font-semibold mb-1 px-1">
-                    ${isCustomer ? 'Bạn' : (msg.senderName || 'Lễ Tân AuraSpa')} • ${msg.time}
-                </span>
-                <div class="${isCustomer ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none shadow-sm' : 'bg-white text-gray-800 border border-rose-100 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[85%] text-xs leading-relaxed">
-                    ${msg.text}
+        chatBody.innerHTML = messages.map(msg => {
+            const isCustomer = msg.sender === 'customer';
+            return `
+                <div class="flex flex-col ${isCustomer ? 'items-end' : 'items-start'} mb-3">
+                    <span class="text-[10px] text-gray-400 font-semibold mb-1 px-1">
+                        ${isCustomer ? '👤 Bạn' : '🌸 ' + (msg.sender_name || 'Lễ Tân AuraSpa')} • ${msg.time}
+                    </span>
+                    <div class="${isCustomer ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none shadow-sm' : 'bg-white text-gray-800 border border-rose-100 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[85%] leading-relaxed text-xs">
+                        ${msg.message_text || msg.text}
+                    </div>
                 </div>
-            </div>
-        `;
-    }).join('');
+            `;
+        }).join('');
 
-    scrollChatToBottom();
-}
-
-// Cuộn khung chat xuống cuối
-function scrollChatToBottom() {
-    const chatBody = document.getElementById('chatMessagesBody');
-    if (chatBody) {
         chatBody.scrollTop = chatBody.scrollHeight;
+    } catch (e) {
+        console.error('Lỗi tải tin nhắn Chat:', e);
     }
 }
 
-// Hàm tư vấn tự động thông minh dựa trên từ khóa (Smart Auto-Reply Bot)
-function generateSmartReply(userText) {
-    const textLower = userText.toLowerCase();
-
-    if (textLower.includes('giá') || textLower.includes('bao nhiêu') || textLower.includes('tiền')) {
-        return 'Dạ các dịch vụ bên em đang có giá rất ưu đãi ạ:\n• Gội đầu dưỡng sinh: 199k (60p)\n• Chăm sóc da chuyên sâu: 350k (75p)\n• Massage cổ vai gáy: 250k (45p)\n• Combo VIP: 499k (90p) 🌸';
-    } else if (textLower.includes('gội đầu') || textLower.includes('dưỡng sinh')) {
-        return 'Dạ gói Gội đầu dưỡng sinh thảo dược (199k - 60 phút) sử dụng nước bồ kết nấu tươi kết hợp vòm nước massage 360 độ giúp giảm căng thẳng cực kỳ thoải mái ạ!';
-    } else if (textLower.includes('da') || textLower.includes('mặt') || textLower.includes('mụn')) {
-        return 'Dạ liệu trình Chăm sóc da mặt chuyên sâu (350k - 75 phút) sẽ bao gồm bước soi da 3D, hút mụn cám và điện di Vitamin C giúp da căng bóng sáng mịn ạ!';
-    } else if (textLower.includes('giờ') || textLower.includes('mở cửa') || textLower.includes('địa chỉ')) {
-        return 'Dạ AuraSpa mở cửa từ 08:30 - 20:30 (Thứ 2 đến CN). Địa chỉ tại: Số 123 Đường Hoa Hồng, Phường 2, Q. Phú Nhuận, TP.HCM ạ!';
-    } else if (textLower.includes('tư vấn') || textLower.includes('chưa') || textLower.includes('alo')) {
-        return 'Dạ em Lễ tân AuraSpa đây ạ! Anh/chị cần tư vấn gói chăm sóc da hay gội đầu dưỡng sinh ạ? Em sẵn sàng giải đáp ngay ạ ✨';
-    } else {
-        return 'Dạ em đã nhận được tin nhắn của anh/chị ạ! Chuyên viên Lễ tân Spa đang sẵn sàng hỗ trợ anh/chị ngay đây ạ ✨';
-    }
-}
-
-// Gửi tin nhắn từ phía Khách Hàng
-function handleCustomerSendChat(event) {
+async function handleCustomerSendChat(event) {
     event.preventDefault();
     const input = document.getElementById('customerChatInput');
     const text = input.value.trim();
-
     if (!text) return;
 
-    const nowTime = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-    const messages = getStoredChat();
+    try {
+        // Gửi tin nhắn của Khách lên MySQL
+        await fetch(CHAT_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sender: 'customer',
+                senderName: 'Khách Hàng',
+                text: text
+            })
+        });
 
-    messages.push({
-        sender: 'customer',
-        senderName: 'Khách Hàng',
-        text: text,
-        time: nowTime
-    });
+        input.value = '';
+        await renderChatMessages();
 
-    input.value = '';
-    saveChat(messages);
+        // Tự động phản hồi Chat Bot nếu cần
+        setTimeout(async () => {
+            const autoReply = generateSmartReply(text);
+            if (autoReply) {
+                await fetch(CHAT_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sender: 'spa',
+                        senderName: 'Lễ Tân AuraSpa (Tự động)',
+                        text: autoReply
+                    })
+                });
+                renderChatMessages();
+            }
+        }, 1000);
 
-    // Tự động trả lời thông minh dựa trên từ khóa khách nhập
-    setTimeout(() => {
-        const updatedMessages = getStoredChat();
-        const lastMsg = updatedMessages[updatedMessages.length - 1];
-
-        if (lastMsg && lastMsg.sender === 'customer') {
-            const replyText = generateSmartReply(text);
-            updatedMessages.push({
-                sender: 'spa',
-                senderName: 'Lễ Tân AuraSpa',
-                text: replyText,
-                time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-            });
-            saveChat(updatedMessages);
-        }
-    }, 1000);
+    } catch (e) {
+        console.error('Lỗi gửi tin nhắn:', e);
+    }
 }
 
-// Lắng nghe sự thay đổi từ tab khác (Tự động cập nhật khi Admin trả lời từ spa_admin.html)
-window.addEventListener('storage', (e) => {
-    if (e.key === 'aura_chat_messages') {
-        renderChatMessages();
-    }
-});
+function generateSmartReply(userText) {
+    const lower = userText.toLowerCase();
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderChatMessages();
-});
+    if (lower.includes('giá') || lower.includes('nhiêu') || lower.includes('tiền')) {
+        return "Dạ dịch vụ Gội đầu dưỡng sinh của bên em có giá 199.000đ/60 phút, Chăm sóc da chuyên sâu giá 350.000đ/75 phút ạ! Bạn có thể nhấn nút 'Đặt Lịch Ngay' ở trên để chọn giờ hẹn phù hợp nhé 🌸";
+    }
+    if (lower.includes('địa chỉ') || lower.includes('ở đâu') || lower.includes('chỉ đường')) {
+        return "AuraSpa tọa lạc tại: Số 123 Đường Hoa Hồng, Phường 2, Q. Phú Nhuận, TP.HCM. Mở cửa từ 08:30 - 20:30 tất cả các ngày trong tuần ạ! ✨";
+    }
+    if (lower.includes('đặt lịch') || lower.includes('đặt hẹn') || lower.includes('mấy giờ')) {
+        return "Dạ bạn có thể nhấn vào nút '📅 Đặt Lịch Ngay' trên góc màn hình để đăng ký khung giờ hẹn mượt mà không lo phải chờ đợi ạ! ❤️";
+    }
+
+    return "Cảm ơn bạn đã nhắn tin cho AuraSpa! Lễ tân bên em đã nhận được tin nhắn và sẽ gọi lại hỗ trợ bạn ngay trong ít phút ạ! ✨";
+}

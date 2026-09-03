@@ -1,132 +1,8 @@
 // ==========================================
-// SPA ADMIN & STAFF DASHBOARD SCRIPT
+// SPA ADMIN & STAFF DASHBOARD SCRIPT (FETCH API CONNECTED)
 // ==========================================
 
-// Dữ liệu mẫu ban đầu nếu localStorage chưa có dữ liệu
-const INITIAL_DUMMY_BOOKINGS = [
-    {
-        code: 'AURA-8942',
-        customerName: 'Nguyễn Thanh Hằng',
-        customerPhone: '0908123456',
-        serviceName: 'Chăm Sóc Da Mặt Chuyên Sâu',
-        servicePrice: 350000,
-        date: '2026-09-03',
-        time: '09:30',
-        staff: 'KTV Nguyễn Minh Anh',
-        note: 'Da nhạy cảm, dễ mẩn đỏ',
-        status: 'In_Progress',
-        createdAt: '03/09/2026 09:10'
-    },
-    {
-        code: 'AURA-5120',
-        customerName: 'Trần Hoàng Phương',
-        customerPhone: '0912987654',
-        serviceName: 'Gội Đầu Dưỡng Sinh Thảo Dược',
-        servicePrice: 199000,
-        date: '2026-09-03',
-        time: '10:30',
-        staff: 'KTV Trần Thu Hà',
-        note: '',
-        status: 'Confirmed',
-        createdAt: '03/09/2026 09:45'
-    },
-    {
-        code: 'AURA-7731',
-        customerName: 'Lê Ngọc Trâm',
-        customerPhone: '0933456789',
-        serviceName: 'Combo Chăm Sóc Da & Gội Đầu VIP',
-        servicePrice: 499000,
-        date: '2026-09-03',
-        time: '14:00',
-        staff: 'KTV Lê Ngọc Lan',
-        note: 'Muốn phòng yên tĩnh',
-        status: 'Pending',
-        createdAt: '03/09/2026 10:15'
-    },
-    {
-        code: 'AURA-3309',
-        customerName: 'Phạm Bảo Ngọc',
-        customerPhone: '0977112233',
-        serviceName: 'Massage Cổ Vai Gáy Trị Liệu',
-        servicePrice: 250000,
-        date: '2026-09-02',
-        time: '16:00',
-        staff: 'KTV Lê Ngọc Lan',
-        note: '',
-        status: 'Completed',
-        createdAt: '02/09/2026 15:00'
-    }
-];
-
-// Tự động chuyển trạng thái theo thời gian
-function autoUpdateBookingStatusByTime(bookings) {
-    const now = new Date();
-    let modified = false;
-
-    bookings.forEach(b => {
-        if (b.status === 'Cancelled' || b.status === 'Completed') return;
-
-        if (b.date && b.time) {
-            const [hours, minutes] = b.time.split(':').map(Number);
-            const bookingDateTime = new Date(b.date);
-            bookingDateTime.setHours(hours, minutes, 0, 0);
-            const endDateTime = new Date(bookingDateTime.getTime() + 60 * 60 * 1000);
-
-            if (b.status === 'Confirmed' && now >= bookingDateTime && now < endDateTime) {
-                b.status = 'In_Progress';
-                modified = true;
-            } else if ((b.status === 'In_Progress' || b.status === 'Confirmed') && now >= endDateTime) {
-                b.status = 'Completed';
-                modified = true;
-            }
-        }
-    });
-
-    if (modified) {
-        localStorage.setItem('aura_bookings', JSON.stringify(bookings));
-    }
-    return bookings;
-}
-
-// Khử trùng lặp mã đơn
-function sanitizeDuplicateCodes(bookings) {
-    const seenCodes = new Set();
-    let modified = false;
-
-    bookings.forEach(b => {
-        if (seenCodes.has(b.code)) {
-            let newCode;
-            do {
-                newCode = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
-            } while (seenCodes.has(newCode));
-
-            b.code = newCode;
-            modified = true;
-        }
-        seenCodes.add(b.code);
-    });
-
-    if (modified) {
-        localStorage.setItem('aura_bookings', JSON.stringify(bookings));
-    }
-    return bookings;
-}
-
-// Khởi tạo dữ liệu từ localStorage
-function getStoredBookings() {
-    let stored = localStorage.getItem('aura_bookings');
-    if (!stored) {
-        localStorage.setItem('aura_bookings', JSON.stringify(INITIAL_DUMMY_BOOKINGS));
-        stored = JSON.stringify(INITIAL_DUMMY_BOOKINGS);
-    }
-    let parsed = JSON.parse(stored);
-    parsed = sanitizeDuplicateCodes(parsed);
-    return autoUpdateBookingStatusByTime(parsed);
-}
-
-function saveBookings(bookings) {
-    localStorage.setItem('aura_bookings', JSON.stringify(bookings));
-}
+const API_BASE_URL = 'api/';
 
 let currentFilterStatus = 'ALL';
 let currentStaffFilter = 'ALL';
@@ -136,10 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAdminChat();
 });
 
-function renderDashboard() {
-    const bookings = getStoredBookings();
-    renderStats(bookings);
-    renderBookingsTable(bookings);
+async function renderDashboard() {
+    try {
+        let url = API_BASE_URL + 'bookings.php?';
+        if (currentFilterStatus !== 'ALL') url += 'status=' + encodeURIComponent(currentFilterStatus) + '&';
+        if (currentStaffFilter !== 'ALL') url += 'staff=' + encodeURIComponent(currentStaffFilter) + '&';
+
+        const response = await fetch(url);
+        const res = await response.json();
+
+        if (res.status === 'success' && res.data) {
+            renderStats(res.data);
+            renderBookingsTable(res.data);
+        }
+    } catch (e) {
+        console.error('Lỗi tải dữ liệu Dashboard từ MySQL:', e);
+    }
 }
 
 function renderStats(bookings) {
@@ -149,7 +37,7 @@ function renderStats(bookings) {
 
     const totalRevenue = bookings
         .filter(b => b.status !== 'Cancelled')
-        .reduce((sum, b) => sum + (b.servicePrice || 0), 0);
+        .reduce((sum, b) => sum + (parseInt(b.servicePrice) || 0), 0);
 
     document.getElementById('statTotal').innerText = totalCount;
     document.getElementById('statPending').innerText = pendingCount;
@@ -180,17 +68,7 @@ function renderBookingsTable(bookings) {
     const tbody = document.getElementById('bookingsTbody');
     if (!tbody) return;
 
-    let filtered = bookings;
-
-    if (currentFilterStatus !== 'ALL') {
-        filtered = filtered.filter(b => b.status === currentFilterStatus);
-    }
-
-    if (currentStaffFilter !== 'ALL') {
-        filtered = filtered.filter(b => b.staff.includes(currentStaffFilter));
-    }
-
-    if (filtered.length === 0) {
+    if (bookings.length === 0) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="7" class="p-8 text-center text-gray-400 text-sm">
@@ -201,7 +79,7 @@ function renderBookingsTable(bookings) {
         return;
     }
 
-    tbody.innerHTML = filtered.map(b => `
+    tbody.innerHTML = bookings.map(b => `
         <tr class="hover:bg-rose-50/40 transition border-b border-gray-100">
             <td class="p-3.5 font-extrabold text-rose-600 text-xs whitespace-nowrap">
                 ${b.code}
@@ -213,7 +91,7 @@ function renderBookingsTable(bookings) {
             </td>
             <td class="p-3.5">
                 <p class="font-bold text-gray-800 text-xs">${b.serviceName}</p>
-                <p class="text-[11px] text-rose-600 font-extrabold">${(b.servicePrice || 0).toLocaleString('vi-VN')} đ</p>
+                <p class="text-[11px] text-rose-600 font-extrabold">${(parseInt(b.servicePrice) || 0).toLocaleString('vi-VN')} đ</p>
             </td>
             <td class="p-3.5 text-xs whitespace-nowrap">
                 <p class="font-bold text-gray-800">⏰ ${b.time}</p>
@@ -271,20 +149,25 @@ function renderAdminActionButtons(code, status) {
     }
 }
 
-function reassignStaff(code, newStaffName) {
-    let bookings = getStoredBookings();
-    const index = bookings.findIndex(b => b.code === code);
-
-    if (index !== -1) {
-        bookings[index].staff = newStaffName;
-        bookings[index].note = (bookings[index].note || '') + ` (Đã chuyển cho ${newStaffName})`;
-        saveBookings(bookings);
+async function reassignStaff(code, newStaffName) {
+    try {
+        await fetch(API_BASE_URL + 'bookings.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                code: code,
+                staff: newStaffName,
+                note: `(Đã chuyển cho ${newStaffName})`
+            })
+        });
         renderDashboard();
+    } catch (e) {
+        console.error('Lỗi đổi KTV:', e);
     }
 }
 
 // ==========================================
-// 🌟 MODAL HỦY CA BẰNG TAILWIND (THAY THẾ BROWSER PROMPT NỔI DỒI ÔI)
+// 🌟 MODAL HỦY CA BẰNG TAILWIND (CẬP NHẬT TỚI MYSQL)
 // ==========================================
 
 let targetCancelCode = '';
@@ -313,37 +196,48 @@ function setQuickReason(text) {
     if (input) input.value = text;
 }
 
-function confirmCancelBookingByStaff() {
+async function confirmCancelBookingByStaff() {
     const reasonInput = document.getElementById('cancelReasonInput');
     const reason = reasonInput ? reasonInput.value.trim() : 'KTV bận';
 
     if (!targetCancelCode) return;
 
-    let bookings = getStoredBookings();
-    const index = bookings.findIndex(b => b.code === targetCancelCode);
+    try {
+        await fetch(API_BASE_URL + 'bookings.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                code: targetCancelCode,
+                status: 'Cancelled',
+                note: `[Đã hủy ca: ${reason}]`
+            })
+        });
 
-    if (index !== -1) {
-        bookings[index].status = 'Cancelled';
-        bookings[index].note = (bookings[index].note || '') + ` [Đã hủy ca: ${reason}]`;
-        saveBookings(bookings);
         closeCancelReasonModal();
         renderDashboard();
+    } catch (e) {
+        alert('Lỗi hủy ca!');
     }
 }
 
-function updateBookingStatus(code, newStatus) {
-    let bookings = getStoredBookings();
-    const index = bookings.findIndex(b => b.code === code);
-
-    if (index !== -1) {
-        bookings[index].status = newStatus;
-        saveBookings(bookings);
+async function updateBookingStatus(code, newStatus) {
+    try {
+        await fetch(API_BASE_URL + 'bookings.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                code: code,
+                status: newStatus
+            })
+        });
         renderDashboard();
+    } catch (e) {
+        console.error('Lỗi cập nhật trạng thái:', e);
     }
 }
 
 // ==========================================
-// 💬 CHỨC NĂNG LIVE CHAT VỚI KHÁCH HÀNG (ADMIN SIDE)
+// 💬 CHỨC NĂNG LIVE CHAT VỚI KHÁCH HÀNG (FETCH FROM MYSQL)
 // ==========================================
 
 function toggleAdminChatModal() {
@@ -359,53 +253,55 @@ function toggleAdminChatModal() {
     }
 }
 
-function renderAdminChat() {
+async function renderAdminChat() {
     const adminChatBody = document.getElementById('adminChatMessagesBody');
     if (!adminChatBody) return;
 
-    let stored = localStorage.getItem('aura_chat_messages');
-    let messages = stored ? JSON.parse(stored) : [];
+    try {
+        const response = await fetch(API_BASE_URL + 'chat.php');
+        const res = await response.json();
+        const messages = (res.status === 'success' && res.data) ? res.data : [];
 
-    adminChatBody.innerHTML = messages.map(msg => {
-        const isAdmin = msg.sender === 'spa';
-        return `
-            <div class="flex flex-col ${isAdmin ? 'items-end' : 'items-start'} mb-3">
-                <span class="text-[10px] text-slate-400 font-semibold mb-1 px-1">
-                    ${isAdmin ? '🌸 Lễ Tân AuraSpa (Bạn)' : '👤 Khách Hàng'} • ${msg.time}
-                </span>
-                <div class="${isAdmin ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none shadow-sm' : 'bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[85%] text-xs leading-relaxed">
-                    ${msg.text}
+        adminChatBody.innerHTML = messages.map(msg => {
+            const isAdmin = msg.sender === 'spa';
+            return `
+                <div class="flex flex-col ${isAdmin ? 'items-end' : 'items-start'} mb-3">
+                    <span class="text-[10px] text-slate-400 font-semibold mb-1 px-1">
+                        ${isAdmin ? '🌸 Lễ Tân AuraSpa (Bạn)' : '👤 Khách Hàng'} • ${msg.time}
+                    </span>
+                    <div class="${isAdmin ? 'bg-rose-600 text-white rounded-2xl rounded-tr-none shadow-sm' : 'bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none shadow-sm'} p-3 max-w-[85%] text-xs leading-relaxed">
+                        ${msg.message_text || msg.text}
+                    </div>
                 </div>
-            </div>
-        `;
-    }).join('');
+            `;
+        }).join('');
 
-    adminChatBody.scrollTop = adminChatBody.scrollHeight;
+        adminChatBody.scrollTop = adminChatBody.scrollHeight;
+    } catch (e) {
+        console.error('Lỗi tải Chat Admin:', e);
+    }
 }
 
-function handleAdminSendChat(event) {
+async function handleAdminSendChat(event) {
     event.preventDefault();
     const input = document.getElementById('adminChatInput');
     const text = input.value.trim();
     if (!text) return;
 
-    let stored = localStorage.getItem('aura_chat_messages');
-    let messages = stored ? JSON.parse(stored) : [];
+    try {
+        await fetch(API_BASE_URL + 'chat.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sender: 'spa',
+                senderName: 'Lễ Tân AuraSpa',
+                text: text
+            })
+        });
 
-    messages.push({
-        sender: 'spa',
-        senderName: 'Lễ Tân AuraSpa',
-        text: text,
-        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-    });
-
-    input.value = '';
-    localStorage.setItem('aura_chat_messages', JSON.stringify(messages));
-    renderAdminChat();
-}
-
-window.addEventListener('storage', (e) => {
-    if (e.key === 'aura_chat_messages') {
+        input.value = '';
         renderAdminChat();
+    } catch (e) {
+        console.error('Lỗi gửi tin nhắn Admin:', e);
     }
-});
+}

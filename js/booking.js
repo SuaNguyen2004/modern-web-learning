@@ -1,14 +1,48 @@
 // ==========================================
-// SPA BOOKING & FEEDBACK INTERACTIVE SCRIPT
+// SPA BOOKING & FEEDBACK INTERACTIVE SCRIPT (FETCH API CONNECTED)
 // ==========================================
 
-// Bảng danh sách dịch vụ Spa & Giá tiền
-const SERVICES_LIST = [
+const API_BASE_URL = 'api/';
+
+// Bảng danh sách dịch vụ Spa & Giá tiền (Dự phòng)
+let SERVICES_LIST = [
     { name: 'Gội Đầu Dưỡng Sinh Thảo Dược', price: 199000, duration: '60 Phút' },
     { name: 'Chăm Sóc Da Mặt Chuyên Sâu', price: 350000, duration: '75 Phút' },
     { name: 'Massage Cổ Vai Gáy Trị Liệu', price: 250000, duration: '45 Phút' },
     { name: 'Combo Chăm Sóc Da & Gội Đầu VIP', price: 499000, duration: '90 Phút' }
 ];
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchServicesFromAPI();
+});
+
+// Tải danh sách Dịch vụ từ API PHP MySQL
+async function fetchServicesFromAPI() {
+    try {
+        const response = await fetch(API_BASE_URL + 'services.php');
+        const result = await response.json();
+        if (result.status === 'success' && result.data && result.data.length > 0) {
+            SERVICES_LIST = result.data.map(s => ({
+                name: s.name,
+                price: parseInt(s.price),
+                duration: s.duration
+            }));
+            populateServiceDropdown();
+        }
+    } catch (e) {
+        // Sử dụng dữ liệu mẫu nếu API bị gián đoạn
+        populateServiceDropdown();
+    }
+}
+
+function populateServiceDropdown() {
+    const serviceSelect = document.getElementById('serviceSelect');
+    if (!serviceSelect) return;
+
+    serviceSelect.innerHTML = SERVICES_LIST.map(s => `
+        <option value="${s.name}">${s.name} (${s.duration})</option>
+    `).join('');
+}
 
 // Khởi tạo phiên Đăng Nhập Mặc Định Khách VIP nếu chưa có
 function getLoggedInCustomer() {
@@ -33,7 +67,6 @@ function openBookingModal(serviceName = null, price = null, voucherCode = null) 
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
 
-    // Đóng mobile menu nếu đang mở
     const mobileMenu = document.getElementById('mobileMenuDrawer');
     if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
@@ -43,7 +76,7 @@ function openBookingModal(serviceName = null, price = null, voucherCode = null) 
     if (serviceSelect) {
         if (serviceName) {
             serviceSelect.value = serviceName;
-        } else {
+        } else if (SERVICES_LIST.length > 0) {
             serviceSelect.value = SERVICES_LIST[0].name;
         }
         updateSelectedServicePrice();
@@ -134,21 +167,8 @@ function selectTimeSlot(element, time) {
     selectedTimeSlot = time;
 }
 
-// Sinh Mã đơn ĐỘC NHẤT
-function generateUniqueBookingCode() {
-    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
-    let existingCodes = new Set(existingBookings.map(b => b.code));
-    let newCode;
-    
-    do {
-        newCode = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
-    } while (existingCodes.has(newCode));
-
-    return newCode;
-}
-
-// Xử lý gửi Form Đặt Lịch
-function handleBookingSubmit(event) {
+// Xử lý gửi Form Đặt Lịch (Tới PHP API & MySQL)
+async function handleBookingSubmit(event) {
     event.preventDefault();
 
     const customerName = document.getElementById('customerName').value.trim();
@@ -165,14 +185,12 @@ function handleBookingSubmit(event) {
         return;
     }
 
-    const bookingCode = generateUniqueBookingCode();
     let finalNote = noteInput;
     if (voucherInput) {
         finalNote += ` [Mã ưu đãi: ${voucherInput}]`;
     }
 
-    const bookingData = {
-        code: bookingCode,
+    const payload = {
         customerName: customerName,
         customerPhone: customerPhone,
         serviceName: serviceName,
@@ -180,17 +198,36 @@ function handleBookingSubmit(event) {
         date: bookingDate,
         time: selectedTimeSlot,
         staff: staffSelect,
-        note: finalNote,
-        status: 'Pending',
-        createdAt: new Date().toLocaleString('vi-VN')
+        note: finalNote
     };
 
-    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
-    existingBookings.unshift(bookingData);
-    localStorage.setItem('aura_bookings', JSON.stringify(existingBookings));
+    try {
+        const response = await fetch(API_BASE_URL + 'bookings.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
-    closeBookingModal();
-    showSuccessPopup(bookingData);
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            closeBookingModal();
+            showSuccessPopup(result.data);
+        } else {
+            alert('Lỗi đặt lịch: ' + result.message);
+        }
+    } catch (e) {
+        alert('Lỗi kết nối Server MySQL! Đang lưu dự phòng...');
+        // Fallback localStorage
+        payload.code = 'AURA-' + Math.floor(1000 + Math.random() * 9000);
+        payload.status = 'Pending';
+        let existing = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
+        existing.unshift(payload);
+        localStorage.setItem('aura_bookings', JSON.stringify(existing));
+
+        closeBookingModal();
+        showSuccessPopup(payload);
+    }
 }
 
 // Hiển thị Popup Đặt Lịch Thành Công
@@ -218,7 +255,7 @@ function closeSuccessPopup() {
 }
 
 // ==========================================
-// 🔍 CHỨC NĂNG TRA CỨU & HỦY LỊCH CHO KHÁCH HÀNG
+// 🔍 CHỨC NĂNG TRA CỨU & HỦY LỊCH CHO KHÁCH HÀNG (FETCH FROM MYSQL)
 // ==========================================
 
 function openLookupModal() {
@@ -244,62 +281,85 @@ function closeLookupModal() {
     }
 }
 
-function handleLookupSearch() {
+async function handleLookupSearch() {
     const query = document.getElementById('lookupInput').value.trim().toUpperCase();
     if (!query) {
         alert('Vui lòng nhập Mã lịch hẹn hoặc Số điện thoại!');
         return;
     }
 
-    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
-    const results = existingBookings.filter(b => b.code === query || b.customerPhone === query);
-
     const resultArea = document.getElementById('lookupResultArea');
     const resultList = document.getElementById('lookupResultList');
 
-    if (results.length === 0) {
-        resultList.innerHTML = `<p class="text-center text-red-500 text-xs py-4">❌ Không tìm thấy lịch hẹn phù hợp với thông tin "${query}".</p>`;
-    } else {
-        resultList.innerHTML = results.map(b => `
-            <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-200 space-y-2 text-xs">
-                <div class="flex justify-between items-center border-b border-rose-200/60 pb-2">
-                    <span class="font-extrabold text-rose-600 text-sm">${b.code}</span>
-                    <span>${getStatusBadgeHTML(b.status)}</span>
-                </div>
-                <div class="space-y-1 text-gray-700">
-                    <p><strong>Khách hàng:</strong> ${b.customerName} (${b.customerPhone})</p>
-                    <p><strong>Dịch vụ:</strong> ${b.serviceName} - <span class="text-rose-600 font-bold">${b.servicePrice.toLocaleString('vi-VN')} đ</span></p>
-                    <p><strong>Thời gian:</strong> ⏰ ${b.time} | 📅 ${b.date}</p>
-                    <p><strong>KTV phụ trách:</strong> ${b.staff}</p>
-                    ${b.note ? `<p class="text-[11px] text-gray-500 italic">Ghi chú: ${b.note}</p>` : ''}
-                </div>
-                ${(b.status === 'Pending' || b.status === 'Confirmed') ? `
-                    <div class="pt-2 border-t border-rose-200/60 text-right">
-                        <button onclick="cancelBookingByCustomer('${b.code}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition shadow-sm">
-                            ✕ Hủy Lịch Hẹn Này
-                        </button>
+    try {
+        let url = API_BASE_URL + 'bookings.php?';
+        if (query.startsWith('AURA-')) {
+            url += 'code=' + encodeURIComponent(query);
+        } else {
+            url += 'phone=' + encodeURIComponent(query);
+        }
+
+        const response = await fetch(url);
+        const res = await response.json();
+        const results = (res.status === 'success' && res.data) ? res.data : [];
+
+        if (results.length === 0) {
+            resultList.innerHTML = `<p class="text-center text-red-500 text-xs py-4">❌ Không tìm thấy lịch hẹn phù hợp với thông tin "${query}".</p>`;
+        } else {
+            resultList.innerHTML = results.map(b => `
+                <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-200 space-y-2 text-xs">
+                    <div class="flex justify-between items-center border-b border-rose-200/60 pb-2">
+                        <span class="font-extrabold text-rose-600 text-sm">${b.code}</span>
+                        <span>${getStatusBadgeHTML(b.status)}</span>
                     </div>
-                ` : `<p class="text-[10px] text-gray-400 text-right italic">Không thể hủy đơn ở trạng thái này</p>`}
-            </div>
-        `).join('');
+                    <div class="space-y-1 text-gray-700">
+                        <p><strong>Khách hàng:</strong> ${b.customerName} (${b.customerPhone})</p>
+                        <p><strong>Dịch vụ:</strong> ${b.serviceName} - <span class="text-rose-600 font-bold">${b.servicePrice.toLocaleString('vi-VN')} đ</span></p>
+                        <p><strong>Thời gian:</strong> ⏰ ${b.time} | 📅 ${b.date}</p>
+                        <p><strong>KTV phụ trách:</strong> ${b.staff}</p>
+                        ${b.note ? `<p class="text-[11px] text-gray-500 italic">Ghi chú: ${b.note}</p>` : ''}
+                    </div>
+                    ${(b.status === 'Pending' || b.status === 'Confirmed') ? `
+                        <div class="pt-2 border-t border-rose-200/60 text-right">
+                            <button onclick="cancelBookingByCustomer('${b.code}')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition shadow-sm">
+                                ✕ Hủy Lịch Hẹn Này
+                            </button>
+                        </div>
+                    ` : `<p class="text-[10px] text-gray-400 text-right italic">Không thể hủy đơn ở trạng thái này</p>`}
+                </div>
+            `).join('');
+        }
+
+    } catch (e) {
+        resultList.innerHTML = `<p class="text-center text-red-500 text-xs py-4">❌ Lỗi kết nối Server khi tìm đơn.</p>`;
     }
 
     resultArea.classList.remove('hidden');
 }
 
-function cancelBookingByCustomer(code) {
+async function cancelBookingByCustomer(code) {
     if (!confirm(`Bạn có chắc chắn muốn HỦY lịch hẹn ${code} không?`)) return;
 
-    let existingBookings = JSON.parse(localStorage.getItem('aura_bookings') || '[]');
-    const index = existingBookings.findIndex(b => b.code === code);
+    try {
+        const response = await fetch(API_BASE_URL + 'bookings.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                code: code,
+                status: 'Cancelled',
+                note: '(Khách tự hủy qua tra cứu)'
+            })
+        });
 
-    if (index !== -1) {
-        existingBookings[index].status = 'Cancelled';
-        existingBookings[index].note = (existingBookings[index].note || '') + ' (Khách hàng tự hủy)';
-        localStorage.setItem('aura_bookings', JSON.stringify(existingBookings));
-
-        alert(`Đã hủy lịch hẹn ${code} thành công!`);
-        handleLookupSearch();
+        const res = await response.json();
+        if (res.status === 'success') {
+            alert(`Đã hủy lịch hẹn ${code} thành công!`);
+            handleLookupSearch();
+        } else {
+            alert('Lỗi hủy lịch: ' + res.message);
+        }
+    } catch (e) {
+        alert('Lỗi kết nối Server!');
     }
 }
 
