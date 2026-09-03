@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Trang Quản Trị - Admin Dashboard UI</title>
+        <!-- Nhúng Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 font-sans text-gray-800 antialiased min-h-screen flex">
+        <!-- 1. SIDEBAR (THANH ĐIỀU HƯỚNG BÊN TRÁI) -->
+        <aside class="w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col justify-between hidden md:flex">
+            <div>
+                <!-- Logo Admin -->
+                <div class="h-16 flex items-center px-6 border-b border-slate-800">
+                    <span class="bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg text-lg mr-3">ADMIN</span>
+                    <span class="font-bold text-white text-lg tracking-wide">ModernPanel</span>
+                </div>
+
+                <!-- Menu Links -->
+                <nav class="px-4 py-6 space-y-1">
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-xl font-medium shadow-lg shadow-blue-600/30">
+                        <span>📊</span>
+                        Tong quan (Dashboard)
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl font-medium transition">
+                        <span>👥</span>
+                        Quan ly nguoi dung
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl font-medium transition">
+                        <span>📦</span>
+                        Quan ly don hang
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl font-medium transition">
+                        <span>⚙️</span>
+                        Cai dat he thong
+                    </a>
+                </nav>
+            </div>
+
+            <!-- User Profile Bottom -->
+            <div class="p-4 border-t border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center font-bold text-white">
+                        SN
+                    </div>
+                    <div class="text-xs">
+                        <p class="font-bold text-white">Sua Nguyen</p>
+                        <p class="text-slate-400">Admin Master</p>
+                    </div>
+                </div>
+                <button class="text-slate-400 hover:text-red-400 text-sm">🚪</button>
+            </div>
+        </aside>
+
+        <!-- 2. KHU VỰC NỘI DUNG CHÍNH (RIGHT SIDE) -->
+        <div class="flex-1 flex flex-col min-w-0">
+            <!-- TOP BAR (HEADER TRÊN) -->
+            <header
+                class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-40">
+                <!-- Search Input Bar -->
+                <div class="relative w-72">
+                    <input
+                        type="text"
+                        placeholder="Tim kiem nguoi dung, don hang..."
+                        class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+                    <span class="absolute left-3 top-2.5 text-gray-400 text-sm">🔍</span>
+                </div>
+
+                <!-- Action Notifications & Profile -->
+                <div class="flex items-center gap-4">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg text-gray-600 relative">
+                        🔔
+                        <span class="w-2 h-2 bg-red-500 rounded-full absolute top-1.5 right-1.5"></span>
+                    </button>
+                    <div class="h-6 w-px bg-gray-200"></div>
+                    <span class="text-sm font-medium text-gray-700">
+                        Xin chao,
+                        <strong>Sua Nguyen</strong>
+                    </span>
+                </div>
+            </header>
+
+            <!-- MAIN DASHBOARD CONTENT -->
+            <main class="p-6 space-y-6 flex-1">
+                <!-- PAGE TITLE & BUTTON -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Danh Sach Nguoi Dung System</h1>
+                        <p class="text-gray-500 text-sm">Quan ly va phan quyen tai khoan trong he thong database</p>
+                    </div>
+                    <button
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-2">
+                        <span>➕</span>
+                        Them Nguoi Dung Moi
+                    </button>
+                </div>
+
+                <!-- 4 STAT CARDS (THỐNG KÊ NHANH) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div
+                        class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-semibold text-gray-500 uppercase">Tong Nguoi Dung</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">1,248</h3>
+                            <span class="text-xs font-semibold text-emerald-600">↑ +12% thang nay</span>
+                        </div>
+                        <div
+                            class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                            👥
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-semibold text-gray-500 uppercase">Doanh Thu Thang</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">$45,200</h3>
+                            <span class="text-xs font-semibold text-emerald-600">↑ +8.5% so voi ky truoc</span>
+                        </div>
+                        <div
+                            class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                            💵
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-semibold text-gray-500 uppercase">Don Hang Cho Duyet</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">34</h3>
+                            <span class="text-xs font-semibold text-amber-600">⚡ Can xu ly ngay</span>
+                        </div>
+                        <div
+                            class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                            ⏳
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-semibold text-gray-500 uppercase">Ty Le Chuyen Doi</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">4.2%</h3>
+                            <span class="text-xs font-semibold text-blue-600">Dat muc tieu KPI</span>
+                        </div>
+                        <div
+                            class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl font-bold">
+                            📈
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BẢNG DỮ LIỆU CHÍNH (DATA TABLE) -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div
+                        class="p-5 border-b border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <h2 class="font-bold text-gray-800 text-lg">Danh Sach Thanh Vien</h2>
+
+                        <!-- Bo Loc Trạng Thái -->
+                        <div class="flex items-center gap-2">
+                            <select
+                                class="bg-gray-50 border border-gray-200 text-sm rounded-lg px-3 py-1.5 focus:outline-none">
+                                <option>Tat ca trang thai</option>
+                                <option>Hoat dong</option>
+                                <option>Cho xac thuc</option>
+                                <option>Da khoa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- TABLE CONTENT -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600">
+                            <thead
+                                class="bg-gray-50 text-gray-700 font-semibold uppercase text-xs border-b border-gray-200">
+                                <tr>
+                                    <th class="p-4">Nguoi Dung</th>
+                                    <th class="p-4">Vai Tro (Role)</th>
+                                    <th class="p-4">Trang Thai</th>
+                                    <th class="p-4">Ngay Tham Gia</th>
+                                    <th class="p-4 text-right">Thao Tac</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="p-4 flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center">
+                                            SN
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Sua Nguyen</p>
+                                            <p class="text-xs text-gray-500">suanguyen@example.com</p>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            Administrator
+                                        </span>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            ● Hoat dong
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-gray-500">03/09/2026</td>
+                                    <td class="p-4 text-right space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 font-medium">Sua</button>
+                                        <button class="text-red-600 hover:text-red-800 font-medium">Xoa</button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="p-4 flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-teal-100 text-teal-700 font-bold flex items-center justify-center">
+                                            NV
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Nguyen Van A</p>
+                                            <p class="text-xs text-gray-500">nguyenvana@example.com</p>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            Developer
+                                        </span>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            ● Hoat dong
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-gray-500">01/09/2026</td>
+                                    <td class="p-4 text-right space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 font-medium">Sua</button>
+                                        <button class="text-red-600 hover:text-red-800 font-medium">Xoa</button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="p-4 flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center">
+                                            TB
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Tran Thi B</p>
+                                            <p class="text-xs text-gray-500">tranthib@example.com</p>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            Customer
+                                        </span>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            ● Cho xac thuc
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-gray-500">28/08/2026</td>
+                                    <td class="p-4 text-right space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 font-medium">Sua</button>
+                                        <button class="text-red-600 hover:text-red-800 font-medium">Xoa</button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4 -->
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="p-4 flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center">
+                                            HT
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Le Hai Tu</p>
+                                            <p class="text-xs text-gray-500">lehaitu@example.com</p>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            Customer
+                                        </span>
+                                    </td>
+                                    <td class="p-4">
+                                        <span
+                                            class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                                            ● Cho xac thuc
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-gray-500">29/08/2026</td>
+                                    <td class="p-4 text-right space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 font-medium">Sua</button>
+                                        <button class="text-red-600 hover:text-red-800 font-medium">Xoa</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION (PHÂN TRANG) -->
+                    <div class="p-4 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
+                        <p>Hien thi 1-3 trong tong so 1,248 ket qua</p>
+                        <div class="flex gap-1">
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-100">
+                                Truoc
+                            </button>
+                            <button class="px-3 py-1.5 bg-blue-600 text-white rounded-md font-bold">1</button>
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-100">2</button>
+                            <button class="px-3 py-1.5 border border-gray-200 rounded-md hover:bg-gray-100">Sau</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
