@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSpa Admin - Trang Quản Lý Lịch Hẹn & Feedback</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 antialiased flex flex-col">
+
+    <!-- 1. HEADER ADMIN NAVBAR -->
+    <header class="bg-slate-900 text-white sticky top-0 z-50 border-b border-slate-800 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo Admin -->
+            <div class="flex items-center gap-3">
+                <span class="bg-rose-600 text-white font-bold px-2.5 py-1 rounded-lg text-sm tracking-wider uppercase">ADMIN</span>
+                <span class="text-xl font-bold tracking-wide">AuraSpa Panel</span>
+            </div>
+
+            <!-- Navigation Links & User Profile -->
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="text-xs font-semibold text-rose-400 hover:text-rose-300 transition flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <span>🌐</span> Trình Xem Khách Hàng (Website)
+                </a>
+                <div class="h-6 w-px bg-slate-800"></div>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-rose-500 text-white font-bold flex items-center justify-center text-xs">
+                        AD
+                    </div>
+                    <div class="text-xs hidden sm:block">
+                        <p class="font-bold text-white leading-none">Chủ Spa (Admin)</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Quản lý hệ thống</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. CONTAINER CHÍNH -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-1 w-full">
+
+        <!-- TIÊU ĐỀ DANGSHBOARD -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+            <div>
+                <h1 class="text-2xl font-extrabold text-slate-900">📊 Quản Lý Lịch Hẹn & Đánh Giá Spa</h1>
+                <p class="text-slate-500 text-xs mt-1">Điều phối ca làm của Kỹ thuật viên & Theo dõi phản hồi khách hàng realtime</p>
+            </div>
+            <button onclick="renderDashboard()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 self-start sm:self-auto">
+                <span>🔄</span> Cập Nhật Dữ Liệu
+            </button>
+        </div>
+
+        <!-- 3. THỐNG KÊ 4 THẺ CHÍNH (STAT CARDS) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Thẻ 1 -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Tổng Lịch Hẹn</p>
+                    <h3 id="statTotal" class="text-3xl font-extrabold text-slate-900 mt-1">0</h3>
+                    <p class="text-[11px] text-slate-500 mt-1">Tất cả ca hẹn</p>
+                </div>
+                <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    📅
+                </div>
+            </div>
+
+            <!-- Thẻ 2 -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-amber-500 uppercase tracking-wider">Chờ Duyệt Đơn</p>
+                    <h3 id="statPending" class="text-3xl font-extrabold text-amber-600 mt-1">0</h3>
+                    <p class="text-[11px] text-amber-600 font-medium mt-1">⚡ Cần xác nhận ngay</p>
+                </div>
+                <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    ⏳
+                </div>
+            </div>
+
+            <!-- Thẻ 3 -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-purple-500 uppercase tracking-wider">Đang Phục Vụ</p>
+                    <h3 id="statInProgress" class="text-3xl font-extrabold text-purple-600 mt-1">0</h3>
+                    <p class="text-[11px] text-purple-600 font-medium mt-1">💆‍♀️ KTV đang làm ca</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    ✨
+                </div>
+            </div>
+
+            <!-- Thẻ 4 -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-emerald-500 uppercase tracking-wider">Doanh Thu Dự Kiến</p>
+                    <h3 id="statRevenue" class="text-2xl font-extrabold text-emerald-600 mt-1">0 đ</h3>
+                    <p class="text-[11px] text-emerald-600 font-medium mt-1">↑ Thống kê các đơn hợp lệ</p>
+                </div>
+                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-inner">
+                    💵
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. BẢNG QUẢN LÝ LỊCH HẸN VÀ BỘ LỌC STATUS -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
+            
+            <!-- Header Tab Filters -->
+            <div class="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
+                <div>
+                    <h2 class="font-extrabold text-slate-900 text-lg">Danh Sách Lịch Hẹn Spa</h2>
+                    <p class="text-slate-500 text-xs">Cập nhật trạng thái từng đơn hẹn realtime từ khách hàng</p>
+                </div>
+
+                <!-- Filters Tab Buttons -->
+                <div class="flex flex-wrap gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+                    <button onclick="filterBookings('ALL', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-rose-600 text-white shadow-sm transition">Tất Cả</button>
+                    <button onclick="filterBookings('Pending', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">⏳ Chờ Duyệt</button>
+                    <button onclick="filterBookings('Confirmed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">✓ Đã Duyệt</button>
+                    <button onclick="filterBookings('In_Progress', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">💆‍♀️ Đang Phục Vụ</button>
+                    <button onclick="filterBookings('Completed', this)" class="filter-tab-btn px-3 py-1.5 rounded-lg font-bold bg-white text-gray-600 hover:bg-gray-100 transition">🎉 Hoàn Thành</button>
+                </div>
+            </div>
+
+            <!-- TABLE CONTENT -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-100/70 text-slate-700 font-extrabold uppercase tracking-wider text-[11px] border-b border-slate-200">
+                        <tr>
+                            <th class="p-4">Mã Đơn</th>
+                            <th class="p-4">Khách Hàng</th>
+                            <th class="p-4">Dịch Vụ & Giá</th>
+                            <th class="p-4">Thời Gian Hẹn</th>
+                            <th class="p-4">Kỹ Thuật Viên</th>
+                            <th class="p-4">Trạng Thái</th>
+                            <th class="p-4 text-right">Thao Tác Duyệt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTbody" class="divide-y divide-slate-100">
+                        <!-- Code JS sẽ tự động render dữ liệu vào đây -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-4 border-t border-slate-100 text-center text-xs text-slate-400">
+                <p>Tự động đồng bộ dữ liệu từ bộ nhớ LocalStorage của khách hàng</p>
+            </div>
+        </div>
+
+        <!-- 5. KHU VỰC THEO DÕI FEEDBACK KHÁCH HÀNG (CUSTOMER FEEDBACK HUB) -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="font-extrabold text-slate-900 text-lg">⭐ Nhật Ký Đánh Giá & Feedback Từ Khách Hàng</h2>
+                    <p class="text-slate-500 text-xs">Theo dõi phản hồi chất lượng phục vụ của kỹ thuật viên</p>
+                </div>
+                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">Trung bình 4.9 ⭐</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Review Item 1 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-slate-900">Nguyễn Thanh Hằng</span>
+                        <span class="text-amber-500 font-bold">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">"KTV Minh Anh tư vấn da mặt rất kỹ, điện di Vitamin C xong mặt nhẹ nhõm căng bóng hẳn."</p>
+                    <p class="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">Phục vụ bởi: KTV Nguyễn Minh Anh • 03/09/2026</p>
+                </div>
+
+                <!-- Review Item 2 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-slate-900">Trần Hoàng Phương</span>
+                        <span class="text-amber-500 font-bold">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">"KTV Thu Hà gội đầu bấm huyệt da đầu rất đỉnh! Vòm nước ấm rửa trôi mệt mỏi cả ngày."</p>
+                    <p class="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">Phục vụ bởi: KTV Trần Thu Hà • 03/09/2026</p>
+                </div>
+
+                <!-- Review Item 3 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-slate-900">Lê Ngọc Trâm</span>
+                        <span class="text-amber-500 font-bold">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">"Gói Combo VIP làm 90 phút cực kỳ đáng tiền. Tay nghề KTV Ngọc Lan bấm bả vai rất mượt."</p>
+                    <p class="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60">Phục vụ bởi: KTV Lê Ngọc Lan • 02/09/2026</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
+        <p>© 2026 AuraSpa Admin Panel - Bảng Điều Hành Quản Lý Spa Thực Tế</p>
+    </footer>
+
+    <!-- Nhúng File Script Admin -->
+    <script src="js/admin_spa.js"></script>
+</body>
+</html>

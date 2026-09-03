@@ -46,13 +46,15 @@
                     <a href="#reviews" class="hover:text-rose-600 transition">Đánh Giá</a>
                 </nav>
 
-                <!-- CTA Booking Button trên Navbar: Mở Modal Đặt Lịch (Cho phép người dùng chọn dịch vụ tùy ý) -->
-                <button
-                    onclick="openBookingModal()"
-                    class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-sm shadow-lg shadow-rose-500/25 active:scale-95 transition flex items-center gap-2">
-                    <span>📅</span>
-                    Đặt Lịch Ngay
+                <!-- CTA Booking & Admin Link -->
+            <div class="flex items-center gap-3">
+                <a href="spa_admin.html" class="hidden sm:flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-rose-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-full border border-gray-200 transition">
+                    <span>⚙️</span> Trang Quản Lý
+                </a>
+                <button onclick="openBookingModal()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold px-5 py-2.5 rounded-full text-sm shadow-lg shadow-rose-500/25 active:scale-95 transition flex items-center gap-2">
+                    <span>📅</span> Đặt Lịch Ngay
                 </button>
+            </div>
             </div>
         </header>
 
